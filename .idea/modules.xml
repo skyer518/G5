@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/LED_G5W.iml" filepath="$PROJECT_DIR$/LED_G5W.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyCustMPChartLib/MyCustMPChartLib.iml" filepath="$PROJECT_DIR$/MyCustMPChartLib/MyCustMPChartLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/alekwifi/alekwifi.iml" filepath="$PROJECT_DIR$/alekwifi/alekwifi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/g5g/g5g.iml" filepath="$PROJECT_DIR$/g5g/g5g.iml" />
+      <module fileurl="file://$PROJECT_DIR$/g5w/g5w.iml" filepath="$PROJECT_DIR$/g5w/g5w.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xbase/xbase.iml" filepath="$PROJECT_DIR$/xbase/xbase.iml" />
+    </modules>
+  </component>
+</project>

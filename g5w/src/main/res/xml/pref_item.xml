@@ -1,0 +1,17 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:defaultValue="true"
+        android:key="sp_moon"
+        android:title="@string/pref_header_moon" />
+
+    <Preference
+        android:defaultValue="true"
+        android:key="sp_flash"
+        android:title="@string/pref_header_flash" />
+
+    <Preference
+        android:defaultValue="true"
+        android:key="sp_acclimation"
+        android:title="@string/pref_header_acclimation" />
+</PreferenceScreen>

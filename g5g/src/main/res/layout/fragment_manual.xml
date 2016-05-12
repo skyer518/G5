@@ -1,0 +1,189 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/app_padding_m"
+    tools:context="cn.com.lightech.led_g5g.view.console.impl.ManualFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_panel_radius"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/ch_B"
+                android:textColor="@color/ch_color_blue" />
+
+            <SeekBar
+                android:id="@+id/seekBar_blue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:indeterminate="false"
+                android:progress="100"
+                android:progressDrawable="@drawable/seekbar_progress_blue" />
+
+            <TextView
+                android:id="@+id/tv_value_sb_blue"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/ch_color_blue" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/ch_W"
+                android:textColor="@color/ch_color_white" />
+
+            <SeekBar
+                android:id="@+id/seekBar_white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:indeterminate="false"
+                android:progress="100"
+                android:progressDrawable="@drawable/seekbar_progress_white" />
+
+            <TextView
+                android:id="@+id/tv_value_sb_white"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/ch_color_white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/ch_P"
+                android:textColor="@color/ch_color_purple" />
+
+            <SeekBar
+                android:id="@+id/seekBar_purple"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:indeterminate="false"
+                android:progress="100"
+                android:progressDrawable="@drawable/seekbar_progress_purple" />
+
+            <TextView
+                android:id="@+id/tv_value_sb_purple"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/ch_color_purple" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/ch_G"
+                android:textColor="@color/ch_color_green" />
+
+            <SeekBar
+                android:id="@+id/seekBar_green"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:indeterminate="false"
+                android:progress="100"
+                android:progressDrawable="@drawable/seekbar_progress_green" />
+
+            <TextView
+                android:id="@+id/tv_value_sb_green"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/ch_color_green" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/ch_R"
+                android:textColor="@color/ch_color_red" />
+
+            <SeekBar
+                android:id="@+id/seekBar_red"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:indeterminate="false"
+                android:progress="100"
+                android:progressDrawable="@drawable/seekbar_progress_red" />
+
+            <TextView
+                android:id="@+id/tv_value_sb_red"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/ch_color_red" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="work_model">
+        <item>@string/app_model_seedling</item>
+        <item>@string/app_model_clone</item>
+        <item>@string/app_model_vegetation</item>
+        <item>@string/app_model_flowering</item>
+        <item>@string/app_model_fruiting</item>
+        <item>@string/app_model_self</item>
+        <item>@string/app_model_manual</item>
+    </string-array>
+    <string-array name="effect">
+        <!--<item>@string/app_effect_moonshine</item>-->
+        <item>@string/app_effect_flash</item>
+        <item>@string/app_effect_acclimation</item>
+    </string-array>
+    <string-array name="last_full_moon_day">
+        <item>day 1</item>
+        <item>day 2</item>
+        <item>day 3</item>
+        <item>day 4</item>
+        <item>day 5</item>
+        <item>day 6</item>
+        <item>day 7</item>
+        <item>day 8</item>
+        <item>day 9</item>
+        <item>day 10</item>
+        <item>day 11</item>
+        <item>day 12</item>
+        <item>day 13</item>
+        <item>day 14</item>
+        <item>day 15</item>
+        <item>day 16</item>
+        <item>day 17</item>
+        <item>day 18</item>
+        <item>day 19</item>
+        <item>day 20</item>
+        <item>day 21</item>
+        <item>day 22</item>
+        <item>day 23</item>
+        <item>day 24</item>
+        <item>day 25</item>
+        <item>day 26</item>
+        <item>day 27</item>
+        <item>day 28</item>
+        <item>day 29</item>
+        <item>day 30</item>
+    </string-array>
+    <string-array name="values_last_full_moon_day">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+    </string-array>
+</resources>

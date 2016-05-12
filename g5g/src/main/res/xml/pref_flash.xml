@@ -1,0 +1,76 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:widgetLayout="@layout/pref_screen">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/pref_key_flash"
+        android:summary="@string/pref_summary_flash"
+        android:title="@string/pref_header_flash" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:dependency="@string/pref_key_flash"
+        android:key="@string/pref_key_flash_time1"
+        android:padding="0dp"
+        android:summary="@string/pref_summary_flash_time1"
+        android:title="@string/pref_title_time1" />
+
+
+    <cn.com.lightech.led_g5g.wedgit.TimePreference
+        android:defaultValue="0"
+        android:dependency="@string/pref_key_flash_time1"
+        android:key="@string/pref_key_flash_time1_start"
+        android:title="@string/pref_title_start_time"
+        android:widgetLayout="@layout/tv_pref_time" />
+
+    <cn.com.lightech.led_g5g.wedgit.TimePreference
+        android:defaultValue="0"
+        android:dependency="@string/pref_key_flash_time1"
+        android:key="@string/pref_key_flash_time1_end"
+        android:title="@string/pref_title_end_time"
+        android:widgetLayout="@layout/tv_pref_time" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:dependency="@string/pref_key_flash_time1"
+        android:key="@string/pref_key_flash_time2"
+        android:summary="@string/pref_summary_flash_time2"
+        android:title="@string/pref_title_time2" />
+
+
+    <cn.com.lightech.led_g5g.wedgit.TimePreference
+        android:defaultValue="0"
+        android:dependency="@string/pref_key_flash_time2"
+        android:key="@string/pref_key_flash_time2_start"
+        android:title="@string/pref_title_start_time"
+        android:widgetLayout="@layout/tv_pref_time" />
+
+    <cn.com.lightech.led_g5g.wedgit.TimePreference
+        android:defaultValue="0"
+        android:dependency="@string/pref_key_flash_time2"
+        android:key="@string/pref_key_flash_time2_end"
+        android:title="@string/pref_title_end_time"
+        android:widgetLayout="@layout/tv_pref_time" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:dependency="@string/pref_key_flash_time2"
+        android:key="@string/pref_key_flash_time3"
+        android:summary="@string/pref_summary_flash_time3"
+        android:title="@string/pref_title_time3" />
+
+
+    <cn.com.lightech.led_g5g.wedgit.TimePreference
+        android:defaultValue="0"
+        android:dependency="@string/pref_key_flash_time3"
+        android:key="@string/pref_key_flash_time3_start"
+        android:title="@string/pref_title_start_time"
+        android:widgetLayout="@layout/tv_pref_time" />
+
+    <cn.com.lightech.led_g5g.wedgit.TimePreference
+        android:defaultValue="0"
+        android:dependency="@string/pref_key_flash_time3"
+        android:key="@string/pref_key_flash_time3_end"
+        android:title="@string/pref_title_end_time"
+        android:widgetLayout="@layout/tv_pref_time" />
+</PreferenceScreen>

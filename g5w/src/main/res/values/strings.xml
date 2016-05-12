@@ -1,0 +1,141 @@
+<resources>
+    <string name="app_name">LED G5W</string>
+    <string name="app_exit_confirm_button_text">OK</string>
+    <string name="app_exit_cancel_button_text">Cancel</string>
+    <string name="app_default_led_password">12345678</string>
+
+
+    <string name="intent_key_ledwifi">LED</string>
+
+    <string name="error_set_flag_failed">Save led group is failed!</string>
+
+
+    <!-- TODO: Model  -->
+    <string name="app_model_auto">Auto</string>
+    <string name="app_model_manual">Manual</string>
+
+    <!-- TODO: Model  -->
+    <string name="app_effect_moonshine">Moonlight</string>
+    <string name="app_effect_flash">Lightning</string>
+    <string name="app_effect_acclimation">Acclimation</string>
+    <string name="title_activity_main_control">@string/device_control</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: ControlActivity menu  -->
+    <string name="action_menu_update">Update</string>
+    <string name="action_menu_effect">Effect</string>
+    <string name="action_tab_auto">Auto</string>
+    <string name="action_tab_mannual">Manual</string>
+
+
+    <!-- TODO: Auto Button   -->
+    <string name="text_edit">Edit</string>
+    <string name="text_add">Add</string>
+    <string name="text_del">Delete</string>
+    <string name="text_previous">Previous</string>
+    <string name="text_next">Next</string>
+    <string name="text_default">Default</string>
+    <string name="text_preview">Preview</string>
+
+    <!-- TODO: Auto Chart   -->
+    <string name="ch_B">CH1</string>
+    <string name="ch_W">CH2</string>
+    <string name="ch_P">CH3</string>
+    <string name="ch_G">CH4</string>
+    <string name="ch_R">CH5</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- TODO :  settings -->
+    <string name="title_activity_effect">Effect</string>
+
+    <string name="pref_header_moon">@string/app_effect_moonshine</string>
+    <string name="pref_summary_moon">Enable/disable the moonlight</string>
+    <string name="pref_header_flash">@string/app_effect_flash</string>
+    <string name="pref_summary_flash">Enable/disable the Lightning</string>
+    <string name="pref_summary_flash_time1">Enable/disable the first time</string>
+    <string name="pref_summary_flash_time2">Enable/disable the second time</string>
+    <string name="pref_summary_flash_time3">Enable/disable the third time</string>
+    <string name="pref_header_acclimation">@string/app_effect_acclimation</string>
+    <string name="pref_summary_acclimation">Enable/disable the acclimation</string>
+    <string name="pref_title_last_full_moon_day">Previous full moon day</string>
+    <string name="pref_title_start_time">Start time</string>
+    <string name="pref_title_end_time">End time</string>
+    <string name="pref_title_time1">Time 1</string>
+    <string name="pref_title_time2">Time 2</string>
+    <string name="pref_title_time3">Time 3</string>
+
+
+    <!-- TODO :  Preference Keys start -->
+
+    <string name="pref_key_mode">pref_work_mode</string>
+    <string name="pref_key_moon">pref_moon</string>
+    <string name="pref_key_flash">pref_flash</string>
+    <string name="pref_key_acclimation">pref_acclimation</string>
+
+    <string name="pref_key_moon_last_fullmoon_day">pref_key_moon_last_fullmoon_day</string>
+    <string name="pref_key_moon_time_start">pref_moon_time_start</string>
+    <string name="pref_key_moon_time_end">pref_moon_time_end</string>
+
+    <string name="pref_key_flash_time1">pref_flash_time1</string>
+    <string name="pref_key_flash_time1_start">pref_flash_time1_start</string>
+    <string name="pref_key_flash_time1_end">pref_flash_time1_end</string>
+    <string name="pref_key_flash_time2">pref_flash_time2</string>
+    <string name="pref_key_flash_time2_start">pref_flash_time2_start</string>
+    <string name="pref_key_flash_time2_end">pref_flash_time2_end</string>
+    <string name="pref_key_flash_time3">pref_flash_time3</string>
+    <string name="pref_key_flash_time3_start">pref_flash_time3_start</string>
+    <string name="pref_key_flash_time3_end">pref_flash_time3_end</string>
+    <string name="app_exit_application_msg">Exit application ?</string>
+    <!-- TODO :  Preference Keys End -->
+
+
+    <string name="group">Group</string>
+    <string name="group_default">Default Group</string>
+    <string name="group_new">New Group</string>
+    <string name="device_control">Control</string>
+    <string name="device_state_connected">Connected</string>
+    <string name="device_state_disconnected">Disconnected</string>
+    <string name="company">CTLite</string>
+    <string name="device_device_title">Online Device</string>
+    <string name="company_info">Professional lighting solution for coral system</string>
+    <string name="device_device_rebooting">Device is rebooting, please try again after 1 minute
+    </string>
+    <string name="device_menu_addDevice">Add new device</string>
+    <string name="device_menu_addGroup">Add new group</string>
+    <string name="device_menu_delDevice">Delete device</string>
+    <string name="device_menu_delGroup">Delete group</string>
+    <string name="device_menu_editGroup">Edit group</string>
+    <string name="device_menu_save">Save</string>
+    <string name="device_menu_scan">Scan</string>
+    <string name="device_newdevice_connecting">Connecting to device</string>
+    <string name="device_newdevice_scan">Scan new device</string>
+    <string name="device_newdevice_title">Please select new device</string>
+    <string name="device_wifi_dialog_button_cancel">Cancel</string>
+    <string name="device_wifi_dialog_button_connect">Connect</string>
+    <string name="device_wifi_dialog_button_delete">Cancel</string>
+    <string name="device_dialog_button_delete">Delete</string>
+    <string name="device_wifi_dialog_button_modify">Modify password</string>
+    <string name="device_wifi_dialog_button_more">More</string>
+    <string name="device_wifi_dialog_button_ok">Ok</string>
+    <string name="device_wifi_reboot">Rebooting device ....</string>
+    <string name="device_wifi_save_data">WiFi under configuration</string>
+    <string name="device_wifi_save_data_2_led">Saving data to LED</string>
+    <string name="device_wifi_scanning">Scanning WiFi</string>
+    <string name="device_wifi_title">Please select home/ office network</string>
+    <string name="error_led_connect_failed">Failed to make new group</string>
+    <string name="msg_dosomething">DATA is being uploaded </string>
+    <string name="msg_updataLed">Upgrading software, please wait ......</string>
+    <string name="device_wifi_connecting">Connecting to WiFi</string>
+    <string name="error_wifi_connect_failed">WiFi connection failed</string>
+    <string name="led_chanel">Channel data</string>
+    <string name="set_state_success">Equipment for %s operating dataType</string>
+    <string name="device_connect">Device Connect</string>
+    <string name="none_new_device">Have not found the new equipment</string>
+    <string name="none_wifi">Found no WiFi</string>
+    <string name="device_wifi_scan">Scan WiFi</string>
+    <string name="device_menu_scanning">Scanning</string>
+    <string name="action_menu_choice_user_photo">Please choose new picture</string>
+    <string name="device_menu_help">Help</string>
+
+</resources>

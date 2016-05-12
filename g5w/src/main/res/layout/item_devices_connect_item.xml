@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/app_item_hight"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/app_padding_m"
+    android:paddingRight="@dimen/app_padding_m">
+
+    <ImageView
+        android:id="@+id/iv_devicePic"
+        android:layout_width="@dimen/item_image_size"
+        android:layout_height="@dimen/item_image_size"
+        android:layout_gravity="center_vertical"
+        android:src="@mipmap/led" />
+
+    <TextView
+        android:id="@+id/tv_deviceNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="10"
+        android:textSize="@dimen/app_margin_m" />
+
+    <ProgressBar
+        android:id="@+id/pb_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_connected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/device_state_connected"
+        android:textSize="@dimen/app_margin_m"
+        android:visibility="gone" />
+</LinearLayout>

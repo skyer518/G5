@@ -1,0 +1,225 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/app_padding_m"
+    android:paddingLeft="@dimen/app_padding_m"
+    android:paddingRight="@dimen/app_padding_m"
+    tools:context="cn.com.lightech.led_g5w.view.console.impl.AutoFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_item_hight"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/ll_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/app_padding_m"
+            android:paddingRight="@dimen/app_padding_m">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Select Time (" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:minHeight="@dimen/app_item_hight"
+                android:paddingLeft="@dimen/app_padding_m"
+                android:paddingRight="@dimen/app_padding_m"
+                android:text=" 12:00 "
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text=")" />
+
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_driver1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/ll_time"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_cab_done_default_holo_light" />
+
+        <ImageView
+            android:id="@+id/btn_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_driver1"
+            android:background="@drawable/btn_no_radius"
+            android:minHeight="@dimen/app_item_hight"
+            android:minWidth="@dimen/button_min_width"
+            android:scaleType="center"
+            android:src="@mipmap/ic_previous"
+            android:text="@string/text_previous" />
+
+        <ImageView
+            android:id="@+id/iv_driver2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/btn_previous"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_cab_done_default_holo_light" />
+
+        <ImageView
+            android:id="@+id/btn_del"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_driver2"
+            android:layout_weight="1"
+            android:background="@drawable/btn_no_radius"
+            android:minHeight="@dimen/app_item_hight"
+            android:minWidth="@dimen/button_min_width"
+            android:scaleType="center"
+            android:src="@mipmap/ic_delete"
+            android:text="@string/text_del" />
+
+        <ImageView
+            android:id="@+id/iv_driver3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/btn_del"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_cab_done_default_holo_light" />
+
+        <TextView
+            android:id="@+id/btn_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_driver3"
+            android:layout_weight="1"
+            android:background="@drawable/btn_no_radius"
+            android:clickable="true"
+            android:gravity="center"
+            android:minHeight="@dimen/app_item_hight"
+            android:minWidth="@dimen/button_min_width"
+            android:text="@string/text_edit"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/btn_edit"
+            android:layout_weight="1"
+            android:background="@drawable/btn_no_radius"
+            android:minHeight="@dimen/app_item_hight"
+            android:minWidth="@dimen/button_min_width"
+            android:scaleType="center"
+            android:src="@mipmap/ic_add"
+            android:text="@string/text_add" />
+
+        <ImageView
+            android:id="@+id/iv_driver11"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/ll_time"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_cab_done_default_holo_light" />
+
+        <ImageView
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_driver11"
+            android:layout_weight="1"
+            android:background="@drawable/btn_no_radius"
+            android:minHeight="@dimen/app_item_hight"
+            android:minWidth="@dimen/button_min_width"
+            android:scaleType="center"
+            android:src="@mipmap/ic_next"
+            android:text="@string/text_next" />
+
+        <ImageView
+            android:id="@+id/iv_driver12"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/btn_next"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_cab_done_default_holo_light" />
+
+        <TextView
+            android:id="@+id/btn_defaul"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_driver12"
+            android:layout_weight="1"
+            android:background="@drawable/btn_no_radius"
+            android:gravity="center"
+            android:minHeight="@dimen/app_item_hight"
+            android:minWidth="@dimen/button_min_width"
+            android:scaleType="center"
+            android:text="@string/text_default"
+            android:textColor="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/iv_driver13"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/btn_defaul"
+            android:scaleType="fitXY"
+            android:src="@drawable/btn_cab_done_default_holo_light" />
+
+        <ImageView
+            android:id="@+id/btn_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_driver13"
+            android:layout_weight="1"
+            android:background="@drawable/btn_no_radius"
+            android:minHeight="@dimen/app_item_hight"
+            android:minWidth="@dimen/button_min_width"
+            android:scaleType="center"
+            android:src="@mipmap/ic_preview"
+            android:text="@string/text_preview" />
+
+        <ImageView
+            android:id="@+id/btn_stopPreview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/btn_preview"
+            android:layout_weight="1"
+            android:background="@drawable/btn_no_radius"
+            android:minHeight="@dimen/app_item_hight"
+            android:minWidth="@dimen/button_min_width"
+            android:scaleType="center"
+            android:src="@mipmap/ic_stop"
+            android:text="@string/text_preview"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lc_chart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_panel_radius"
+        android:padding="@dimen/app_padding_m" />
+
+</LinearLayout>

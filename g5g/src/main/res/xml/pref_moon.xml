@@ -1,0 +1,31 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/pref_key_moon"
+        android:summary="@string/pref_summary_moon"
+        android:title="@string/pref_header_moon" />
+
+    <ListPreference
+        android:dependency="@string/pref_key_moon"
+        android:entries="@array/last_full_moon_day"
+        android:entryValues="@array/values_last_full_moon_day"
+        android:key="@string/pref_key_moon_last_fullmoon_day"
+        android:title="@string/pref_title_last_full_moon_day" />
+
+
+    <cn.com.lightech.led_g5g.wedgit.TimePreference
+        android:defaultValue="0"
+        android:dependency="@string/pref_key_moon"
+        android:key="@string/pref_key_moon_time_start"
+        android:title="@string/pref_title_start_time"
+        android:widgetLayout="@layout/tv_pref_time" />
+
+    <cn.com.lightech.led_g5g.wedgit.TimePreference
+        android:defaultValue="0"
+        android:dependency="@string/pref_key_moon"
+        android:key="@string/pref_key_moon_time_end"
+        android:title="@string/pref_title_end_time"
+        android:widgetLayout="@layout/tv_pref_time" />
+
+</PreferenceScreen>

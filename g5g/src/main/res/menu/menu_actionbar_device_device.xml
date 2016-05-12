@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_btn_device_scanning"
+        android:icon="@null"
+        android:showAsAction="always"
+        android:title="@string/device_menu_scan" />
+    <item
+        android:id="@+id/action_btn_device_add_device"
+        android:icon="@null"
+        android:showAsAction="collapseActionView"
+        android:title="@string/device_menu_addDevice" />
+
+    <item
+        android:id="@+id/action_btn_device_del_device"
+        android:icon="@null"
+        android:showAsAction="collapseActionView"
+        android:title="@string/device_menu_delDevice" />
+
+    <item
+        android:id="@+id/action_btn_device_add_group"
+        android:icon="@null"
+        android:showAsAction="collapseActionView"
+        android:title="@string/device_menu_addGroup" />
+    <item
+        android:id="@+id/action_btn_device_del_group"
+        android:icon="@null"
+        android:showAsAction="collapseActionView"
+        android:title="@string/device_menu_delGroup" />
+
+    <item
+        android:id="@+id/action_btn_help"
+        android:icon="@null"
+        android:showAsAction="collapseActionView"
+        android:title="@string/device_menu_help" />
+</menu>
