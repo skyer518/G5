@@ -1,1 +1,1 @@
-include ':g5g',':g5w', ':xbase', ':MyCustMPChartLib', ':alekwifi'
+include ':g5g', ':g5w', ':xbase', ':chartLib', ':wifiLib', ':spray', ':net', ':myutils'

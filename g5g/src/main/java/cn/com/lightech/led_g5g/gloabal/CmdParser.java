@@ -1,5 +1,6 @@
 package cn.com.lightech.led_g5g.gloabal;
 
+import java.util.Arrays;
 import java.util.List;
 
 import cn.com.lightech.led_g5g.entity.DataType;
@@ -184,11 +185,9 @@ public class CmdParser {
 
         // 数据包长度检测
         if (!valideDataLength(content)) {
-            logger.e("pid1: " + content[4] + " ; pid2: " + content[5]);
-            logger.e("包长度不对，len:%1d; dataLen:%2d", content.length, content[2] & 0xff);
+            logger.e("包长度不对，len:%1d; dataLen:%2d,data:[%3s]", content.length, content[2] & 0xff, Arrays.toString(content));
             return true;
         }
-        ;
         return false;
     }
 

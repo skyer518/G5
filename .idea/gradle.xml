@@ -9,20 +9,26 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/MyCustMPChartLib" />
-            <option value="$PROJECT_DIR$/alekwifi" />
+            <option value="$PROJECT_DIR$/chartLib" />
             <option value="$PROJECT_DIR$/g5g" />
             <option value="$PROJECT_DIR$/g5w" />
+            <option value="$PROJECT_DIR$/myutils" />
+            <option value="$PROJECT_DIR$/net" />
+            <option value="$PROJECT_DIR$/spray" />
+            <option value="$PROJECT_DIR$/wifiLib" />
             <option value="$PROJECT_DIR$/xbase" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/MyCustMPChartLib" />
-            <option value="$PROJECT_DIR$/alekwifi" />
+            <option value="$PROJECT_DIR$/chartLib" />
             <option value="$PROJECT_DIR$/g5g" />
             <option value="$PROJECT_DIR$/g5w" />
+            <option value="$PROJECT_DIR$/myutils" />
+            <option value="$PROJECT_DIR$/net" />
+            <option value="$PROJECT_DIR$/spray" />
+            <option value="$PROJECT_DIR$/wifiLib" />
             <option value="$PROJECT_DIR$/xbase" />
           </set>
         </option>
