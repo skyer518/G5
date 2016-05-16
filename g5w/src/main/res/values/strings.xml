@@ -139,4 +139,15 @@
     <string name="device_menu_help">Help</string>
     <string name="error_points_too_match">Too much time, no more than 24.</string>
 
+    <!-- spray -->
+    <string name="function_1">Sync.</string>
+    <string name="function_2">Async.</string>
+    <string name="function_3">Long run</string>
+    <string name="function_4">Sequence</string>
+    <string name="effect_1">Normal</string>
+    <string name="effect_2">Ramdon</string>
+    <string name="effect_3">Tidal</string>
+    <string name="effect_4">Coral</string>
+    <string name="effect_5">Shallow</string>
+
 </resources>

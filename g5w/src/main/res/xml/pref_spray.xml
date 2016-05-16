@@ -1,0 +1,89 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cust="http://schemas.android.com/apk/res/cn.com.lightech.ledw3">
+
+    <ListPreference
+        android:defaultValue="1"
+        android:dialogTitle="选择效果"
+        android:entries="@array/array_wave_effect"
+        android:key="pref_effect"
+        android:title="效果"></ListPreference>
+
+    <cn.com.lightech.ledw3.wediget.SeekBarPreference
+        android:defaultValue="60"
+        android:dialogTitle="选择功率"
+        android:key="pref_power"
+        android:layout="@layout/pref_list"
+        android:max="100"
+        android:title="功率"
+        cust:min="30"></cn.com.lightech.ledw3.wediget.SeekBarPreference>
+
+
+    <cn.com.lightech.led_g5w.wedgit.SeekBarPreference
+        android:defaultValue="60"
+        android:dialogTitle="无线频道"
+        android:key="pref_channel"
+        android:max="100"
+        android:title="无线频道"
+        cust:min="0"></cn.com.lightech.led_g5w.wedgit.SeekBarPreference>
+
+
+    <SwitchPreference
+        android:key="pref_feed"
+        android:summaryOff="关"
+        android:summaryOn="开"
+        android:switchTextOff="关"
+        android:switchTextOn="开"
+        android:title="喂食" />
+    <SwitchPreference
+        android:key="pref_autoWave"
+        android:summaryOff="关"
+        android:summaryOn="开"
+        android:switchTextOff="关"
+        android:switchTextOn="开"
+        android:title="自动海浪" />
+    <SwitchPreference
+        android:key="pref_dayOrNight"
+        android:summaryOff="关"
+        android:summaryOn="开"
+        android:switchTextOff="关"
+        android:switchTextOn="开"
+        android:title="Day / Night" />
+
+
+    <cn.com.lightech.led_g5w.wedgit.TimePreference
+        android:defaultValue="0"
+        android:dependency="@string/pref_key_moon"
+        android:key="pref_pause"
+        android:title="Pause Time"
+        android:widgetLayout="@layout/tv_pref_time" />
+
+    <PreferenceCategory android:title="Sequence 1>2>3>4">
+
+        <cn.com.lightech.led_g5w.wedgit.TimePreference
+            android:defaultValue="0"
+            android:dependency="@string/pref_key_moon"
+            android:key="@string/pref_key_moon_time_start"
+            android:title="M1"
+            android:widgetLayout="@layout/tv_pref_time" />
+
+        <cn.com.lightech.led_g5w.wedgit.TimePreference
+            android:defaultValue="0"
+            android:dependency="@string/pref_key_moon"
+            android:key="@string/pref_key_moon_time_start"
+            android:title="M2"
+            android:widgetLayout="@layout/tv_pref_time" />
+        <cn.com.lightech.led_g5w.wedgit.TimePreference
+            android:defaultValue="0"
+            android:dependency="@string/pref_key_moon"
+            android:key="@string/pref_key_moon_time_start"
+            android:title="M3"
+            android:widgetLayout="@layout/tv_pref_time" />
+        <cn.com.lightech.led_g5w.wedgit.TimePreference
+            android:defaultValue="0"
+            android:dependency="@string/pref_key_moon"
+            android:key="@string/pref_key_moon_time_start"
+            android:title="M4"
+            android:widgetLayout="@layout/tv_pref_time" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
