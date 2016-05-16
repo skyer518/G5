@@ -87,4 +87,5 @@
     <string name="app_model_fruiting">結果模式</string>
     <string name="app_model_flowering">開花模式</string>
     <string name="app_model_clone">克隆模式</string>
+    <string name="error_points_too_match">時間點過多，請不要超過24箇！</string>
 </resources>

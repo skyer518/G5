@@ -142,5 +142,6 @@
     <string name="device_menu_scanning">Scanning</string>
     <string name="action_menu_choice_user_photo">Please choose new picture</string>
     <string name="device_menu_help">Help</string>
+    <string name="error_points_too_match">Too much time, no more than 24.</string>
 
 </resources>

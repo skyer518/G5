@@ -1,1 +1,1 @@
-include ':g5g', ':g5w', ':xbase', ':chartLib', ':wifiLib', ':spray', ':net', ':myutils'
+include ':g5g', ':g5w', ':xbase', ':chartLib', ':wifiLib', ':spray', ':net', ':myutils', ':testnetlib'

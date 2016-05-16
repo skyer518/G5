@@ -33,7 +33,7 @@ public class CurveData extends DataNode {
     }
 
     public void setPoints(List<CurvePoint> points) {
-        if (isOutOfBounds(points))
+        if (points.size() > MAX_POINT)
             throw new RuntimeException("points . size > MAX_POINT");
         this.points = points;
     }
@@ -66,7 +66,7 @@ public class CurveData extends DataNode {
                 return i;
             }
         }
-        if (isOutOfBounds(points))
+        if (isOutOfBounds())
             return -1;
         points.add(newPoint);
         Collections.sort(points);
@@ -76,11 +76,10 @@ public class CurveData extends DataNode {
     /**
      * 检查是否超 24个点
      *
-     * @param points
      * @return
      */
-    private boolean isOutOfBounds(List<CurvePoint> points) {
-        if (points.size() > MAX_POINT) {
+    public boolean isOutOfBounds() {
+        if (points.size() >= MAX_POINT) {
             return true;
         }
         return false;

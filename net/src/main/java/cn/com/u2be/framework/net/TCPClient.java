@@ -74,7 +74,9 @@ public class TCPClient {
 
         try {
             // 打开监听信道并设置为非阻塞模式
-            socketChannel = SocketChannel.open(new InetSocketAddress(hostIp,
+            socketChannel = SocketChannel.open();
+            socketChannel.configureBlocking(false);
+            socketChannel.connect(new InetSocketAddress(hostIp,
                     hostListenningPort));
             if (socketChannel != null) {
                 socketChannel.socket().setTcpNoDelay(false);
@@ -82,7 +84,6 @@ public class TCPClient {
                 // 设置 读socket的timeout时间
                 socketChannel.socket().setSoTimeout(
                         Const.SOCKET_READ_TIMOUT);
-                socketChannel.configureBlocking(false);
 
                 // 打开并注册选择器到信道
                 selector = Selector.open();
@@ -95,7 +96,7 @@ public class TCPClient {
             if (!done && selector != null) {
                 selector.close();
             }
-            if (!done) {
+            if (!done && socketChannel != null) {
                 socketChannel.close();
             }
         }

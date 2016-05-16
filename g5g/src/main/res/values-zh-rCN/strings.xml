@@ -92,4 +92,5 @@
     <string name="app_model_seedling">播种模式</string>
     <string name="app_model_self">自定义模式</string>
     <string name="app_model_vegetation">长叶模式</string>
+    <string name="error_points_too_match">时间点过多，请不要超过24个！</string>
 </resources>

@@ -17,5 +17,7 @@ public interface IAutoView extends IBaseView {
     void enableDeleteButton(boolean enable);
 
     void enableEditButton(boolean enable);
+
+    void enableAddButton(boolean enable);
 }
 

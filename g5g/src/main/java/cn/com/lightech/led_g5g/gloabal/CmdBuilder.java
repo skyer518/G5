@@ -83,7 +83,7 @@ public class CmdBuilder {
         cmd[0] = 0x34;
         cmd[1] = 0x56;
         cmd[2] = (byte) 0xff;
-        cmd[3] = (byte) 0xA5;
+        cmd[3] = (byte) 0xA6;
         cmd[4] = (byte) groupNo;
         cmd[5] = Sum(cmd, 0, 4);
         return cmd;
@@ -623,7 +623,7 @@ public class CmdBuilder {
     private static byte[] CreateSetStateCmd(LampState ls) {
         if (ls == null)
             return null;
-        byte[] cmd = new byte[10];
+        byte[] cmd = new byte[9];
         cmd[0] = 0x34;
         cmd[1] = 0x56;
         cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 长度
@@ -631,9 +631,9 @@ public class CmdBuilder {
         cmd[4] = (byte) (ls.On ? 0x1 : 0);
         cmd[5] = ls.mode;
         cmd[6] = (byte) (ls.lighting ? 0x1 : 0);
-        cmd[7] = (byte) (ls.moon ? 0x1 : 0);
-        cmd[8] = (byte) (ls.acclimation ? 0x1 : 0);
-        cmd[9] = Sum(cmd, 0, 8);
+        // cmd[7] = (byte) (ls.moon ? 0x1 : 0);
+        cmd[7] = (byte) (ls.acclimation ? 0x1 : 0);
+        cmd[8] = Sum(cmd, 0, 7);
 
         return cmd;
     }

@@ -252,7 +252,7 @@ public class CmdParser {
             ls.IsSwitch = content[nPos++] == 0 ? false : true;
             ls.mode = content[nPos++];
             ls.lighting = content[nPos++] == 0 ? false : true;
-            ls.moon = content[nPos++] == 0 ? false : true;
+            //ls.moon = content[nPos++] == 0 ? false : true;
             ls.acclimation = content[nPos++] == 0 ? false : true;
 
             ls.IsFanSwitch = content[nPos++] == 0 ? false : true;

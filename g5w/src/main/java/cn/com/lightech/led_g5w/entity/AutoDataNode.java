@@ -38,6 +38,18 @@ public class AutoDataNode extends DataNode {
     }
 
     /**
+     * 检查是否超 24个点
+     *
+     * @return
+     */
+    public boolean isOutOfBounds() {
+        if (points.size() > MAX_POINT) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 添加一个时间点
      *
      * @param time 新时间点
@@ -52,6 +64,8 @@ public class AutoDataNode extends DataNode {
         if (points == null) {
             return -1;
         }
+        if (isOutOfBounds())
+            return -1;
         for (int i = 0; i < points.size(); i++) {
             CurvePoint point = points.get(i);
             if (point.isSamePoint(newPoint)) {

@@ -185,6 +185,9 @@ public class DataManager implements IDataListener {
                 return saveManualDataNode((ManualData) wn, updateTime);
             case Moon:
                 return saveMoonDataNode((MoonData) wn, updateTime);
+            case Timing:
+                setCurveDataById2((CurveData) wn);
+                return true;
         }
         return false;
     }
@@ -293,22 +296,22 @@ public class DataManager implements IDataListener {
                 break;
 
             case 0x01:
-                setTiming(seedling, curveData);
+                seedling = setTiming(seedling, curveData);
                 break;
             case 0x06:
-                setTiming(clone, curveData);
+                clone = setTiming(clone, curveData);
                 break;
             case 0x08:
-                setTiming(vegetation, curveData);
+                vegetation = setTiming(vegetation, curveData);
                 break;
             case 0x0a:
-                setTiming(flowering, curveData);
+                flowering = setTiming(flowering, curveData);
                 break;
             case 0x0c:
-                setTiming(fruiting, curveData);
+                fruiting = setTiming(fruiting, curveData);
                 break;
             case 0x0e:
-                setTiming(self, curveData);
+                self = setTiming(self, curveData);
                 break;
         }
 

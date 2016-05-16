@@ -292,6 +292,16 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
         }
     }
 
+    @Override
+    public void enableAddButton(boolean enable) {
+        if (enable) {
+            this.btnAdd.setImageResource(R.mipmap.ic_add);
+        } else {
+            this.btnAdd.setImageResource(R.mipmap.ic_add_disabled);
+        }
+        this.btnAdd.setEnabled(enable);
+    }
+
 
     private void addLineChartView() {
 

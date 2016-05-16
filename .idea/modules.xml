@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/myutils/myutils.iml" filepath="$PROJECT_DIR$/myutils/myutils.iml" />
       <module fileurl="file://$PROJECT_DIR$/net/net.iml" filepath="$PROJECT_DIR$/net/net.iml" />
       <module fileurl="file://$PROJECT_DIR$/spray/spray.iml" filepath="$PROJECT_DIR$/spray/spray.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testnetlib/testnetlib.iml" filepath="$PROJECT_DIR$/testnetlib/testnetlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/wifiLib/wifiLib.iml" filepath="$PROJECT_DIR$/wifiLib/wifiLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/xbase/xbase.iml" filepath="$PROJECT_DIR$/xbase/xbase.iml" />
     </modules>

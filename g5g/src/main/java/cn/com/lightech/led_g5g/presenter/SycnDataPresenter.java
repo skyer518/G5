@@ -122,17 +122,6 @@ public class SycnDataPresenter implements IDataListener {
         DataNode wn = response.getDataNode();
         if (wn != null) {
             DataManager.getInstance().saveDataNode(wn, false);
-//            if (response.getPackageId()[1] == 0x01) {
-//                CurveData node = (CurveData) wn;
-//                List<CurvePoint> points = node.getPoints();
-//
-//                for (int i = 0; i < points.size(); i++) {
-//                    CurvePoint point = points.get(i);
-//                    point.setChannel(DataManager.getInstance().getCurveData().getPoints().get(i).getChannel());
-//                }
-//                DataManager.getInstance().saveDataNode(node, false);
-//            } else {
-//            }
         }
     }
 

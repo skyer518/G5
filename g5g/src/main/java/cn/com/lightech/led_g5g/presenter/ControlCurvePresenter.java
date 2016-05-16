@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.List;
 
+import cn.com.lightech.led_g5g.R;
 import cn.com.lightech.led_g5g.entity.data.CurveData;
 import cn.com.lightech.led_g5g.entity.CurvePoint;
 import cn.com.lightech.led_g5g.entity.DataNode;
@@ -118,6 +119,7 @@ public class ControlCurvePresenter implements IDataListener {
         DataManager.getInstance().getCurveDataById2(dataId).getPoints().get(mCursor);
         DataManager.getInstance().getCurveDataById2(dataId).getPoints().remove(mCursor);
         saveAuto();
+        canAdd();
         mCursor--;
         loadCursor(mCursor);
         autoView.drawChart();
@@ -136,7 +138,9 @@ public class ControlCurvePresenter implements IDataListener {
     public void backDefault() {
         DataManager.getInstance().backDefaultAuto(dataId);
         saveAuto();
+        canAdd();
         autoView.drawChart();
+        mCursor = 0;
     }
 
 
@@ -151,8 +155,13 @@ public class ControlCurvePresenter implements IDataListener {
     }
 
     public void addPoint(CurvePoint point) {
-        DataManager.getInstance().getCurveDataById2(dataId).addPoint(point);
+        final int index = DataManager.getInstance().getCurveDataById2(dataId).addPoint(point);
+        if (index == -1) {
+            autoView.showMessage(mContext.getString(R.string.error_points_too_match));
+            return;
+        }
         saveAuto();
+        canAdd();
         loadCursor(mCursor);
         autoView.drawChart();
     }
@@ -205,5 +214,9 @@ public class ControlCurvePresenter implements IDataListener {
         } else {
             autoView.enableEditButton(false);
         }
+    }
+
+    public void canAdd() {
+        autoView.enableAddButton(!DataManager.getInstance().getCurveDataById2(dataId).isOutOfBounds());
     }
 }

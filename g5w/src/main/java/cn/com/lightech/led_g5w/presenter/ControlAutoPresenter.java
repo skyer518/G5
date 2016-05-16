@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.List;
 
+import cn.com.lightech.led_g5w.R;
 import cn.com.lightech.led_g5w.entity.AutoDataNode;
 import cn.com.lightech.led_g5w.entity.CurvePoint;
 import cn.com.lightech.led_g5w.entity.DataNode;
@@ -45,11 +46,11 @@ public class ControlAutoPresenter implements IDataListener {
         LedProxy.previewCurve();
     }
 
-    public void registerDataListener(){
-        ConnectionsManager.getInstance().registerHigh(this,false);
+    public void registerDataListener() {
+        ConnectionsManager.getInstance().registerHigh(this, false);
     }
 
-    public void unRegisterDataListener(){
+    public void unRegisterDataListener() {
         ConnectionsManager.getInstance().unRegister(this);
     }
 
@@ -113,6 +114,8 @@ public class ControlAutoPresenter implements IDataListener {
         DataManager.getInstance().getAutoDataNode().getPoints().get(mCursor);
         DataManager.getInstance().getAutoDataNode().getPoints().remove(mCursor);
         saveAuto();
+
+        canAdd();
         mCursor--;
         loadCursor(mCursor);
         autoView.drawChart();
@@ -131,7 +134,9 @@ public class ControlAutoPresenter implements IDataListener {
     public void backDefault() {
         DataManager.getInstance().backDefaultAuto();
         saveAuto();
+        canAdd();
         autoView.drawChart();
+        mCursor = 0;
     }
 
 
@@ -146,8 +151,13 @@ public class ControlAutoPresenter implements IDataListener {
     }
 
     public void addPoint(CurvePoint point) {
-        DataManager.getInstance().getAutoDataNode().addPoint(point);
+        int index = DataManager.getInstance().getAutoDataNode().addPoint(point);
+        if (index == -1) {
+            autoView.showMessage(mContext.getString(R.string.error_points_too_match));
+            return;
+        }
         saveAuto();
+        canAdd();
         loadCursor(mCursor);
         autoView.drawChart();
     }
@@ -200,5 +210,9 @@ public class ControlAutoPresenter implements IDataListener {
         } else {
             autoView.enableEditButton(false);
         }
+    }
+
+    public void canAdd() {
+        autoView.enableAddButton(!DataManager.getInstance().getAutoDataNode().isOutOfBounds());
     }
 }

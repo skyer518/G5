@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/myutils" />
             <option value="$PROJECT_DIR$/net" />
             <option value="$PROJECT_DIR$/spray" />
+            <option value="$PROJECT_DIR$/testnetlib" />
             <option value="$PROJECT_DIR$/wifiLib" />
             <option value="$PROJECT_DIR$/xbase" />
           </set>
@@ -28,6 +29,7 @@
             <option value="$PROJECT_DIR$/myutils" />
             <option value="$PROJECT_DIR$/net" />
             <option value="$PROJECT_DIR$/spray" />
+            <option value="$PROJECT_DIR$/testnetlib" />
             <option value="$PROJECT_DIR$/wifiLib" />
             <option value="$PROJECT_DIR$/xbase" />
           </set>

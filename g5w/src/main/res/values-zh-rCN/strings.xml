@@ -87,4 +87,5 @@
     <string name="device_dialog_button_delete">删除</string>
     <string name="action_menu_choice_user_photo">选择相片</string>
     <string name="device_menu_help">帮助</string>
+    <string name="error_points_too_match">时间点过多，请不要超过24个！</string>
 </resources>
