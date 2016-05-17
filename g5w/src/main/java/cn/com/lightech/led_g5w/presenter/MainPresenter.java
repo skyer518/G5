@@ -27,28 +27,12 @@ public class MainPresenter {
     }
 
 
-    public void addGroup(List<DeviceGroup> deviceGroups) {
-        Intent intent = new Intent();
-        intent.setClass(mContext, EditGroupActivity.class);
-        intent.putExtra(EditGroupActivity.ARGS_DEFAULT_DEVICE_GROUP, deviceGroups.get(0));
-        intent.putExtra(EditGroupActivity.ARGS_NEW_GROUP_NUMBER, deviceGroups.get(deviceGroups.size() - 1).getNumber() + 1);
-        mContext.startActivity(intent);
-    }
-
-    public void deleteDevice() {
-        mainDeviceView.gotoDeleteDeviceFragment();
-    }
 
     public void addNewDevice() {
         Intent intent = new Intent();
         intent.setClass(mContext, AddDeviceActivity.class);
         mContext.startActivity(intent);
 
-    }
-
-
-    public void deleteGroup() {
-        mainDeviceView.gotoDeleteGroupFragment();
     }
 
     public void showHelp() {

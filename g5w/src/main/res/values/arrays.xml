@@ -98,4 +98,9 @@
         <item>@string/effect_2</item>
         <item>@string/effect_4</item>
     </string-array>
+
+    <string-array name="array_device_type">
+        <item>@string/device_led</item>
+        <item>@string/device_spray</item>
+    </string-array>
 </resources>

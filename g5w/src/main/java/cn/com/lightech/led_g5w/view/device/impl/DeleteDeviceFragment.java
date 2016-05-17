@@ -167,7 +167,8 @@ public class DeleteDeviceFragment extends AppBaseFragment implements IDeleteDevi
 
     @Override
     public void closeView() {
-        getActivity().onBackPressed();
+        //getActivity().onBackPressed();
+        getFragmentManager().popBackStack();
     }
 
     @Override

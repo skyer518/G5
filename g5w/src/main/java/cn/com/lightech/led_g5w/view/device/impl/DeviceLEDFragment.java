@@ -1,7 +1,7 @@
 package cn.com.lightech.led_g5w.view.device.impl;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +21,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.lightech.led_g5w.R;
-import cn.com.lightech.led_g5w.adapter.ExpDeviceAdapter;
+import cn.com.lightech.led_g5w.adapter.ExpControllableDeviceAdapter;
 import cn.com.lightech.led_g5w.entity.Device;
 import cn.com.lightech.led_g5w.entity.DeviceGroup;
 import cn.com.lightech.led_g5w.presenter.LedListPresenter;
@@ -30,7 +30,7 @@ import cn.com.lightech.led_g5w.view.AppBaseStateFragment;
 import cn.com.lightech.led_g5w.view.device.IDeviceView;
 
 
-public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDeviceView {
+public class DeviceLEDFragment extends AppBaseStateFragment implements IDeviceView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,13 +45,13 @@ public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDev
     private String mParam2;
 
 
-    private ExpDeviceAdapter deviceAdapter;
+    private ExpControllableDeviceAdapter deviceAdapter;
     private LedListPresenter presenter;
     private MenuItem scanMenu;
 
-    public ExpDeviceGroupFragment() {
+    public DeviceLEDFragment() {
         // Required empty public constructor
-        System.out.print("ExpDeviceGroupFragment ");
+        System.out.print("DeviceLEDFragment ");
     }
 
     /**
@@ -60,11 +60,11 @@ public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDev
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ExpDeviceGroupFragment.
+     * @return A new instance of fragment DeviceLEDFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ExpDeviceGroupFragment newInstance(String param1, String param2) {
-        ExpDeviceGroupFragment fragment = new ExpDeviceGroupFragment();
+    public static DeviceLEDFragment newInstance(String param1, String param2) {
+        DeviceLEDFragment fragment = new DeviceLEDFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -80,8 +80,8 @@ public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDev
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         presenter = new LedListPresenter(getActivity(), this);
-        Log.i("ExpDeviceGroupFragment", "initVariables");
-        System.out.print("ExpDeviceGroupFragment savedInstanceState");
+        Log.i("DeviceLEDFragment", "initVariables");
+        System.out.print("DeviceLEDFragment savedInstanceState");
     }
 
 
@@ -93,7 +93,7 @@ public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDev
         ActionBar actionBar = getActivity().getActionBar();
 
         setHasOptionsMenu(true);
-        this.deviceAdapter = new ExpDeviceAdapter(getActivity()) {
+        this.deviceAdapter = new ExpControllableDeviceAdapter(getActivity()) {
 
             @Override
             public void OnControlButtonClick(int groupNo) {
@@ -134,7 +134,7 @@ public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDev
                     }
                     count++;
                     if (count == 7) {
-                        UIHelper.showUpdataLedDialog(getActivity(),(Device) deviceAdapter.getChild(groupPosition, childPosition));
+                        UIHelper.showUpdataLedDialog(getActivity(), (Device) deviceAdapter.getChild(groupPosition, childPosition));
                         count = 0;
                     }
 
@@ -147,31 +147,30 @@ public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDev
         });
 
 
-        Log.i("ExpDeviceGroupFragment", "initView");
-        System.out.print("ExpDeviceGroupFragment initView");
+        Log.i("DeviceLEDFragment", "initView");
+        System.out.print("DeviceLEDFragment initView");
         return rootView;
     }
 
 
-
     @Override
     protected void loadData() {
-        Log.i("ExpDeviceGroupFragment", "loadData");
-        System.out.print("ExpDeviceGroupFragment loadData");
+        Log.i("DeviceLEDFragment", "loadData");
+        System.out.print("DeviceLEDFragment loadData");
         //presenter.scanDevice();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        System.out.print("ExpDeviceGroupFragment onAttach");
+        System.out.print("DeviceLEDFragment onAttach");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("ExpDeviceGroupFragment", "onResume");
-        System.out.print("ExpDeviceGroupFragment onResume");
+        Log.i("DeviceLEDFragment", "onResume");
+        System.out.print("DeviceLEDFragment onResume");
         presenter.start();
     }
 
@@ -191,7 +190,7 @@ public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDev
 
     @Override
     public void showDevices() {
-        Log.i("ExpDeviceGroupFragment", "showDevices");
+        Log.i("DeviceLEDFragment", "showDevices");
         ArrayList<DeviceGroup> deviceGroups = presenter.getDeviceGroups();
         if (deviceGroups == null) {
             return;
@@ -227,7 +226,7 @@ public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDev
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_actionbar_device_device, menu);
+        inflater.inflate(R.menu.menu_actionbar_device_led, menu);
         scanMenu = menu.findItem(R.id.action_btn_device_scanning);
         scanLoading(true);
         super.onCreateOptionsMenu(menu, inflater);
@@ -247,12 +246,36 @@ public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDev
     }
 
     @Override
+    public void gotoDeleteGroupFragment() {
+        DeleteGroupFragment fragment = DeleteGroupFragment.newInstance(getDeviceGroups());
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.child_fragment_container, fragment).show(fragment).addToBackStack(null).commit();
+    }
+
+
+    @Override
+    public void gotoDeleteDeviceFragment() {
+        DeleteDeviceFragment fragment = DeleteDeviceFragment.newInstance(getDeviceGroups());
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.child_fragment_container, fragment).show(fragment).addToBackStack(null).commit();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.action_btn_device_scanning:
                 presenter.scanDevice();
                 scanLoading(true);
+                break;
+            case R.id.action_btn_device_add_group:
+                presenter.addGroup(getDeviceGroups());
+                break;
+            case R.id.action_btn_device_del_group:
+                presenter.deleteGroup();
+                break;
+            case R.id.action_btn_device_del_device:
+                presenter.deleteDevice();
                 break;
         }
         return super.onOptionsItemSelected(item);

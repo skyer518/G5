@@ -149,5 +149,8 @@
     <string name="effect_3">Tidal</string>
     <string name="effect_4">Coral</string>
     <string name="effect_5">Shallow</string>
+    <!--device Type -->
+    <string name="device_led">LED</string>
+    <string name="device_spray">Spray</string>
 
 </resources>

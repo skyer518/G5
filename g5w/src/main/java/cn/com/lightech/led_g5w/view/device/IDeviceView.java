@@ -13,4 +13,8 @@ public interface IDeviceView extends IBaseView {
     void showDevices();
 
     void scanLoading(boolean scaning);
+
+    void gotoDeleteGroupFragment();
+
+    void gotoDeleteDeviceFragment();
 }

@@ -4,10 +4,6 @@ package cn.com.lightech.led_g5g.view.console.impl;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 
 import cn.com.lightech.led_g5g.R;
 

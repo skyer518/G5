@@ -32,4 +32,5 @@ public abstract class LedPresenter {
             blinkLed(devices.get(i));
         }
     }
+
 }

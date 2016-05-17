@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="42dp"
-    android:background="@drawable/bg_item_group"
+    android:layout_height="match_parent"
     android:minHeight="@dimen/app_item_hight"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/app_padding_m"
+    android:paddingRight="@dimen/app_padding_m">
 
     <ImageView
         android:id="@+id/iv_devicePic"
@@ -17,9 +18,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="10"
         android:orientation="vertical">
 
         <TextView
@@ -27,8 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textSize="@dimen/app_margin_m"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:textSize="@dimen/app_margin_m" />
 
         <TextView
             android:id="@+id/tv_deviceip"
@@ -39,18 +39,4 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_control"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/app_margin_m"
-        android:background="@drawable/btn_no_radius"
-        android:focusable="false"
-        android:gravity="center"
-        android:minWidth="@dimen/app_item_width"
-        android:paddingLeft="@dimen/app_padding_m"
-        android:paddingRight="@dimen/app_padding_m"
-        android:text="@string/device_control"
-        android:textSize="18sp"
-        android:textStyle="bold" />
 </LinearLayout>

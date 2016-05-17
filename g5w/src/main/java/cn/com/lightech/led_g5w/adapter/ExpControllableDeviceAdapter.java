@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -22,18 +21,18 @@ import cn.com.lightech.led_g5w.entity.DeviceGroup;
 /**
  * Created by 明 on 2016/3/4.
  */
-public abstract class ExpDeviceAdapter extends BaseExpandableListAdapter {
+public abstract class ExpControllableDeviceAdapter extends BaseExpandableListAdapter {
 
     private List<DeviceGroup> mData = new ArrayList<>(0);
 
     private Context mContext;
 
-    public ExpDeviceAdapter(Context context, List<DeviceGroup> groups) {
+    public ExpControllableDeviceAdapter(Context context, List<DeviceGroup> groups) {
         this.mContext = context;
         this.mData = groups;
     }
 
-    public ExpDeviceAdapter(Context context) {
+    public ExpControllableDeviceAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -103,7 +102,7 @@ public abstract class ExpDeviceAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ItemViewHolder holder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_devices_item, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_devices_child_item, null);
             holder = new ItemViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -163,6 +162,6 @@ public abstract class ExpDeviceAdapter extends BaseExpandableListAdapter {
         this.mData = mData;
     }
 
-    public abstract void OnControlButtonClick(int groupPosition);
+    public abstract void OnControlButtonClick(int groupNumber);
 
 }

@@ -1,5 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cust="http://schemas.android.com/apk/res/cn.com.lightech.ledw3">
+    xmlns:cust="http://schemas.android.com/apk/res/cn.com.lightech.led_g5w">
 
     <ListPreference
         android:defaultValue="1"
@@ -8,14 +8,13 @@
         android:key="pref_effect"
         android:title="效果"></ListPreference>
 
-    <cn.com.lightech.ledw3.wediget.SeekBarPreference
+    <cn.com.lightech.led_g5w.wediget.SeekBarPreference
         android:defaultValue="60"
         android:dialogTitle="选择功率"
         android:key="pref_power"
-        android:layout="@layout/pref_list"
         android:max="100"
         android:title="功率"
-        cust:min="30"></cn.com.lightech.ledw3.wediget.SeekBarPreference>
+        cust:min="30"></cn.com.lightech.led_g5w.wediget.SeekBarPreference>
 
 
     <cn.com.lightech.led_g5w.wedgit.SeekBarPreference

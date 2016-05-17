@@ -1,8 +1,6 @@
 package cn.com.lightech.led_g5w.adapter;
 
 import android.content.Context;
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +52,7 @@ public class DeviceAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_devices_item, null);
+            convertView = inflater.inflate(R.layout.item_devices_child_item, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

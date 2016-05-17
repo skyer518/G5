@@ -1,21 +1,17 @@
 package cn.com.lightech.led_g5w.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.com.lightech.led_g5w.entity.Device;
-import cn.com.lightech.led_g5w.entity.DeviceGroup;
 import cn.com.lightech.led_g5w.entity.DeviceType;
 import cn.com.lightech.led_g5w.gloabal.CmdBuilder;
 import cn.com.lightech.led_g5w.gloabal.Constants;
@@ -37,29 +33,23 @@ import cn.com.u2be.xbase.net.MulticastManager;
 /**
  *
  */
-public class LedListPresenter extends LedPresenter implements Serializable, IMulticastListener, IDataListener {
+public class SprayListPresenter extends LedPresenter implements Serializable, IMulticastListener, IDataListener {
 
     private static final int WHAT_UDP_SCAN_STOPED = 0xf1;
     private final Context mContext;
     private IDeviceView deviceView;
     private Timer udpScanTimer;
     private int scanCount;
-    private Comparator<? super DeviceGroup> comparator = new Comparator<DeviceGroup>() {
-        @Override
-        public int compare(DeviceGroup lhs, DeviceGroup rhs) {
-            return lhs.getNumber() - rhs.getNumber();
-        }
-    };
 
-    public ArrayList<DeviceGroup> getDeviceGroups() {
-        return deviceGroups;
+    public ArrayList<Device> getDevices() {
+        return devices;
     }
 
-    public void setDeviceGroups(ArrayList<DeviceGroup> deviceGroups) {
-        this.deviceGroups = deviceGroups;
+    public void setDevices(ArrayList<Device> devices) {
+        this.devices = devices;
     }
 
-    private ArrayList<DeviceGroup> deviceGroups;
+    private ArrayList<Device> devices;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -76,11 +66,10 @@ public class LedListPresenter extends LedPresenter implements Serializable, IMul
     };
 
 
-    public LedListPresenter(Context context, IDeviceView deviceView) {
+    public SprayListPresenter(Context context, IDeviceView deviceView) {
         this.deviceView = deviceView;
         this.mContext = context;
-        deviceGroups = new ArrayList<>(0);
-        deviceGroups.add(new DeviceGroup());
+        devices = new ArrayList<>(0);
 
     }
 
@@ -107,7 +96,7 @@ public class LedListPresenter extends LedPresenter implements Serializable, IMul
         }
 
 
-        initdeviceGroups();
+        initDevices();
 
     }
 
@@ -119,23 +108,14 @@ public class LedListPresenter extends LedPresenter implements Serializable, IMul
         mHandler.sendEmptyMessage(WHAT_UDP_SCAN_STOPED);
     }
 
-    public void initdeviceGroups() {
-        DeviceGroup defaultGroup = deviceGroups.remove(0);
-        deviceGroups.clear();
-        defaultGroup.getDevices().clear();
-        deviceGroups.add(defaultGroup);
+    public void initDevices() {
+        devices.clear();
         deviceView.showDevices();
     }
 
 
-    public void gotoControl(int groupNo) {
-        DeviceGroup group = null;
-        for (DeviceGroup deviceGroup : deviceGroups) {
-            if (deviceGroup.getNumber() == groupNo)
-                group = deviceGroup;
-        }
-        if (group != null)
-            UIHelper.getInstance().showConnectDialog(mContext, false, group);
+    public void gotoControl(String ip) {
+        // UIHelper.getInstance().showConnectDialog(mContext, false, group);
 
     }
 
@@ -157,7 +137,7 @@ public class LedListPresenter extends LedPresenter implements Serializable, IMul
     }
 
     private void conect(String host) {
-        Log.i("" + LedListPresenter.class.getName(), host);
+        Log.i("" + SprayListPresenter.class.getName(), host);
         ConnectionsManager.getInstance().connect(host, Constants.LED_PORT);
         ConnectionsManager.getInstance().registerHigh(this, true);
     }
@@ -212,43 +192,22 @@ public class LedListPresenter extends LedPresenter implements Serializable, IMul
     }
 
     public void addDevice(Device device) {
-        int groupNo = device.getGroupNumber();
-        DeviceGroup deviceGroup = getDeviceGroup(groupNo);
-        if (deviceGroup == null) {
-            deviceGroup = new DeviceGroup(groupNo);
-            deviceGroups.add(deviceGroup);
-            Collections.sort(deviceGroups, comparator);
-        }
-        deviceGroup.addDevice(device);
+        devices.add(device);
     }
 
 
     public void removeDeivce(String host) {
-        for (int j = 0; j < deviceGroups.size(); j++) {
-            DeviceGroup group = deviceGroups.get(j);
-            for (int i = 0; i < group.getDevices().size(); i++) {
-                Device device = group.getDevices().get(i);
-                if (host.equals(device.getIp())) {
-                    group.getDevices().remove(i);
-                    if (deviceGroups.size() > 1 && group.getDevices().size() == 0) {
-                        deviceGroups.remove(group);
-                        Collections.sort(deviceGroups, comparator);
-                    }
-                    break;
-                }
-            }
-
-        }
-    }
-
-    private DeviceGroup getDeviceGroup(int groupNo) {
-        for (DeviceGroup group : deviceGroups) {
-            if (groupNo == group.getNumber()) {
-                return group;
+        for (int i = 0; i < devices.size(); i++) {
+            Device device = devices.get(i);
+            if (host.equals(device.getIp())) {
+                devices.remove(i);
+                break;
             }
         }
-        return null;
+
+
     }
+
 
     public void start() {
         MulticastManager.getInstance().registListener(this);
@@ -262,20 +221,9 @@ public class LedListPresenter extends LedPresenter implements Serializable, IMul
         MulticastManager.getInstance().unRegistListener(this);
     }
 
-    public void deleteGroup() {
-        deviceView.gotoDeleteGroupFragment();
-    }
-
-    public void addGroup(List<DeviceGroup> deviceGroups) {
-        Intent intent = new Intent();
-        intent.setClass(mContext, EditGroupActivity.class);
-        intent.putExtra(EditGroupActivity.ARGS_DEFAULT_DEVICE_GROUP, deviceGroups.get(0));
-        intent.putExtra(EditGroupActivity.ARGS_NEW_GROUP_NUMBER, deviceGroups.get(deviceGroups.size() - 1).getNumber() + 1);
-        mContext.startActivity(intent);
-    }
-
 
     public void deleteDevice() {
         deviceView.gotoDeleteDeviceFragment();
     }
+
 }

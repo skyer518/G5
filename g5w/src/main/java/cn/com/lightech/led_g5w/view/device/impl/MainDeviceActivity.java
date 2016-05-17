@@ -3,16 +3,15 @@ package cn.com.lightech.led_g5w.view.device.impl;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
-import android.view.ContextMenu;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,29 +20,26 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.com.lightech.led_g5w.R;
-import cn.com.lightech.led_g5w.adapter.ExpDeviceAdapter;
+import cn.com.lightech.led_g5w.adapter.ExpControllableDeviceAdapter;
 import cn.com.lightech.led_g5w.presenter.MainPresenter;
 import cn.com.lightech.led_g5w.utils.ImageUtil;
-import cn.com.lightech.led_g5w.view.AppBaseActivity;
+import cn.com.lightech.led_g5w.view.AppBaseTabNavgationActivity;
+import cn.com.lightech.led_g5w.view.console.impl.AutoFragment;
+import cn.com.lightech.led_g5w.view.console.impl.ManualFragment;
 import cn.com.lightech.led_g5w.view.device.IMainDeviceView;
+import cn.com.lightech.led_g5w.wedgit.CustViewPager;
 import cn.com.lightech.led_g5w.wedgit.RoundImageView;
 
 /**
  * Created by 明 on 2016/3/4.
  */
-public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceView, View.OnLongClickListener {
+public class MainDeviceActivity extends AppBaseTabNavgationActivity implements IMainDeviceView, View.OnLongClickListener {
 
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
@@ -55,17 +51,20 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
     // 裁剪后图片的宽(X)和高(Y),480 X 480的正方形。
     private static int output_X = 360;
     private static int output_Y = 360;
-    ExpDeviceAdapter deviceAdapter;
+    ExpControllableDeviceAdapter deviceAdapter;
 
+    @Bind(R.id.container)
+    CustViewPager mViewPager;
     @Bind(R.id.iv_custPic)
     RoundImageView ivCustPic;
     @Bind(R.id.ll_device_activity)
     LinearLayout llDeviceActivity;
 
     MainPresenter mainDevicePresenter;
-    private ExpDeviceGroupFragment defaultFragment;
+    private DeviceLEDFragment defaultFragment;
     private Fragment currentFragment;
     private PopupMenu menu;
+    private String[] deviceType;
 
     public MainDeviceActivity() {
         super();
@@ -74,7 +73,7 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
 
     @Override
     protected void initVariables(Bundle savedInstanceState) {
-
+        deviceType = getResources().getStringArray(R.array.array_device_type);
     }
 
     @Override
@@ -83,14 +82,17 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
         ButterKnife.bind(this);
         ActionBar supportActionBar = getActionBar();
         supportActionBar.setTitle(getString(R.string.device_device_title));
-        gotoDeviceGroupFragment();
+
+        setmViewPager(mViewPager);
+        setmSectionsPagerAdapter(new SectionsPagerAdapter4Device(getFragmentManager()));
+        //gotoDeviceGroupFragment();
         ivCustPic.setOnLongClickListener(this);
         registerForContextMenu(ivCustPic);
     }
 
     @Override
     protected void loadData() {
-
+        super.loadData();
         //将图片显示到ImageView中
         Bitmap bm = ImageUtil.readBitmapFormDirectoryPictures(IMAGE_FILE_NAME);
         if (bm != null) {
@@ -98,6 +100,7 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
         }
 
     }
+
 
     void choicePhoto() {
         Intent intentFromGallery = new Intent(
@@ -219,47 +222,11 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
             case R.id.action_btn_device_add_device:
                 mainDevicePresenter.addNewDevice();
                 break;
-            case R.id.action_btn_device_del_device:
-                mainDevicePresenter.deleteDevice();
-                break;
-            case R.id.action_btn_device_add_group:
-                mainDevicePresenter.addGroup(defaultFragment.getDeviceGroups());
-                break;
-            case R.id.action_btn_device_del_group:
-                mainDevicePresenter.deleteGroup();
-                break;
             case R.id.action_btn_help:
                 mainDevicePresenter.showHelp();
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void gotoDeleteDeviceFragment() {
-        DeleteDeviceFragment fragment = DeleteDeviceFragment.newInstance(defaultFragment.getDeviceGroups());
-        this.currentFragment = fragment;
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment, fragment).addToBackStack(null).commit();
-
-    }
-
-    @Override
-    public void gotoDeleteGroupFragment() {
-        DeleteGroupFragment fragment = DeleteGroupFragment.newInstance(defaultFragment.getDeviceGroups());
-        this.currentFragment = fragment;
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment, fragment).addToBackStack(null).commit();
-    }
-
-    @Override
-    public void gotoDeviceGroupFragment() {
-        if (this.defaultFragment == null)
-            this.defaultFragment = ExpDeviceGroupFragment.newInstance("", "");
-        this.currentFragment = defaultFragment;
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment, defaultFragment).addToBackStack(null).commit();
     }
 
 
@@ -341,6 +308,43 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
         }
         menu.show();
         return true;
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter4Device extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter4Device(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return DeviceLEDFragment.newInstance("", "");
+                case 1:
+                    return DeviceSprayFragment.newInstance("", "");
+            }
+            return AutoFragment.newInstance("", "");
+        }
+
+        @Override
+        public int getCount() {
+            return deviceType.length;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return deviceType[position];
+        }
     }
 
 
