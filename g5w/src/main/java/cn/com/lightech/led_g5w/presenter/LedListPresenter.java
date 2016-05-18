@@ -30,6 +30,7 @@ import cn.com.lightech.led_g5w.net.entity.Response;
 import cn.com.lightech.led_g5w.net.utils.MacUtil;
 import cn.com.lightech.led_g5w.utils.UIHelper;
 import cn.com.lightech.led_g5w.view.device.IDeviceView;
+import cn.com.lightech.led_g5w.view.device.impl.AddDeviceActivity;
 import cn.com.lightech.led_g5w.view.device.impl.EditGroupActivity;
 import cn.com.u2be.xbase.net.IMulticastListener;
 import cn.com.u2be.xbase.net.MulticastManager;
@@ -184,7 +185,7 @@ public class LedListPresenter extends LedPresenter implements Serializable, IMul
 
     private void queryGroup(ConnectManager connectManager) {
         Request request = new Request();
-        request.setCmdType(CmdType.QueryGroup);
+        request.setCmdType(CmdType.QueryGroup0xF1);
         connectManager.SendToLed(request);
     }
 
@@ -193,19 +194,21 @@ public class LedListPresenter extends LedPresenter implements Serializable, IMul
     public boolean onReceive(Response response, ConnectManager connectManager) {
         if (response.IsOK() && response.getCmdType() == CmdType.CheckReady) {
             queryGroup(connectManager);
-        } else if (response.getCmdType() == CmdType.QueryGroup) {
+        } else if (response.getCmdType() == CmdType.QueryGroup0xF1 || response.getCmdType() == CmdType.QueryGroup0x1A) {
             if (response.IsOK()) {
-                int groupNum = response.getGroupNum();
                 DeviceType deviceType = response.getDeviceType();
-                String host = connectManager.getHost();
+                if (deviceType == DeviceType.Led) {
+                    int groupNum = response.getGroupNum();
+                    String host = connectManager.getHost();
 
-                Device device = new Device(groupNum, 0, host);
-                device.setType(deviceType);
-                final String mac = MacUtil.convertMac(response.getMac());
-                device.setMac(mac);
-                connectManager.setMac(mac);
-                addDevice(device);
-                deviceView.showDevices();
+                    Device device = new Device(groupNum, 0, host);
+                    device.setType(deviceType);
+                    final String mac = MacUtil.convertMac(response.getMac());
+                    device.setMac(mac);
+                    connectManager.setMac(mac);
+                    addDevice(device);
+                    deviceView.showDevices();
+                }
             }
         }
         return true;
@@ -277,5 +280,12 @@ public class LedListPresenter extends LedPresenter implements Serializable, IMul
 
     public void deleteDevice() {
         deviceView.gotoDeleteDeviceFragment();
+    }
+
+    public void addNewDevice() {
+        Intent intent = new Intent();
+        intent.setClass(mContext, AddDeviceActivity.class);
+        mContext.startActivity(intent);
+
     }
 }

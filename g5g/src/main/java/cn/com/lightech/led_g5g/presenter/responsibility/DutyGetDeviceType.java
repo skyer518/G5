@@ -1,15 +1,15 @@
-package cn.com.lightech.led_g5w.presenter.responsibility;
+package cn.com.lightech.led_g5g.presenter.responsibility;
 
 import android.os.Handler;
 
-import cn.com.lightech.led_g5w.R;
-import cn.com.lightech.led_g5w.entity.DeviceType;
-import cn.com.lightech.led_g5w.gloabal.CmdBuilder;
-import cn.com.lightech.led_g5w.net.ConnectManager;
-import cn.com.lightech.led_g5w.net.entity.CmdType;
-import cn.com.lightech.led_g5w.net.entity.Request;
-import cn.com.lightech.led_g5w.net.entity.Response;
-import cn.com.lightech.led_g5w.utils.ProgressUtil;
+import cn.com.lightech.led_g5g.R;
+import cn.com.lightech.led_g5g.entity.DeviceType;
+import cn.com.lightech.led_g5g.gloabal.CmdBuilder;
+import cn.com.lightech.led_g5g.net.ConnectManager;
+import cn.com.lightech.led_g5g.net.entity.CmdType;
+import cn.com.lightech.led_g5g.net.entity.Request;
+import cn.com.lightech.led_g5g.net.entity.Response;
+import cn.com.lightech.led_g5g.utils.ProgressUtil;
 
 /**
  * Created by alek on 2016/5/17.

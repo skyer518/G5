@@ -24,7 +24,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.lightech.led_g5w.R;
 import cn.com.lightech.led_g5w.adapter.WifiAdapter;
-import cn.com.lightech.led_g5w.presenter.ScanLedPresenter;
+import cn.com.lightech.led_g5w.entity.DeviceType;
+import cn.com.lightech.led_g5w.presenter.ScanDevicePresenter;
 import cn.com.lightech.led_g5w.view.AppBaseActivity;
 import cn.com.lightech.led_g5w.view.device.IAddDeviceView;
 
@@ -35,9 +36,8 @@ public class AddDeviceActivity extends AppBaseActivity implements IAddDeviceView
     ListView lvNewDevices;
     @Bind(R.id.tv_noItemsInfo)
     TextView tvNoItemsInfo;
-    private int requestCode = 0x10;
 
-    private ScanLedPresenter addDevicePresenter;
+    private ScanDevicePresenter addDevicePresenter;
 
     private Handler handler = new Handler() {
         @Override
@@ -47,11 +47,12 @@ public class AddDeviceActivity extends AppBaseActivity implements IAddDeviceView
     };
     private WifiManager mWifiManager;
     private MenuItem scanMenu;
+    private DeviceType type;
 
 
     @Override
     protected void initVariables(Bundle savedInstanceState) {
-        this.addDevicePresenter = new ScanLedPresenter(this, this);
+        this.addDevicePresenter = new ScanDevicePresenter(this, this);
     }
 
     @Override

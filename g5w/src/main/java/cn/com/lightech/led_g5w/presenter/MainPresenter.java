@@ -27,14 +27,6 @@ public class MainPresenter {
     }
 
 
-
-    public void addNewDevice() {
-        Intent intent = new Intent();
-        intent.setClass(mContext, AddDeviceActivity.class);
-        mContext.startActivity(intent);
-
-    }
-
     public void showHelp() {
         Intent intent = new Intent();
         intent.setClass(mContext, HelpActivity.class);

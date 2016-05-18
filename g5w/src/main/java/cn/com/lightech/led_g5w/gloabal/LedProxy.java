@@ -116,7 +116,7 @@ public class LedProxy {
      */
     public static void queryGroup(boolean allSend) {
         Request req = new Request();
-        req.setCmdType(CmdType.QueryGroup);
+        req.setCmdType(CmdType.QueryGroup0x1A);
         byte[] data = CmdBuilder.Build(req);
         ConnectionsManager.getInstance().sendToLed(data, allSend);
     }

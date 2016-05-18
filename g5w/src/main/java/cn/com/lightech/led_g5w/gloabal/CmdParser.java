@@ -48,14 +48,14 @@ public class CmdParser {
         }
         if (content[2] == (byte) 0xf1 && content.length == 64) {
             if (!valideSize(content, result)) return result;
-            result = ParseQueryGroup(content);
+            result = ParseQueryGroup0xF1(content);
             ReplyErrorCode replyCode = result.getReplyCode();
             result.setByteArray(content);
 
-            result.setCmdType(CmdType.QueryGroup);
+            result.setCmdType(CmdType.QueryGroup0x1A);
             result.setReplyCode(replyCode);
             logger.i("recv data，len:%d,cmdType:%s,errorcode:%s", content.length,
-                    CmdType.QueryGroup.toString(), replyCode.toString());
+                    CmdType.QueryGroup0x1A.toString(), replyCode.toString());
 
         } else {
             // 数据包长度检测
@@ -100,8 +100,8 @@ public class CmdParser {
                 case AttachSub:// 关联从灯命令
                     replyCode = ParseNormal(content);
                     break;
-                case QueryGroup:// 查询组号命令
-                    result = ParseQueryGroup(content);
+                case QueryGroup0x1A:// 查询组号命令
+                    result = ParseQueryGroup0x1A(content);
                     replyCode = result.getReplyCode();
                     break;
                 case SetGroup:// 设置组号命令
@@ -117,6 +117,10 @@ public class CmdParser {
                     break;
                 case ValidateData: // 查询曲线数据有效性
                     result = ParseValidateData(content);
+                    replyCode = result.getReplyCode();
+                    break;
+                case QueryType:
+                    result = ParseQueryType(content);
                     replyCode = result.getReplyCode();
                     break;
                 case IDFormatError:
@@ -145,6 +149,7 @@ public class CmdParser {
 
         return result;
     }
+
 
     private static boolean valideSize(byte[] content, Response result) {
 
@@ -426,15 +431,28 @@ public class CmdParser {
         return result;
     }
 
+    private static Response ParseQueryType(byte[] content) {
+        Response result = new Response();
+        if (content != null && content.length != 6) {
+            result.setReplyCode(ReplyErrorCode.LogicError);
+            return result;
+        }
+        result.setDeviceType(DeviceType.parseInt(content[4] & 0xff));
+        result.setReplyCode(ReplyErrorCode.OK);
+        return result;
+    }
+
+
     /* 查询曲线数据有效性 */
-    private static Response ParseQueryGroup(byte[] content) {
+    private static Response ParseQueryGroup0xF1(byte[] content) {
         Response result = new Response();
         if (content.length < 7) {
             result.setReplyCode(ReplyErrorCode.LogicError);
             return result;
         }
+        //
         int startIndex = 3;
-        int device = content[startIndex++];
+        int device = content[startIndex++] & 0xff;
         int num = content[startIndex++];
         byte[] mac = new byte[]{content[startIndex++],
                 content[startIndex++],
@@ -442,6 +460,32 @@ public class CmdParser {
                 content[startIndex++],
                 content[startIndex++],
                 content[startIndex++]};
+
+        result.setDeviceType(DeviceType.parseInt(device));
+        result.setGroupNum(num);
+        result.setMac(mac);
+        result.setReplyCode(ReplyErrorCode.OK);
+        return result;
+    }
+
+    /* 查询曲线数据有效性 */
+    private static Response ParseQueryGroup0x1A(byte[] content) {
+        Response result = new Response();
+        if (content.length < 7) {
+            result.setReplyCode(ReplyErrorCode.LogicError);
+            return result;
+        }
+        //
+        int startIndex = 4;
+        int num = content[startIndex++];
+        byte[] mac = new byte[]{content[startIndex++],
+                content[startIndex++],
+                content[startIndex++],
+                content[startIndex++],
+                content[startIndex++],
+                content[startIndex++]};
+
+        int device = content[startIndex++] & 0xff;
 
         result.setDeviceType(DeviceType.parseInt(device));
         result.setGroupNum(num);

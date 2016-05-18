@@ -264,6 +264,9 @@ public class DeviceLEDFragment extends AppBaseStateFragment implements IDeviceVi
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
+            case R.id.action_btn_device_add_device:
+                presenter.addNewDevice();
+                break;
             case R.id.action_btn_device_scanning:
                 presenter.scanDevice();
                 scanLoading(true);

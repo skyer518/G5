@@ -1,13 +1,13 @@
 package cn.com.lightech.led_g5w.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,9 +24,8 @@ import cn.com.lightech.led_g5w.net.entity.ConnState;
 import cn.com.lightech.led_g5w.net.entity.Request;
 import cn.com.lightech.led_g5w.net.entity.Response;
 import cn.com.lightech.led_g5w.net.utils.MacUtil;
-import cn.com.lightech.led_g5w.utils.UIHelper;
 import cn.com.lightech.led_g5w.view.device.IDeviceView;
-import cn.com.lightech.led_g5w.view.device.impl.EditGroupActivity;
+import cn.com.lightech.led_g5w.view.device.impl.AddDeviceActivity;
 import cn.com.u2be.xbase.net.IMulticastListener;
 import cn.com.u2be.xbase.net.MulticastManager;
 
@@ -164,7 +163,7 @@ public class SprayListPresenter extends LedPresenter implements Serializable, IM
 
     private void queryGroup(ConnectManager connectManager) {
         Request request = new Request();
-        request.setCmdType(CmdType.QueryGroup);
+        request.setCmdType(CmdType.QueryGroup0x1A);
         connectManager.SendToLed(request);
     }
 
@@ -173,19 +172,21 @@ public class SprayListPresenter extends LedPresenter implements Serializable, IM
     public boolean onReceive(Response response, ConnectManager connectManager) {
         if (response.IsOK() && response.getCmdType() == CmdType.CheckReady) {
             queryGroup(connectManager);
-        } else if (response.getCmdType() == CmdType.QueryGroup) {
+        } else if (response.getCmdType() == CmdType.QueryGroup0xF1 || response.getCmdType() == CmdType.QueryGroup0x1A) {
             if (response.IsOK()) {
-                int groupNum = response.getGroupNum();
                 DeviceType deviceType = response.getDeviceType();
-                String host = connectManager.getHost();
+                if (deviceType == DeviceType.Spray) {
+                    int groupNum = response.getGroupNum();
+                    String host = connectManager.getHost();
 
-                Device device = new Device(groupNum, 0, host);
-                device.setType(deviceType);
-                final String mac = MacUtil.convertMac(response.getMac());
-                device.setMac(mac);
-                connectManager.setMac(mac);
-                addDevice(device);
-                deviceView.showDevices();
+                    Device device = new Device(groupNum, 0, host);
+                    device.setType(deviceType);
+                    final String mac = MacUtil.convertMac(response.getMac());
+                    device.setMac(mac);
+                    connectManager.setMac(mac);
+                    addDevice(device);
+                    deviceView.showDevices();
+                }
             }
         }
         return true;
@@ -226,4 +227,10 @@ public class SprayListPresenter extends LedPresenter implements Serializable, IM
         deviceView.gotoDeleteDeviceFragment();
     }
 
+    public void addNewDevice() {
+        Intent intent = new Intent();
+        intent.setClass(mContext, AddDeviceActivity.class);
+        mContext.startActivity(intent);
+
+    }
 }

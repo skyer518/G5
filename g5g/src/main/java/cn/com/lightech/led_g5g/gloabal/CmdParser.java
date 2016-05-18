@@ -119,6 +119,10 @@ public class CmdParser {
                     result = ParseValidateData(content);
                     replyCode = result.getReplyCode();
                     break;
+                case QueryType:
+                    result = ParseQueryType(content);
+                    replyCode = result.getReplyCode();
+                    break;
                 case IDFormatError:
                     replyCode = ReplyErrorCode.IDFormatError;
                     logger.e("ID格式错误");
@@ -143,6 +147,17 @@ public class CmdParser {
         }
 
 
+        return result;
+    }
+
+    private static Response ParseQueryType(byte[] content) {
+        Response result = new Response();
+        if (content != null && content.length != 6) {
+            result.setReplyCode(ReplyErrorCode.LogicError);
+            return result;
+        }
+        result.setDeviceType(DeviceType.parseInt(content[4] & 0xff));
+        result.setReplyCode(ReplyErrorCode.OK);
         return result;
     }
 
@@ -432,7 +447,7 @@ public class CmdParser {
             return result;
         }
         int startIndex = 3;
-        int device = content[startIndex++];
+        int device = content[startIndex++] & 0xff;
         int num = content[startIndex++];
         byte[] mac = new byte[]{content[startIndex++],
                 content[startIndex++],

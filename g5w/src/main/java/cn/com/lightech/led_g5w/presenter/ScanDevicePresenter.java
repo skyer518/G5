@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.lightech.led_g5w.R;
+import cn.com.lightech.led_g5w.entity.DeviceType;
 import cn.com.lightech.led_g5w.net.wifi.WifiReceiver;
 import cn.com.lightech.led_g5w.net.wifi.WifiTask;
 import cn.com.lightech.led_g5w.utils.ProgressUtil;
@@ -25,7 +26,7 @@ import cn.com.lightech.led_g5w.view.device.impl.WifiActivity;
 /**
  * Created by 明 on 2016/3/7.
  */
-public class ScanLedPresenter {
+public class ScanDevicePresenter {
 
     private static final int WHAT_SHOW_ERROR = 0;
     private static final int WHAT_GOTO_NEXT = 1;
@@ -39,7 +40,7 @@ public class ScanLedPresenter {
     private final IAddDeviceView newDeviceView;
 
 
-    public ScanLedPresenter(Context context, IAddDeviceView view) {
+    public ScanDevicePresenter(Context context, IAddDeviceView view) {
         this.mContext = context;
         this.newDeviceView = view;
         mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);

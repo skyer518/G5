@@ -246,6 +246,12 @@ public class DeviceSprayFragment extends AppBaseStateFragment implements IDevice
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
+            case R.id.action_btn_device_add_device:
+                presenter.addNewDevice();
+                break;
+            case R.id.action_btn_device_del_device:
+                presenter.deleteDevice();
+                break;
             case R.id.action_btn_device_scanning:
                 presenter.scanDevice();
                 scanLoading(true);

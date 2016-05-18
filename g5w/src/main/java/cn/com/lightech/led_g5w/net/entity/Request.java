@@ -1,6 +1,7 @@
 package cn.com.lightech.led_g5w.net.entity;
 
 import cn.com.lightech.led_g5w.entity.DataNode;
+import cn.com.lightech.led_g5w.entity.DeviceType;
 import cn.com.lightech.led_g5w.entity.LampState;
 import cn.com.lightech.led_g5w.entity.UpdataNode;
 
@@ -27,6 +28,8 @@ public class Request {
     private byte[] byteArray;
 
     private UpdataNode updataNode;
+
+    private DeviceType deviceType;
 
     public DataNode getModelDate() {
         return modelDate;
@@ -91,5 +94,13 @@ public class Request {
 
     public UpdataNode getUpdataNode() {
         return updataNode;
+    }
+
+    public void setDeviceType(DeviceType deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public DeviceType getDeviceType() {
+        return deviceType;
     }
 }

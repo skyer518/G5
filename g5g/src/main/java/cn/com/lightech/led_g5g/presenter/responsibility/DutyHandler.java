@@ -1,4 +1,4 @@
-package cn.com.lightech.led_g5w.presenter.responsibility;
+package cn.com.lightech.led_g5g.presenter.responsibility;
 
 /**
  * Created by alek on 2016/5/17.

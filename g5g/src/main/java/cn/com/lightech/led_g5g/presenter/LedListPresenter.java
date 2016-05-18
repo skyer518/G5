@@ -192,17 +192,19 @@ public class LedListPresenter extends LedPresenter implements Serializable, IMul
             queryGroup(connectManager);
         } else if (response.getCmdType() == CmdType.QueryGroup) {
             if (response.IsOK()) {
-                int groupNum = response.getGroupNum();
                 DeviceType deviceType = response.getDeviceType();
-                String host = connectManager.getHost();
+                if (deviceType == DeviceType.Led) {
+                    int groupNum = response.getGroupNum();
+                    String host = connectManager.getHost();
 
-                Device device = new Device(groupNum, 0, host);
-                device.setType(deviceType);
-                final String mac = MacUtil.convertMac(response.getMac());
-                device.setMac(mac);
-                connectManager.setMac(mac);
-                addDevice(device);
-                deviceView.showDevices();
+                    Device device = new Device(groupNum, 0, host);
+                    device.setType(deviceType);
+                    final String mac = MacUtil.convertMac(response.getMac());
+                    device.setMac(mac);
+                    connectManager.setMac(mac);
+                    addDevice(device);
+                    deviceView.showDevices();
+                }
             }
         }
         return true;

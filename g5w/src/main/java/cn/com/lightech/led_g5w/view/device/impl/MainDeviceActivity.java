@@ -219,9 +219,6 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
-            case R.id.action_btn_device_add_device:
-                mainDevicePresenter.addNewDevice();
-                break;
             case R.id.action_btn_help:
                 mainDevicePresenter.showHelp();
                 break;

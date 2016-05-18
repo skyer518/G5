@@ -1,16 +1,16 @@
-package cn.com.lightech.led_g5w.presenter.responsibility;
+package cn.com.lightech.led_g5g.presenter.responsibility;
 
 import android.os.Handler;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.com.lightech.led_g5w.R;
-import cn.com.lightech.led_g5w.net.http.HttpPostTask;
-import cn.com.lightech.led_g5w.net.utils.Logger;
-import cn.com.lightech.led_g5w.net.utils.MacUtil;
-import cn.com.lightech.led_g5w.net.utils.PostParamUtil;
-import cn.com.lightech.led_g5w.utils.ProgressUtil;
+import cn.com.lightech.led_g5g.R;
+import cn.com.lightech.led_g5g.net.http.HttpPostTask;
+import cn.com.lightech.led_g5g.net.utils.Logger;
+import cn.com.lightech.led_g5g.net.utils.MacUtil;
+import cn.com.lightech.led_g5g.net.utils.PostParamUtil;
+import cn.com.lightech.led_g5g.utils.ProgressUtil;
 
 /**
  * Created by alek on 2016/5/17.

@@ -1,4 +1,4 @@
-package cn.com.lightech.led_g5w.presenter.responsibility;
+package cn.com.lightech.led_g5g.presenter.responsibility;
 
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -6,10 +6,10 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 
-import cn.com.lightech.led_g5w.R;
-import cn.com.lightech.led_g5w.net.wifi.WifiReceiver;
-import cn.com.lightech.led_g5w.net.wifi.WifiTask;
-import cn.com.lightech.led_g5w.utils.ProgressUtil;
+import cn.com.lightech.led_g5g.R;
+import cn.com.lightech.led_g5g.net.wifi.WifiReceiver;
+import cn.com.lightech.led_g5g.net.wifi.WifiTask;
+import cn.com.lightech.led_g5g.utils.ProgressUtil;
 
 /**
  * Created by alek on 2016/5/17.

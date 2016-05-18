@@ -1,11 +1,11 @@
-package cn.com.lightech.led_g5w.presenter.responsibility;
+package cn.com.lightech.led_g5g.presenter.responsibility;
 
 import android.os.Handler;
 
-import cn.com.lightech.led_g5w.R;
-import cn.com.lightech.led_g5w.net.http.HttpPostTask;
-import cn.com.lightech.led_g5w.net.utils.PostParamUtil;
-import cn.com.lightech.led_g5w.utils.ProgressUtil;
+import cn.com.lightech.led_g5g.R;
+import cn.com.lightech.led_g5g.net.http.HttpPostTask;
+import cn.com.lightech.led_g5g.net.utils.PostParamUtil;
+import cn.com.lightech.led_g5g.utils.ProgressUtil;
 import cn.com.u2be.alekwifilibrary.Wifi;
 
 /**

@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.lightech.led_g5w.R;
 import cn.com.lightech.led_g5w.adapter.WifiAdapter;
+import cn.com.lightech.led_g5w.entity.DeviceType;
 import cn.com.lightech.led_g5w.presenter.ScanWifiPresenter;
 import cn.com.lightech.led_g5w.utils.ProgressUtil;
 import cn.com.lightech.led_g5w.view.AppBaseActivity;

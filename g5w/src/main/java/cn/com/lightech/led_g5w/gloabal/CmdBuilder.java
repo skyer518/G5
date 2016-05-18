@@ -1,6 +1,5 @@
 package cn.com.lightech.led_g5w.gloabal;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -37,8 +36,10 @@ public class CmdBuilder {
                 return CmdBuilder.CreateAttachSubCmd();
             case CheckReady:
                 return CmdBuilder.CreateCheckReadyCmd();
-            case QueryGroup:
-                return CmdBuilder.CreateQueryGroupCmd();
+            case QueryGroup0x1A:
+                return CmdBuilder.CreateQueryGroupCmd0x1A();
+            case QueryGroup0xF1:
+                return CmdBuilder.CreateQueryGroupCmd0xF1();
             case SetGroup:
                 return CmdBuilder.CreateSetGroupCmd(request);
             case GetVersion:
@@ -65,11 +66,23 @@ public class CmdBuilder {
                 return CmdBuilder.CreateValidateDataCmd(request.getByteArray());
             case ConfirmLed:
                 return CmdBuilder.CreateConfirmLedDataCmd(request.getIntVal());
+            case QueryType:
+                return CmdBuilder.CreateQueryTypeCmd();
             case FindLed:
                 return "HLK".getBytes();
             default:
                 throw new IllegalArgumentException("god bless you");
         }
+    }
+
+    private static byte[] CreateQueryTypeCmd() {
+        byte[] cmd = new byte[5];
+        cmd[0] = 0x34;
+        cmd[1] = 0x56;
+        cmd[2] = 0x01;
+        cmd[3] = 0x02;
+        cmd[4] = Sum(cmd, 0, 3);
+        return cmd;
     }
 
     /**
@@ -534,13 +547,7 @@ public class CmdBuilder {
     /**
      * 查询组号
      */
-    private static byte[] CreateQueryGroupCmd() {
-//        byte[] cmd = new byte[4];
-//        cmd[0] = 0x34;
-//        cmd[1] = 0x56;
-//        cmd[2] = (byte) 0xF1;
-//        cmd[3] = Sum(cmd, 0, 2);
-//        return cmd;
+    private static byte[] CreateQueryGroupCmd0x1A() {
         byte[] cmd = new byte[5];
         cmd[0] = 0x34;
         cmd[1] = 0x56;
@@ -548,6 +555,19 @@ public class CmdBuilder {
         cmd[3] = 0x1A;
         cmd[4] = Sum(cmd, 0, 3);
         return cmd;
+    }
+
+    /**
+     * 查询组号
+     */
+    private static byte[] CreateQueryGroupCmd0xF1() {
+        byte[] cmd = new byte[4];
+        cmd[0] = 0x34;
+        cmd[1] = 0x56;
+        cmd[2] = (byte) 0xF1;
+        cmd[3] = Sum(cmd, 0, 2);
+        return cmd;
+
     }
 
     /**
@@ -567,7 +587,7 @@ public class CmdBuilder {
         cmd[8] = (byte) mac[3];
         cmd[9] = (byte) mac[4];
         cmd[10] = (byte) mac[5];
-        cmd[11] = (byte) 0x11;
+        cmd[11] = (byte) request.getDeviceType().getIntValue();
         cmd[12] = (byte) 0x11;
         cmd[13] = Sum(cmd, 0, 12);
         return cmd;
