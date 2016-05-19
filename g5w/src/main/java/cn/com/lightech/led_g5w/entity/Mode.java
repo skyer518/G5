@@ -8,11 +8,12 @@ package cn.com.lightech.led_g5w.entity;
  * @author f
  */
 public enum Mode {
-    Auto(0), Manual(1), Flash(2), Moon(3), AutoTiming(4);
+    Auto(0), Manual(1), Flash(2), Moon(3), AutoTiming(4), WAVE(5);
+
 
     private final int value;
     public final static int START_INDEX = 0;
-    public final static int MAX_INDEX = 4;
+    public final static int MAX_INDEX = 5;
 
     private Mode(int value) {
         this.value = value;

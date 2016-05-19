@@ -8,6 +8,7 @@ import cn.com.lightech.led_g5w.R;
 import cn.com.lightech.led_g5w.entity.AutoDataNode;
 import cn.com.lightech.led_g5w.entity.CurvePoint;
 import cn.com.lightech.led_g5w.entity.DataNode;
+import cn.com.lightech.led_g5w.entity.LampChannel;
 import cn.com.lightech.led_g5w.gloabal.DataManager;
 import cn.com.lightech.led_g5w.gloabal.IDataListener;
 import cn.com.lightech.led_g5w.gloabal.LedProxy;
@@ -44,6 +45,15 @@ public class ControlAutoPresenter implements IDataListener {
     public void previewAuto() {
         LedProxy.stopPreview();
         LedProxy.previewCurve();
+    }
+
+    public void previewChanel(LampChannel channel) {
+        LedProxy.stopPreview();
+        LedProxy.preview(channel);
+    }
+
+    public void stopPreviewChanel() {
+        LedProxy.stopPreview();
     }
 
     public void registerDataListener() {
@@ -158,7 +168,10 @@ public class ControlAutoPresenter implements IDataListener {
         }
         saveAuto();
         canAdd();
-        loadCursor(mCursor);
+        if (mCursor < index)
+            loadCursor(1);
+        else
+            loadCursor(0);
         autoView.drawChart();
     }
 

@@ -2,12 +2,14 @@ package cn.com.lightech.led_g5w.view.console.impl;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -247,23 +249,17 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
             holder.seekBarGreen.setProgress(currentCurvePoint.getChannel().getGreen());
             holder.seekBarRed.setProgress(currentCurvePoint.getChannel().getRed());
         }
+        autoPresenter.previewChanel(holder.getLampChannel());
         dialog.getWindow().setLayout(LocalPhoneParms.getPhoneWidth() / 4 * 3,
                 LocalPhoneParms.getPhoneHeight() / 4 * 3);
-
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                autoPresenter.stopPreviewChanel();
+            }
+        });
     }
 
-//    private void addChanelDialog() {
-//
-//        this.currentCurvePoint = new CurvePoint(tempCurvePoint.getTime(), tempCurvePoint.getChannel());
-//        Dialog dialog = new Dialog(getActivity(), R.style.dialog);
-//        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_channel, null);
-//        ViewHolder holder = new ViewHolder(view, dialog);
-//        dialog.setContentView(view);
-//        dialog.show();
-//        dialog.getWindow().setLayout(LocalPhoneParms.getPhoneWidth() / 4 * 3,
-//                LocalPhoneParms.getPhoneHeight() / 4 * 3);
-//
-//    }
 
     public void spikToCurrent(int time) {
         lcChart.highlightValue(time, 0);
@@ -604,6 +600,8 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if (fromUser)
+                previewChannel(progress, false);
             switch (seekBar.getId()) {
                 case R.id.seekBar_blue:
                     this.tvValueSbBlue.setText("" + progress);
@@ -635,18 +633,34 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
+            int progress = seekBar.getProgress();
+            previewChannel(progress, true);
+        }
 
+        private void previewChannel(int progress, boolean isLast) {
+            if (!isLast) {
+                if (progress % 10 == 0)
+                    autoPresenter.previewChanel(getLampChannel());
+            } else {
+                autoPresenter.previewChanel(getLampChannel());
+            }
         }
 
 
-        @OnClick(R.id.tv_btn_ok)
-        void onBtnOKClick() {
+        @NonNull
+        private LampChannel getLampChannel() {
             LampChannel channel = new LampChannel();
             channel.setData(ChanelType.Bule, seekBarBlue.getProgress());
             channel.setData(ChanelType.White, seekBarWhite.getProgress());
             channel.setData(ChanelType.PurPle, seekBarPurple.getProgress());
             channel.setData(ChanelType.Green, seekBarGreen.getProgress());
             channel.setData(ChanelType.Red, seekBarRed.getProgress());
+            return channel;
+        }
+
+        @OnClick(R.id.tv_btn_ok)
+        void onBtnOKClick() {
+            LampChannel channel = getLampChannel();
 
             CurvePoint point = new CurvePoint(currentCurvePoint.getTime(), channel);
             autoPresenter.addPoint(point);

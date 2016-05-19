@@ -3,6 +3,7 @@ package cn.com.lightech.led_g5w.net.entity;
 import cn.com.lightech.led_g5w.entity.DataNode;
 import cn.com.lightech.led_g5w.entity.DeviceType;
 import cn.com.lightech.led_g5w.entity.LampState;
+import cn.com.lightech.led_g5w.view.spray.entity.WaveNode;
 
 /*LED返回的Response*/
 public class Response {
@@ -21,6 +22,16 @@ public class Response {
 
     // 模式节点数据
     private DataNode dataNode;
+
+    public WaveNode getWaveNode() {
+        return waveNode;
+    }
+
+    public void setWaveNode(WaveNode waveNode) {
+        this.waveNode = waveNode;
+    }
+
+    private WaveNode waveNode;
 
     // 模式序号
     private int ModeIndex;

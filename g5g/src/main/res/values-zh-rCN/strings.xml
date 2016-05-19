@@ -11,7 +11,7 @@
     <string name="device_menu_delDevice">删除设备</string>
     <string name="device_menu_delGroup">删除分组</string>
     <string name="company">希蒂莱特</string>
-    <string name="company_info">专业水族灯光解决系统</string>
+    <string name="company_info">专业植物生长灯光解决系统</string>
 
     <string name="device_menu_scan">扫描</string>
     <string name="device_menu_editGroup">编缉分组</string>
@@ -46,7 +46,7 @@
     <string name="action_tab_mannual">手动模式</string>
     <string name="app_effect_moonshine">月光模式</string>
     <string name="app_effect_flash">闪电</string>
-    <string name="app_effect_acclimation">珊瑚适应</string>
+    <string name="app_effect_acclimation">植物适应</string>
     <string name="error_set_flag_failed">保存分组失败！</string>
     <string name="intent_key_ledwifi">LED</string>
     <string name="pref_summary_acclimation">启用/禁用珊瑚适应功能</string>

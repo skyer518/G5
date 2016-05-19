@@ -55,6 +55,10 @@
             android:label="@string/title_activity_effect"
             android:screenOrientation="landscape"></activity>
         <activity
+            android:name=".view.spray.WaveActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".view.device.impl.HelpActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/device_menu_help"

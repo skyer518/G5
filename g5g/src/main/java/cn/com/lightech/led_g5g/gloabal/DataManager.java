@@ -364,27 +364,27 @@ public class DataManager implements IDataListener {
                 break;
 
             case 0x01:
-                curveData = new CurveData(PackageId.Seedling_Timing[0], PackageId.Seedling_Timing[0]);
+                curveData = new CurveData(PackageId.Seedling_Timing[0], PackageId.Seedling_Timing[1]);
                 curveData.setPoints(seedling.getPoints());
                 break;
             case 0x06:
-                curveData = new CurveData(PackageId.Clone_Timing[0], PackageId.Clone_Timing[0]);
+                curveData = new CurveData(PackageId.Clone_Timing[0], PackageId.Clone_Timing[1]);
                 curveData.setPoints(clone.getPoints());
                 break;
             case 0x08:
-                curveData = new CurveData(PackageId.Vegetation_Timing[0], PackageId.Vegetation_Timing[0]);
+                curveData = new CurveData(PackageId.Vegetation_Timing[0], PackageId.Vegetation_Timing[1]);
                 curveData.setPoints(vegetation.getPoints());
                 break;
             case 0x0a:
-                curveData = new CurveData(PackageId.Flowering_Timing[0], PackageId.Flowering_Timing[0]);
+                curveData = new CurveData(PackageId.Flowering_Timing[0], PackageId.Flowering_Timing[1]);
                 curveData.setPoints(flowering.getPoints());
                 break;
             case 0x0c:
-                curveData = new CurveData(PackageId.Fruiting_Timing[0], PackageId.Fruiting_Timing[0]);
+                curveData = new CurveData(PackageId.Fruiting_Timing[0], PackageId.Fruiting_Timing[1]);
                 curveData.setPoints(fruiting.getPoints());
                 break;
             case 0x0e:
-                curveData = new CurveData(PackageId.Self_Timing[0], PackageId.Self_Timing[0]);
+                curveData = new CurveData(PackageId.Self_Timing[0], PackageId.Self_Timing[1]);
                 curveData.setPoints(self.getPoints());
                 break;
         }

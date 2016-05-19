@@ -81,11 +81,24 @@
         <item>@string/function_3</item>
         <item>@string/function_4</item>
     </string-array>
+    <integer-array name="array_value_wave_function_all">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </integer-array>
     <string-array name="array_wave_function">
         <item>@string/function_1</item>
         <item>@string/function_2</item>
         <item>@string/function_3</item>
     </string-array>
+    <integer-array name="array_value_wave_effect_all">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </integer-array>
     <string-array name="array_wave_effect_all">
         <item>@string/effect_1</item>
         <item>@string/effect_2</item>

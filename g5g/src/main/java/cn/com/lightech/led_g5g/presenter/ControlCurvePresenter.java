@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.List;
 
 import cn.com.lightech.led_g5g.R;
+import cn.com.lightech.led_g5g.entity.LampChannel;
 import cn.com.lightech.led_g5g.entity.data.CurveData;
 import cn.com.lightech.led_g5g.entity.CurvePoint;
 import cn.com.lightech.led_g5g.entity.DataNode;
@@ -49,6 +50,15 @@ public class ControlCurvePresenter implements IDataListener {
     public void previewAuto() {
         LedProxy.stopPreview();
         LedProxy.previewCurve();
+    }
+
+    public void previewChanel(LampChannel channel) {
+        LedProxy.stopPreview();
+        LedProxy.preview(channel);
+    }
+
+    public void stopPreviewChanel() {
+        LedProxy.stopPreview();
     }
 
     public void registerDataListener() {
@@ -115,14 +125,16 @@ public class ControlCurvePresenter implements IDataListener {
 
 
     public void deletePoint() {
-        validCursor();
-        DataManager.getInstance().getCurveDataById2(dataId).getPoints().get(mCursor);
-        DataManager.getInstance().getCurveDataById2(dataId).getPoints().remove(mCursor);
-        saveAuto();
-        canAdd();
-        mCursor--;
-        loadCursor(mCursor);
-        autoView.drawChart();
+        if (mCursor != 0) {
+            validCursor();
+            DataManager.getInstance().getCurveDataById2(dataId).getPoints().get(mCursor);
+            DataManager.getInstance().getCurveDataById2(dataId).getPoints().remove(mCursor);
+            saveAuto();
+            canAdd();
+            mCursor--;
+            loadCursor(mCursor);
+            autoView.drawChart();
+        }
     }
 
     private void validCursor() {
@@ -162,7 +174,10 @@ public class ControlCurvePresenter implements IDataListener {
         }
         saveAuto();
         canAdd();
-        loadCursor(mCursor);
+        if (mCursor < index)
+            loadCursor(1);
+        else
+            loadCursor(0);
         autoView.drawChart();
     }
 

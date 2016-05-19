@@ -2,6 +2,7 @@ package cn.com.lightech.led_g5w.view.device.impl;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.com.lightech.led_g5w.R;
 import cn.com.lightech.led_g5w.adapter.ControllableDeviceAdapter;
 import cn.com.lightech.led_g5w.entity.Device;
@@ -26,6 +29,8 @@ import cn.com.lightech.led_g5w.presenter.SprayListPresenter;
 import cn.com.lightech.led_g5w.utils.UIHelper;
 import cn.com.lightech.led_g5w.view.AppBaseStateFragment;
 import cn.com.lightech.led_g5w.view.device.IDeviceView;
+import cn.com.lightech.led_g5w.view.spray.SprayActivity;
+import cn.com.lightech.led_g5w.view.spray.WaveActivity;
 
 
 public class DeviceSprayFragment extends AppBaseStateFragment implements IDeviceView {
@@ -37,6 +42,7 @@ public class DeviceSprayFragment extends AppBaseStateFragment implements IDevice
 
     @Bind(R.id.device_list)
     ListView elvDevices;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -143,6 +149,11 @@ public class DeviceSprayFragment extends AppBaseStateFragment implements IDevice
         return rootView;
     }
 
+    @OnClick(R.id.btn1)
+    void click(View v) {
+        Intent intent = new Intent(getActivity(), WaveActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void loadData() {

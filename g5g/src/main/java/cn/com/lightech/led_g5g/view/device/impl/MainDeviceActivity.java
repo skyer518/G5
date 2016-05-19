@@ -37,7 +37,7 @@ import cn.com.lightech.led_g5g.wedgit.RoundImageView;
 public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceView, View.OnLongClickListener {
 
     /* 头像文件 */
-    private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
+    private static final String IMAGE_FILE_NAME = "temp_g5g_head_image.jpg";
 
     /* 请求识别码 */
     private static final int CODE_GALLERY_REQUEST = 0xa0;
