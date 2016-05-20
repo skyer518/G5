@@ -5,6 +5,7 @@
         <item name="android:windowAnimationStyle">@style/ActivitySwitchAnimation</item>
         <item name="android:actionBarStyle">@style/myActionBarStyle</item>
         <item name="android:popupWindowStyle">@style/popup_window</item>
+        <!--<item name="android:background">@mipmap/bg_control</item>-->
         <!--<item name="android:alertDialogTheme">@style/dialog</item>-->
         <!--<item name="android:preferenceStyle">@style/my_preference_activity_style</item>-->
 

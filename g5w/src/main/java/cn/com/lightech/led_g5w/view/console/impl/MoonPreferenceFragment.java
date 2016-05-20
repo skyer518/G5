@@ -68,7 +68,7 @@ public class MoonPreferenceFragment extends BasePreferenceFragment {
 //            } else if (preference.getKey().equals(getString(R.string.pref_key_moon_time_end))) {
 //                data.getTime().setEnd((Integer) value);
 //            }
-//            LedProxy.sendToLed(data);
+//            SparyProxy.sendToLed(data);
             return true;
         }
     };

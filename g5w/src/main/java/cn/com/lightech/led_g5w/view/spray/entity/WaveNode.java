@@ -1,5 +1,7 @@
 package cn.com.lightech.led_g5w.view.spray.entity;
 
+import cn.com.lightech.led_g5w.view.spray.Timing;
+
 public class WaveNode {
     /**
      * Data1: 功能: 1=同步2=异步3=长开4=顺序
@@ -44,7 +46,7 @@ public class WaveNode {
     /**
      * Data11: 实际时间（时） Data12: 实际时间（分）
      */
-    private int time;
+    private Timing time;
     /**
      * Data13: M1时间（秒）0~99
      */
@@ -149,11 +151,11 @@ public class WaveNode {
         this.daysAgo = daysAgo;
     }
 
-    public int getTime() {
+    public Timing getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(Timing time) {
         this.time = time;
     }
 

@@ -18,6 +18,8 @@ import cn.com.lightech.led_g5w.net.entity.ReplyErrorCode;
 import cn.com.lightech.led_g5w.net.entity.Response;
 import cn.com.lightech.led_g5w.net.utils.Logger;
 import cn.com.lightech.led_g5w.utils.TimeUtil;
+import cn.com.lightech.led_g5w.view.spray.Timing;
+import cn.com.lightech.led_g5w.view.spray.entity.WaveNode;
 
 
 /*命令解析器*/
@@ -291,114 +293,147 @@ public class CmdParser {
         result.setPackageId(ids);
         int dataLength = content[nPos + 2] & 0xff;
         int startIndex = nPos + 3;
+        if (ids[0] == 0x02) {
+            if (dataLength != 0x10) {
+                // 数据包长度不对
+                result.setReplyCode(ReplyErrorCode.DataLengthError);
+                logger.e("数据包内长度不足：%d,应为0x19", dataLength);
+                return result;
+            }
 
-        Mode scheduleMode = PackageId.getMode(ids);
-        switch (scheduleMode) {
-            case Auto:
-                if (dataLength != 0x7c) {
-                    // 数据包长度不对
-                    result.setReplyCode(ReplyErrorCode.DataLengthError);
-                    logger.e("Auto数据包内长度不足：%d,应为0x7c", dataLength);
-                    return result;
-                }
-                AutoDataNode node = new AutoDataNode();
-                List<CurvePoint> points = node.getPoints();
-                for (int i = 0; i < Constants.HOUR_NUM; i++) {
-                    LampChannel lc = new LampChannel();
+            WaveNode waveNode = new WaveNode();
+            waveNode.setFunction(content[startIndex++]);
+            waveNode.setEffect(content[startIndex++]);
+            waveNode.setPulseS(content[startIndex++]);
+            waveNode.setPulseMs(content[startIndex++]);
+            waveNode.setPower(content[startIndex++]);
+            waveNode.setChannel(content[startIndex++]);
 
-                    lc.setPurple(content[startIndex++]);
-                    lc.setBlue(content[startIndex++]);
-                    lc.setWhite(content[startIndex++]);
-                    lc.setGreen(content[startIndex++]);
-                    lc.setRed(content[startIndex++]);
-                    points.add(new CurvePoint(lc));
+            byte feed = content[startIndex++];
+            waveNode.setFeed(feed == 0x00 ? false : true);
+            byte autoWave = content[startIndex++];
+            waveNode.setAutoWave(autoWave == 0x00 ? false : true);
+            byte dayOrNight = content[startIndex++];
+            waveNode.setDayOrNight(dayOrNight == 0x00 ? false : true);
 
-                }
-                result.setDataNode(node);
+            waveNode.setDaysAgo(content[startIndex++]);
+            waveNode.setTime(new Timing(content[startIndex++],
+                    content[startIndex++]));
+
+            waveNode.setM1(content[startIndex++]);
+            waveNode.setM2(content[startIndex++]);
+            waveNode.setM3(content[startIndex++]);
+            waveNode.setM4(content[startIndex++]);
+            result.setWaveNode(waveNode);
+
+        } else {
+            Mode scheduleMode = PackageId.getMode(ids);
+            switch (scheduleMode) {
+                case Auto:
+                    if (dataLength != 0x7c) {
+                        // 数据包长度不对
+                        result.setReplyCode(ReplyErrorCode.DataLengthError);
+                        logger.e("Auto数据包内长度不足：%d,应为0x7c", dataLength);
+                        return result;
+                    }
+                    AutoDataNode node = new AutoDataNode();
+                    List<CurvePoint> points = node.getPoints();
+                    for (int i = 0; i < Constants.HOUR_NUM; i++) {
+                        LampChannel lc = new LampChannel();
+
+                        lc.setPurple(content[startIndex++]);
+                        lc.setBlue(content[startIndex++]);
+                        lc.setWhite(content[startIndex++]);
+                        lc.setGreen(content[startIndex++]);
+                        lc.setRed(content[startIndex++]);
+                        points.add(new CurvePoint(lc));
+
+                    }
+                    result.setDataNode(node);
 //                if (scheduleMode == Mode.) {
 //                    return result;
 //                }
-                break;
-            case Flash:
-                if (dataLength != 0x10) {
-                    // 数据包长度不对
-                    result.setReplyCode(ReplyErrorCode.DataLengthError);
-                    logger.e("Flash 数据包内长度不足：%d,应为0x10", dataLength);
-                    return result;
-                }
-
-                FlashDataNode flashNode = new FlashDataNode();
-                flashNode.setTime1(new TimeBucket(content[startIndex++], content[startIndex++], content[startIndex++], content[startIndex++]));
-                flashNode.setTime2(new TimeBucket(content[startIndex++], content[startIndex++], content[startIndex++], content[startIndex++]));
-                flashNode.setTime3(new TimeBucket(content[startIndex++], content[startIndex++], content[startIndex++], content[startIndex++]));
-
-                result.setDataNode(flashNode);
-                break;
-            case Moon:
-                if (dataLength != 0x09) {
-                    // 数据包长度不对
-                    result.setReplyCode(ReplyErrorCode.DataLengthError);
-                    logger.e("Moon 数据包内长度不足：%d,应为0x09", dataLength);
-                    return result;
-                }
-                MoonDataNode moonDataNode = new MoonDataNode();
-                moonDataNode.setLastFullMoonDay(content[startIndex++]);
-                moonDataNode.setTime(new TimeBucket(content[startIndex++], content[startIndex++], content[startIndex++], content[startIndex++]));
-                result.setDataNode(moonDataNode);
-                break;
-            case Manual:
-                if (dataLength != 0x09) {
-                    // 数据包长度不对
-                    result.setReplyCode(ReplyErrorCode.DataLengthError);
-                    logger.e(" Manual 数据包内长度不足：%d,应为0x09", dataLength);
-                    return result;
-                }
-                ManualDataNode manualDataNode = new ManualDataNode();
-                LampChannel channel = new LampChannel();
-                channel.setPurple(content[startIndex++]);
-                channel.setBlue(content[startIndex++]);
-                channel.setWhite(content[startIndex++]);
-                channel.setGreen(content[startIndex++]);
-                channel.setRed(content[startIndex++]);
-                manualDataNode.setChannel(channel);
-                result.setDataNode(manualDataNode);
-                break;
-            case AutoTiming:
-                if (dataLength != 0x34) {
-                    // 数据包长度不对
-                    result.setReplyCode(ReplyErrorCode.DataLengthError);
-                    logger.e("AutoTiming数据包内长度不足：%d,应为0x34", dataLength);
-                    return result;
-                }
-
-                AutoDataNode autoDataNode = new AutoDataNode();
-                List<CurvePoint> points1 = autoDataNode.getPoints();
-                int index = 0;
-                for (int i = 0; i < Constants.HOUR_NUM; i++) {
-                    CurvePoint point = new CurvePoint();
-                    point.setTime(content[startIndex++] & 0xff, (content[startIndex++] & 0xff) / 10);
-                    if (TimeUtil.isVali(point.getTime())) { // 无效时间点放弃
-                        points1.add(point);
-                        index++;
+                    break;
+                case Flash:
+                    if (dataLength != 0x10) {
+                        // 数据包长度不对
+                        result.setReplyCode(ReplyErrorCode.DataLengthError);
+                        logger.e("Flash 数据包内长度不足：%d,应为0x10", dataLength);
+                        return result;
                     }
 
-                }
-                result.setDataNode(autoDataNode);
-                break;
-            default:
-                break;
+                    FlashDataNode flashNode = new FlashDataNode();
+                    flashNode.setTime1(new TimeBucket(content[startIndex++], content[startIndex++], content[startIndex++], content[startIndex++]));
+                    flashNode.setTime2(new TimeBucket(content[startIndex++], content[startIndex++], content[startIndex++], content[startIndex++]));
+                    flashNode.setTime3(new TimeBucket(content[startIndex++], content[startIndex++], content[startIndex++], content[startIndex++]));
+
+                    result.setDataNode(flashNode);
+                    break;
+                case Moon:
+                    if (dataLength != 0x09) {
+                        // 数据包长度不对
+                        result.setReplyCode(ReplyErrorCode.DataLengthError);
+                        logger.e("Moon 数据包内长度不足：%d,应为0x09", dataLength);
+                        return result;
+                    }
+                    MoonDataNode moonDataNode = new MoonDataNode();
+                    moonDataNode.setLastFullMoonDay(content[startIndex++]);
+                    moonDataNode.setTime(new TimeBucket(content[startIndex++], content[startIndex++], content[startIndex++], content[startIndex++]));
+                    result.setDataNode(moonDataNode);
+                    break;
+                case Manual:
+                    if (dataLength != 0x09) {
+                        // 数据包长度不对
+                        result.setReplyCode(ReplyErrorCode.DataLengthError);
+                        logger.e(" Manual 数据包内长度不足：%d,应为0x09", dataLength);
+                        return result;
+                    }
+                    ManualDataNode manualDataNode = new ManualDataNode();
+                    LampChannel channel = new LampChannel();
+                    channel.setPurple(content[startIndex++]);
+                    channel.setBlue(content[startIndex++]);
+                    channel.setWhite(content[startIndex++]);
+                    channel.setGreen(content[startIndex++]);
+                    channel.setRed(content[startIndex++]);
+                    manualDataNode.setChannel(channel);
+                    result.setDataNode(manualDataNode);
+                    break;
+                case AutoTiming:
+                    if (dataLength != 0x34) {
+                        // 数据包长度不对
+                        result.setReplyCode(ReplyErrorCode.DataLengthError);
+                        logger.e("AutoTiming数据包内长度不足：%d,应为0x34", dataLength);
+                        return result;
+                    }
+
+                    AutoDataNode autoDataNode = new AutoDataNode();
+                    List<CurvePoint> points1 = autoDataNode.getPoints();
+                    int index = 0;
+                    for (int i = 0; i < Constants.HOUR_NUM; i++) {
+                        CurvePoint point = new CurvePoint();
+                        point.setTime(content[startIndex++] & 0xff, (content[startIndex++] & 0xff) / 10);
+                        if (TimeUtil.isVali(point.getTime())) { // 无效时间点放弃
+                            points1.add(point);
+                            index++;
+                        }
+
+                    }
+                    result.setDataNode(autoDataNode);
+                    break;
+                default:
+                    break;
+            }
+
+
+            // 包标识码、时间截
+            long data1 = content[startIndex++] & 0xff;
+            long data2 = content[startIndex++] & 0xff;
+            long data3 = content[startIndex++] & 0xff;
+            long data4 = content[startIndex] & 0xff;
+            long unixTIme = (data1 << 24) + (data2 << 16) + (data3 << 8) + data4;
+
+            result.setUnixTime(unixTIme);
         }
-
-
-        // 包标识码、时间截
-        long data1 = content[startIndex++] & 0xff;
-        long data2 = content[startIndex++] & 0xff;
-        long data3 = content[startIndex++] & 0xff;
-        long data4 = content[startIndex] & 0xff;
-        long unixTIme = (data1 << 24) + (data2 << 16) + (data3 << 8) + data4;
-
-        result.setUnixTime(unixTIme);
-
         result.setReplyCode(ReplyErrorCode.OK);
 
         return result;

@@ -100,6 +100,7 @@ public enum CmdType {
      */
     FindLed(0xFFFF),
 
+
     /**
      * ID格式错误  补充类型，不是真实命令
      */

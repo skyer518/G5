@@ -53,7 +53,7 @@ public class EditGroupActivity extends AppBaseActivity implements IGroupView {
         ActionBar actionBar = getActionBar();
         actionBar.setTitle(R.string.device_menu_addGroup);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
         groupPresenter = new DeviceAddGroupPresenter(this, this);
 
         final DeviceAdapter defaultDeviceAdapter = new DeviceAdapter(this, defaultDeviceGroup.getDevices());

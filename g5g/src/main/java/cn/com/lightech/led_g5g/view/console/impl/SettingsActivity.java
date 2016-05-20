@@ -109,6 +109,7 @@ public class SettingsActivity extends AppBaseActivity {
         if (actionBar != null) {
             // Show the Up button in the action bar.
             actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }

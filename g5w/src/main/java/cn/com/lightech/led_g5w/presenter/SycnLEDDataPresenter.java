@@ -2,13 +2,11 @@ package cn.com.lightech.led_g5w.presenter;
 
 import android.content.Context;
 
-import java.util.Arrays;
 import java.util.List;
 
 import cn.com.lightech.led_g5w.entity.AutoDataNode;
 import cn.com.lightech.led_g5w.entity.CurvePoint;
 import cn.com.lightech.led_g5w.entity.DataNode;
-import cn.com.lightech.led_g5w.entity.Mode;
 import cn.com.lightech.led_g5w.entity.PackageId;
 import cn.com.lightech.led_g5w.gloabal.DataManager;
 import cn.com.lightech.led_g5w.gloabal.IDataListener;
@@ -23,15 +21,15 @@ import cn.com.lightech.led_g5w.view.console.ISycnDataView;
 /**
  * Created by 明 on 2016/4/18.
  */
-public class SycnDataPresenter implements IDataListener {
+public class SycnLEDDataPresenter implements IDataListener {
 
     private final ISycnDataView sycnDataView;
-    private Logger logger = Logger.getLogger(SycnDataPresenter.class);
+    private Logger logger = Logger.getLogger(SycnLEDDataPresenter.class);
     private static final int TOTAL_MODE = 5;
     private int modeIndex;
     private String ip;
 
-    public SycnDataPresenter(Context context, ISycnDataView sycnDataView, String ip) {
+    public SycnLEDDataPresenter(Context context, ISycnDataView sycnDataView, String ip) {
         this.ip = ip;
         this.sycnDataView = sycnDataView;
     }
@@ -92,7 +90,7 @@ public class SycnDataPresenter implements IDataListener {
         }
         count++;
         LedProxy.recvDataFromLED(pkgId);
-//        LedProxy.validateData(pkgId);
+//        SparyProxy.validateData(pkgId);
 
 
         String txt = String.format("current: %d  ; total: %d  ;",
@@ -184,7 +182,7 @@ public class SycnDataPresenter implements IDataListener {
 //        if (appNode == null) {
 //            // APP数据为空
 //            if (unixTime > 0)
-//                LedProxy.recvDataFromLED(pkgId);// LED的数据较新
+//                SparyProxy.recvDataFromLED(pkgId);// LED的数据较新
 //            else
 //                syncNext();// APP和LED都没有数据，下一个
 //            return;
@@ -204,10 +202,10 @@ public class SycnDataPresenter implements IDataListener {
 //            return;
 ////        } else if (unixTime < appNode.getUnixTime()) {
 ////            // APP的数据较新
-////            LedProxy.sendToLed(appNode);
+////            SparyProxy.sendToLed(appNode);
 //        } else {
 //            // LED的数据较新
-//            LedProxy.recvDataFromLED(pkgId);
+//            SparyProxy.recvDataFromLED(pkgId);
 //        }
 //
 //    }

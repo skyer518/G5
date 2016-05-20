@@ -60,7 +60,7 @@ public class AddDeviceActivity extends AppBaseActivity implements IAddDeviceView
         ButterKnife.bind(this);
         ActionBar supportActionBar = getActionBar();
         supportActionBar.setTitle(getString(R.string.device_newdevice_title));
-        supportActionBar.setDisplayShowHomeEnabled(true);
+        supportActionBar.setDisplayShowHomeEnabled(false);
         supportActionBar.setDisplayHomeAsUpEnabled(true);
         lvNewDevices.setAdapter(new WifiAdapter(this, new ArrayList<ScanResult>(0)));
         lvNewDevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {

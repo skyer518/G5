@@ -207,7 +207,7 @@ public class SettingsActivity extends AppBaseActivity {
 //            boolean flash = dsp.getBoolean(getString(R.string.pref_key_flash), false);
 //            boolean moon = dsp.getBoolean(getString(R.string.pref_key_moon), false);
 //            boolean acclimation = dsp.getBoolean(getString(R.string.pref_key_acclimation), false);
-//            LedProxy.setState(mode, flash, moon, acclimation);
+//            SparyProxy.setState(mode, flash, moon, acclimation);
         }
 
         @Override

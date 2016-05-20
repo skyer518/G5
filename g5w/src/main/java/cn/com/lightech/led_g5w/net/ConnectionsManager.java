@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import cn.com.lightech.led_g5w.gloabal.IDataListener;
-import cn.com.lightech.led_g5w.net.entity.CmdType;
 import cn.com.lightech.led_g5w.net.entity.ConnState;
 import cn.com.lightech.led_g5w.net.entity.Request;
 import cn.com.lightech.led_g5w.net.entity.Response;
-import cn.com.lightech.led_g5w.presenter.SycnDataPresenter;
 
 /**
  * Created by 明 on 2016/3/16.

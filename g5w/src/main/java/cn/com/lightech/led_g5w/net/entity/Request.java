@@ -1,9 +1,7 @@
 package cn.com.lightech.led_g5w.net.entity;
 
-import cn.com.lightech.led_g5w.entity.DataNode;
 import cn.com.lightech.led_g5w.entity.DeviceType;
 import cn.com.lightech.led_g5w.entity.LampState;
-import cn.com.lightech.led_g5w.entity.UpdataNode;
 
 /*发送给LED的Request*/
 public class Request {
@@ -13,9 +11,18 @@ public class Request {
     // 灯状态
     private LampState lampState;
 
-    // 模式节点数据
-    private DataNode modelDate;
+    public Object getData() {
+        return data;
+    }
 
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    //    // 模式节点数据
+//    private Object modelDate;
+    // 模式节点数据
+    private Object data;
     // 模式序号
     private int modeIndex;
 
@@ -27,17 +34,17 @@ public class Request {
 
     private byte[] byteArray;
 
-    private UpdataNode updataNode;
+//    private UpdataNode updataNode;
 
     private DeviceType deviceType;
 
-    public DataNode getModelDate() {
-        return modelDate;
-    }
+//    public DataNode getModelDate() {
+//        return modelDate;
+//    }
 
-    public void setModelDate(DataNode modelDate) {
-        this.modelDate = modelDate;
-    }
+//    public void setModelDate(DataNode modelDate) {
+//        this.modelDate = modelDate;
+//    }
 
     public int getIntVal() {
         return intVal;
@@ -88,13 +95,13 @@ public class Request {
     }
 
 
-    public void setUpdataNode(UpdataNode updataNode) {
-        this.updataNode = updataNode;
-    }
-
-    public UpdataNode getUpdataNode() {
-        return updataNode;
-    }
+//    public void setUpdataNode(UpdataNode updataNode) {
+//        this.updataNode = updataNode;
+//    }
+//
+//    public UpdataNode getUpdataNode() {
+//        return updataNode;
+//    }
 
     public void setDeviceType(DeviceType deviceType) {
         this.deviceType = deviceType;

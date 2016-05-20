@@ -1,6 +1,7 @@
 package cn.com.lightech.led_g5w.presenter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,7 @@ import java.util.TimerTask;
 
 import cn.com.lightech.led_g5w.entity.Device;
 import cn.com.lightech.led_g5w.entity.DeviceType;
+import cn.com.lightech.led_g5w.gloabal.App;
 import cn.com.lightech.led_g5w.gloabal.CmdBuilder;
 import cn.com.lightech.led_g5w.gloabal.Constants;
 import cn.com.lightech.led_g5w.gloabal.IDataListener;
@@ -24,8 +26,11 @@ import cn.com.lightech.led_g5w.net.entity.ConnState;
 import cn.com.lightech.led_g5w.net.entity.Request;
 import cn.com.lightech.led_g5w.net.entity.Response;
 import cn.com.lightech.led_g5w.net.utils.MacUtil;
+import cn.com.lightech.led_g5w.view.console.impl.ControlActivity;
 import cn.com.lightech.led_g5w.view.device.IDeviceView;
 import cn.com.lightech.led_g5w.view.device.impl.AddDeviceActivity;
+import cn.com.lightech.led_g5w.view.spray.SycnDataDialog;
+import cn.com.lightech.led_g5w.view.spray.WaveActivity;
 import cn.com.u2be.xbase.net.IMulticastListener;
 import cn.com.u2be.xbase.net.MulticastManager;
 
@@ -114,8 +119,17 @@ public class SprayListPresenter extends LedPresenter implements Serializable, IM
 
 
     public void gotoControl(String ip) {
-        // UIHelper.getInstance().showConnectDialog(mContext, false, group);
-
+        SycnDataDialog dialog = new SycnDataDialog(mContext, ip);
+        dialog.setCancelable(false);
+        dialog.show();
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                Intent intent = new Intent();
+                intent.setClass(App.getInstance(), WaveActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
 

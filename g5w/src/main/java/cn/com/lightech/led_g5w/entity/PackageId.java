@@ -11,6 +11,8 @@ public class PackageId {
     public static final byte[] Moon = {0x00, 0x03};
     public static final byte[] Manual = {0x00, 0x04};
 
+    public static final byte[] Wave = {0x02, 0x00};
+
 
     public static Mode getMode(byte[] ids) {
         if (ids == null || ids.length != 2 || ids[1] < 0 || ids[1] > 0x0f)
@@ -46,5 +48,9 @@ public class PackageId {
         }
 
         return PackageId.Auto;
+    }
+
+    public static byte[] getWavePackageId() {
+        return PackageId.Wave;
     }
 }

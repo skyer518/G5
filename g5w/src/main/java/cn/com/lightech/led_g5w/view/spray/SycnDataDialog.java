@@ -1,4 +1,4 @@
-package cn.com.lightech.led_g5w.view.console.impl;
+package cn.com.lightech.led_g5w.view.spray;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import cn.com.lightech.led_g5w.R;
 import cn.com.lightech.led_g5w.entity.DeviceGroup;
 import cn.com.lightech.led_g5w.presenter.SycnLEDDataPresenter;
+import cn.com.lightech.led_g5w.presenter.SycnWaveDataPresenter;
 import cn.com.lightech.led_g5w.view.console.ISycnDataView;
 
 public class SycnDataDialog extends Dialog implements ISycnDataView {
@@ -18,19 +19,16 @@ public class SycnDataDialog extends Dialog implements ISycnDataView {
 
     @Bind(R.id.tv_msg)
     TextView tvMsg;
-    private DeviceGroup group;
-
 
     private Context mContext;
 
-    private SycnLEDDataPresenter sycnLEDDataPresenter;
+    private SycnWaveDataPresenter sycnWaveDataPresenter;
 
 
-    public SycnDataDialog(Context context, DeviceGroup group, String ip) {
+    public SycnDataDialog(Context context, String ip) {
         super(context, android.R.style.Theme_Holo_Light_Dialog);
-        sycnLEDDataPresenter = new SycnLEDDataPresenter(context, this, ip);
+        sycnWaveDataPresenter = new SycnWaveDataPresenter(context, this, ip);
         this.mContext = context;
-        this.group = group;
     }
 
     @Override
@@ -40,8 +38,8 @@ public class SycnDataDialog extends Dialog implements ISycnDataView {
         setContentView(R.layout.dialog_somthing);
         ButterKnife.bind(this);
 
-        sycnLEDDataPresenter.register();
-        sycnLEDDataPresenter.syncData();
+        sycnWaveDataPresenter.register();
+        sycnWaveDataPresenter.syncData();
     }
 
 
@@ -53,7 +51,7 @@ public class SycnDataDialog extends Dialog implements ISycnDataView {
     @Override
     protected void onStop() {
         super.onStop();
-        sycnLEDDataPresenter.unRegister();
+        sycnWaveDataPresenter.unRegister();
     }
 
     @Override

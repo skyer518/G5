@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,7 +28,6 @@ import cn.com.lightech.led_g5w.presenter.SprayListPresenter;
 import cn.com.lightech.led_g5w.utils.UIHelper;
 import cn.com.lightech.led_g5w.view.AppBaseStateFragment;
 import cn.com.lightech.led_g5w.view.device.IDeviceView;
-import cn.com.lightech.led_g5w.view.spray.SprayActivity;
 import cn.com.lightech.led_g5w.view.spray.WaveActivity;
 
 

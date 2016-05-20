@@ -74,6 +74,7 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
         ButterKnife.bind(this);
         ActionBar supportActionBar = getActionBar();
         supportActionBar.setTitle(getString(R.string.device_device_title));
+        supportActionBar.setDisplayShowHomeEnabled(false);
         gotoDeviceGroupFragment();
         ivCustPic.setOnLongClickListener(this);
         registerForContextMenu(ivCustPic);

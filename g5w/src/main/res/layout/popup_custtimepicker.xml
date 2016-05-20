@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_popup_radius"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <NumberPicker
+            android:id="@+id/np_time_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:divider="@null" />
+
+        <TextView
+            android:id="@+id/tv_timepicker_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/app_padding_l"
+            android:text="."
+            android:textSize="28sp" />
+
+        <NumberPicker
+            android:id="@+id/np_time_minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:divider="@null" />
+
+        <TextView
+            android:id="@+id/tv_timepicker_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/app_padding_l"
+            android:text="S"
+            android:textSize="28sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#bec2c6" />
+
+    <TextView
+        android:id="@+id/btn_dialog_timepicker_ok"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="10"
+        android:clickable="true"
+        android:gravity="center"
+        android:minHeight="30dp"
+        android:text="OK" />
+
+</LinearLayout>

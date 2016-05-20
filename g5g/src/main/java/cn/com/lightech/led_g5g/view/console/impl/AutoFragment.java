@@ -166,14 +166,14 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
 
     @Override
     public void onResume() {
-        super.onResume();
         autoPresenter.registerDataListener();
+        super.onResume();
     }
 
     @Override
     public void onPause() {
-        super.onPause();
         autoPresenter.unRegisterDataListener();
+        super.onPause();
     }
 
 

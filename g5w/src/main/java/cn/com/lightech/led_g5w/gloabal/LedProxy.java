@@ -80,14 +80,14 @@ public class LedProxy {
     public static void sendToLed(DataNode dataNode) {
         Request request = new Request();
         request.setCmdType(CmdType.SendDataToLED);
-        request.setModelDate(dataNode);
+        request.setData(dataNode);
         ConnectionsManager.getInstance().sendToLed(request, false);
     }
 
     public static void sendToLed(UpdataNode updataNode) {
         Request request = new Request();
         request.setCmdType(CmdType.SendDataToLED);
-        request.setUpdataNode(updataNode);
+        request.setData(updataNode);
         ConnectionsManager.getInstance().sendToLed(request, false);
     }
 

@@ -70,7 +70,7 @@ public class ControlActivity extends AppBaseActivity implements ActionBar.TabLis
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
 
-        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 

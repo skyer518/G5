@@ -7,13 +7,14 @@ import cn.com.lightech.led_g5w.entity.AutoDataNode;
 import cn.com.lightech.led_g5w.entity.CurvePoint;
 import cn.com.lightech.led_g5w.entity.DataNode;
 import cn.com.lightech.led_g5w.entity.FlashDataNode;
+import cn.com.lightech.led_g5w.entity.LampChannel;
+import cn.com.lightech.led_g5w.entity.LampState;
 import cn.com.lightech.led_g5w.entity.ManualDataNode;
 import cn.com.lightech.led_g5w.entity.MoonDataNode;
 import cn.com.lightech.led_g5w.entity.TimeBucket;
-import cn.com.lightech.led_g5w.entity.LampChannel;
-import cn.com.lightech.led_g5w.entity.LampState;
 import cn.com.lightech.led_g5w.entity.UpdataNode;
 import cn.com.lightech.led_g5w.net.entity.Request;
+import cn.com.lightech.led_g5w.view.spray.entity.WaveNode;
 
 
 /**
@@ -199,9 +200,9 @@ public class CmdBuilder {
      * 下载曲线数据到单片机
      */
     private static byte[] CreateDataToLedCmd(Request request) {
-        UpdataNode updataNode = request.getUpdataNode();
-        if (updataNode == null) {
-            DataNode modelDate = request.getModelDate();
+        final Object data = request.getData();
+        if (data instanceof DataNode) {
+            DataNode modelDate = (DataNode) data;
             switch (modelDate.getScheduleMode()) {
                 case Manual:
                     return createManualDataToLedCmd(request);
@@ -216,19 +217,63 @@ public class CmdBuilder {
                 default:
                     break;
             }
-        } else {
+        } else if (data instanceof UpdataNode) {
+            UpdataNode updataNode = (UpdataNode) data;
             if (updataNode.getID2() == (byte) 0x80)
                 return createCheckUpdataLedCmd(request);
             else
                 return createUpdataLedCmd(request);
+        } else if (data instanceof WaveNode) {
+            WaveNode waveNode = (WaveNode) data;
+            return createSendWaveDataCmd(request);
         }
 
         return null;
     }
 
+    private static byte[] createSendWaveDataCmd(Request request) {
+        WaveNode waveNode = (WaveNode) request.getData();
+        int length = 24;
+        byte[] cmd = new byte[length];
+        cmd[0] = 0x34;
+        cmd[1] = 0x56;
+        cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
+        cmd[3] = (byte) 0xf0; // 命令 下载曲线数据到单片机
+        cmd[4] = waveNode.getID1(); // 包ID1
+        cmd[5] = waveNode.getID2();// 包ID2
+        cmd[6] = (byte) (cmd.length - 8); // 包长度
+        int startIndex = 7;
+        /* 数据部份 */
+        cmd[startIndex++] = waveNode.getFunction();
+        cmd[startIndex++] = waveNode.getEffect();
+        cmd[startIndex++] = waveNode.getPulseS();
+        cmd[startIndex++] = waveNode.getPulseMs();
+        cmd[startIndex++] = waveNode.getPower();
+        cmd[startIndex++] = (byte) waveNode.getChannel();
+
+        cmd[startIndex++] = (byte) (waveNode.isFeed() ? 0x01 : 0x00);
+        cmd[startIndex++] = (byte) (waveNode.isAutoWave() ? 0x01 : 0x00);
+        cmd[startIndex++] = (byte) (waveNode.isDayOrNight() ? 0x01 : 0x00);
+
+        cmd[startIndex++] = waveNode.getDaysAgo();
+
+        cmd[startIndex++] = (byte) waveNode.getTime().getHour();
+        cmd[startIndex++] = (byte) waveNode.getTime().getMinute();
+
+        cmd[startIndex++] = (byte) waveNode.getM1();
+        cmd[startIndex++] = (byte) waveNode.getM2();
+        cmd[startIndex++] = (byte) waveNode.getM3();
+        cmd[startIndex++] = (byte) waveNode.getM4();
+
+
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1); // 校验和
+
+        return cmd;
+    }
+
 
     private static byte[] createManualDataToLedCmd(Request request) {
-        ManualDataNode effectMode = (ManualDataNode) request.getModelDate();
+        ManualDataNode effectMode = (ManualDataNode) request.getData();
         int length = 17;
         byte[] cmd = new byte[length];
         cmd[0] = 0x34;
@@ -259,7 +304,7 @@ public class CmdBuilder {
 
 
     private static byte[] createMoonDataToLedCmd(Request request) {
-        MoonDataNode moonDataNode = (MoonDataNode) request.getModelDate();
+        MoonDataNode moonDataNode = (MoonDataNode) request.getData();
         int length = 17;
         byte[] cmd = new byte[length];
         cmd[0] = 0x34;
@@ -292,7 +337,7 @@ public class CmdBuilder {
      * 发送时间曲线到led
      */
     private static byte[] createAutoTimingDataToLedCmd(Request request) {
-        AutoDataNode modelData = (AutoDataNode) request.getModelDate();
+        AutoDataNode modelData = (AutoDataNode) request.getData();
         int length = 60;
         if (modelData.isPreview()) {
             length = 56;
@@ -335,7 +380,7 @@ public class CmdBuilder {
      * 发送闪电设置到led
      */
     private static byte[] creatFlashDataToLedCmd(Request request) {
-        FlashDataNode dataNode = (FlashDataNode) request.getModelDate();
+        FlashDataNode dataNode = (FlashDataNode) request.getData();
         int length = 24;
         byte[] cmd = new byte[length];
         cmd[0] = 0x34;
@@ -381,7 +426,7 @@ public class CmdBuilder {
      * 发送模式数据到led
      */
     private static byte[] createAutoDataToLedCmd(Request request) {
-        AutoDataNode dataNode = (AutoDataNode) request.getModelDate();
+        AutoDataNode dataNode = (AutoDataNode) request.getData();
         int length = 132;
         if (dataNode.isPreview()) {
             length = 128;
@@ -428,7 +473,7 @@ public class CmdBuilder {
      * 发送模式数据到led
      */
     private static byte[] createUpdataLedCmd(Request request) {
-        UpdataNode updataNode = request.getUpdataNode();
+        UpdataNode updataNode = (UpdataNode) request.getData();
         int length = 136;
         byte[] cmd = new byte[length];
         cmd[0] = 0x34;
@@ -451,7 +496,7 @@ public class CmdBuilder {
      * 发送模式数据到led
      */
     private static byte[] createCheckUpdataLedCmd(Request request) {
-        UpdataNode updataNode = request.getUpdataNode();
+        UpdataNode updataNode = (UpdataNode) request.getData();
         int length = 12;
         byte[] cmd = new byte[length];
         cmd[0] = 0x34;

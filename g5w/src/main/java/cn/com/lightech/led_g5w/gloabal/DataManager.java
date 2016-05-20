@@ -23,6 +23,7 @@ import cn.com.lightech.led_g5w.net.socket.NetworkHelper;
 import cn.com.lightech.led_g5w.net.utils.StringUtil;
 import cn.com.lightech.led_g5w.net.ConnectionsManager;
 import cn.com.lightech.led_g5w.utils.PreferenceUtils;
+import cn.com.lightech.led_g5w.view.spray.entity.WaveNode;
 
 public class DataManager implements IDataListener {
     private static DataManager inst;
@@ -34,6 +35,9 @@ public class DataManager implements IDataListener {
     private FlashDataNode flashDataNode;
     private MoonDataNode moonDataNode;
     private LampState state;
+
+
+    private WaveNode wave;
 
 
     public static DataManager getInstance() {
@@ -328,4 +332,13 @@ public class DataManager implements IDataListener {
     public void setState(LampState state) {
         this.state = state;
     }
+
+    public void saveWaveNode(WaveNode wn, boolean updateTime) {
+        this.wave = wn;
+    }
+
+    public WaveNode getWaveNode() {
+        return wave;
+    }
+
 }

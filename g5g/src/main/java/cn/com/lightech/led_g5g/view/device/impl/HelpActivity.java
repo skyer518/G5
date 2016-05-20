@@ -39,6 +39,7 @@ public class HelpActivity extends AppBaseActivity {
         ActionBar supportActionBar = getActionBar();
         supportActionBar.setTitle(getString(R.string.device_menu_help));
         supportActionBar.setDisplayHomeAsUpEnabled(true);
+        supportActionBar.setDisplayShowHomeEnabled(false);
         String able = getResources().getConfiguration().locale.getCountry();
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         if (able.equals("CN"))
