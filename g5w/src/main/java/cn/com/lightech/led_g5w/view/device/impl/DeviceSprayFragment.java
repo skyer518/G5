@@ -164,20 +164,19 @@ public class DeviceSprayFragment extends AppBaseStateFragment implements IDevice
         System.out.print("DeviceLEDFragment onAttach");
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.i("DeviceLEDFragment", "onResume");
-        System.out.print("DeviceLEDFragment onResume");
-        presenter.start();
-    }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        presenter.stop();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        Log.i("DeviceLEDFragment", "onResume");
+//        presenter.start();
+//    }
+//
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        presenter.stop();
+//    }
 
     @Override
     public void onDestroyView() {
@@ -186,16 +185,16 @@ public class DeviceSprayFragment extends AppBaseStateFragment implements IDevice
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public void showDevices() {
-        Log.i("DeviceLEDFragment", "showDevices");
-        ArrayList<Device> devices = presenter.getDevices();
-        if (devices == null) {
-            return;
-        }
-        deviceAdapter.setData(devices);
-        deviceAdapter.notifyDataSetChanged();
-    }
+//    @Override
+//    public void showDevices() {
+//        Log.i("DeviceLEDFragment", "showDevices");
+//        ArrayList<Device> devices = presenter.getDevices();
+//        if (devices == null) {
+//            return;
+//        }
+//        deviceAdapter.setData(devices);
+//        deviceAdapter.notifyDataSetChanged();
+//    }
 
     @Override
     public void showMessage(String message) {
@@ -223,23 +222,23 @@ public class DeviceSprayFragment extends AppBaseStateFragment implements IDevice
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_actionbar_device_spray, menu);
-        scanMenu = menu.findItem(R.id.action_btn_device_scanning);
-        scanLoading(true);
+//        scanMenu = menu.findItem(R.id.action_btn_device_scanning);
+//        scanLoading(true);
         super.onCreateOptionsMenu(menu, inflater);
 
     }
 
-    public void scanLoading(boolean loading) {
-        if (scanMenu != null) {
-            if (loading) {
-                scanMenu.setActionView(R.layout.actionbar_indeterminate_progress);
-                scanMenu.setEnabled(false);
-            } else {
-                scanMenu.setActionView(null);
-                scanMenu.setEnabled(true);
-            }
-        }
-    }
+//    public void scanLoading(boolean loading) {
+//        if (scanMenu != null) {
+//            if (loading) {
+//                scanMenu.setActionView(R.layout.actionbar_indeterminate_progress);
+//                scanMenu.setEnabled(false);
+//            } else {
+//                scanMenu.setActionView(null);
+//                scanMenu.setEnabled(true);
+//            }
+//        }
+//    }
 
     @Override
     public void gotoDeleteGroupFragment() {
@@ -261,15 +260,21 @@ public class DeviceSprayFragment extends AppBaseStateFragment implements IDevice
             case R.id.action_btn_device_del_device:
                 presenter.deleteDevice();
                 break;
-            case R.id.action_btn_device_scanning:
-                presenter.scanDevice();
-                scanLoading(true);
-                break;
+//            case R.id.action_btn_device_scanning:
+//                presenter.scanDevice();
+//                scanLoading(true);
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     public List<Device> getDevics() {
         return presenter.getDevices();
+    }
+
+    public void setDevices(ArrayList<Device> devices) {
+        presenter.setDevices(devices);
+        deviceAdapter.setData(devices);
+        deviceAdapter.notifyDataSetChanged();
     }
 }

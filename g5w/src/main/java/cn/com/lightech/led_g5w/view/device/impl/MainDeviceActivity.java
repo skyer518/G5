@@ -27,11 +27,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.lightech.led_g5w.R;
 import cn.com.lightech.led_g5w.adapter.ExpControllableDeviceAdapter;
+import cn.com.lightech.led_g5w.net.utils.Logger;
 import cn.com.lightech.led_g5w.presenter.MainPresenter;
 import cn.com.lightech.led_g5w.utils.ImageUtil;
 import cn.com.lightech.led_g5w.view.AppBaseTabNavgationActivity;
 import cn.com.lightech.led_g5w.view.console.impl.AutoFragment;
-import cn.com.lightech.led_g5w.view.console.impl.ManualFragment;
 import cn.com.lightech.led_g5w.view.device.IMainDeviceView;
 import cn.com.lightech.led_g5w.wedgit.CustViewPager;
 import cn.com.lightech.led_g5w.wedgit.RoundImageView;
@@ -40,7 +40,7 @@ import cn.com.lightech.led_g5w.wedgit.RoundImageView;
  * Created by 明 on 2016/3/4.
  */
 public class MainDeviceActivity extends AppBaseTabNavgationActivity implements IMainDeviceView, View.OnLongClickListener {
-
+    private Logger logger = Logger.getLogger(MainDeviceActivity.class);
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_g5w_head_image.jpg";
 
@@ -61,10 +61,12 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
     LinearLayout llDeviceActivity;
 
     MainPresenter mainDevicePresenter;
-    private DeviceLEDFragment defaultFragment;
-    private Fragment currentFragment;
+
+    private DeviceLEDFragment ledFragment = DeviceLEDFragment.newInstance("", "");
+    private DeviceSprayFragment sprayFragment = DeviceSprayFragment.newInstance("", "");
     private PopupMenu menu;
     private String[] deviceType;
+    private MenuItem scanMenu;
 
     public MainDeviceActivity() {
         super();
@@ -212,7 +214,11 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_actionbar_device_main, menu);
+        scanMenu = menu.findItem(R.id.action_btn_device_scanning);
+        scanLoading(true);
+        return false;
+        // return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -221,6 +227,10 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
         switch (itemId) {
             case R.id.action_btn_help:
                 mainDevicePresenter.showHelp();
+                break;
+            case R.id.action_btn_device_scanning:
+                mainDevicePresenter.scanDevice();
+                scanLoading(true);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -312,6 +322,39 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
+    @Override
+    public void scanLoading(boolean isScanning) {
+        if (scanMenu != null) {
+            if (isScanning) {
+                scanMenu.setActionView(R.layout.actionbar_indeterminate_progress);
+                scanMenu.setEnabled(false);
+            } else {
+                scanMenu.setActionView(null);
+                scanMenu.setEnabled(true);
+            }
+        }
+    }
+
+    @Override
+    public void refresh() {
+        ledFragment.setDevices(mainDevicePresenter.getDeviceGroups());
+        sprayFragment.setDevices(mainDevicePresenter.getDevices());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        logger.i("DeviceLEDFragment", "onResume");
+        mainDevicePresenter.start();
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mainDevicePresenter.stop();
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -326,11 +369,11 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return DeviceLEDFragment.newInstance("", "");
+                    return ledFragment; //DeviceLEDFragment.newInstance("", "");
                 case 1:
-                    return DeviceSprayFragment.newInstance("", "");
+                    return sprayFragment;//DeviceSprayFragment.newInstance("", "");
             }
-            return AutoFragment.newInstance("", "");
+            return ledFragment;
         }
 
         @Override

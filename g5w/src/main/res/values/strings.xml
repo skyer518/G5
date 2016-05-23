@@ -151,6 +151,6 @@
     <string name="effect_5">Shallow</string>
     <!--device Type -->
     <string name="device_led">LED</string>
-    <string name="device_spray">Spray</string>
+    <string name="device_spray">Wave </string>
 
 </resources>

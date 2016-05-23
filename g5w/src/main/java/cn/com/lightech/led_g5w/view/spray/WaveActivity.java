@@ -11,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import java.util.Date;
 
@@ -31,6 +32,20 @@ import cn.com.lightech.led_g5w.wedgit.MyTimePicker;
 public class WaveActivity extends AppBaseActivity implements OnClickListener,
         IDataListener, SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener {
 
+
+    @Bind(R.id.tv_motorSpeend)
+    TextView tvMotorSpeend;
+    @Bind(R.id.tv_M1)
+    TextView tvM1;
+    @Bind(R.id.tv_M2)
+    TextView tvM2;
+    @Bind(R.id.tv_M3)
+    TextView tvM3;
+    @Bind(R.id.tv_M4)
+    TextView tvM4;
+    @Bind(R.id.tv_lastMoonDay)
+    TextView tvLastMoonDay;
+
     private ActionBar actionBar;
 
 
@@ -40,20 +55,20 @@ public class WaveActivity extends AppBaseActivity implements OnClickListener,
     Spinner sp_effect;
 
     @Bind(R.id.hsb_Channel)
-    SeekBar hsb_channel;
+    SeekBar seekbar_channel;
     @Bind(R.id.hsb_motorSpeend)
-    SeekBar hsb_speed;
+    SeekBar seekbar_speed;
     @Bind(R.id.hsb_lastMoonDay)
-    SeekBar hsb_moonDay;
+    SeekBar seekbar_moonDay;
 
     @Bind(R.id.hsb_M1)
-    SeekBar hsb_M1;
+    SeekBar seekbar_M1;
     @Bind(R.id.hsb_M2)
-    SeekBar hsb_M2;
+    SeekBar seekbar_M2;
     @Bind(R.id.hsb_M3)
-    SeekBar hsb_M3;
+    SeekBar seekbar_M3;
     @Bind(R.id.hsb_M4)
-    SeekBar hsb_M4;
+    SeekBar seekbar_M4;
 
     @Bind(R.id.sw_dayOrNight)
     Switch sw_dayOrNight;
@@ -81,9 +96,9 @@ public class WaveActivity extends AppBaseActivity implements OnClickListener,
         public void onItemSelected(AdapterView<?> parent, View view,
                                    int position, long id) {
             if (position != 3) {
-                hsb_moonDay.setEnabled(false);
+                seekbar_moonDay.setEnabled(false);
             } else {
-                hsb_moonDay.setEnabled(true);
+                seekbar_moonDay.setEnabled(true);
             }
             onValueChanged();
 
@@ -103,16 +118,16 @@ public class WaveActivity extends AppBaseActivity implements OnClickListener,
         public void onItemSelected(AdapterView<?> parent, View view,
                                    int position, long id) {
             if (position == 3) {
-                hsb_M1.setEnabled(true);
-                hsb_M2.setEnabled(true);
-                hsb_M3.setEnabled(true);
-                hsb_M4.setEnabled(true);
+                seekbar_M1.setEnabled(true);
+                seekbar_M2.setEnabled(true);
+                seekbar_M3.setEnabled(true);
+                seekbar_M4.setEnabled(true);
 
             } else {
-                hsb_M1.setEnabled(false);
-                hsb_M2.setEnabled(false);
-                hsb_M3.setEnabled(false);
-                hsb_M4.setEnabled(false);
+                seekbar_M1.setEnabled(false);
+                seekbar_M2.setEnabled(false);
+                seekbar_M3.setEnabled(false);
+                seekbar_M4.setEnabled(false);
             }
             if (position < 2) {
                 sw_autoWave.setEnabled(true);
@@ -146,13 +161,19 @@ public class WaveActivity extends AppBaseActivity implements OnClickListener,
 
         sp_function.setOnItemSelectedListener(functionListener);
 
-        hsb_channel.setOnSeekBarChangeListener(this);
-        hsb_M1.setOnSeekBarChangeListener(this);
-        hsb_M2.setOnSeekBarChangeListener(this);
-        hsb_M3.setOnSeekBarChangeListener(this);
-        hsb_M4.setOnSeekBarChangeListener(this);
-        hsb_moonDay.setOnSeekBarChangeListener(this);
-        hsb_speed.setOnSeekBarChangeListener(this);
+        //seekbar_channel.setOnSeekBarChangeListener(this);
+        seekbar_M1.setOnSeekBarChangeListener(this);
+        seekbar_M1.setTag(tvM1);
+        seekbar_M2.setOnSeekBarChangeListener(this);
+        seekbar_M2.setTag(tvM2);
+        seekbar_M3.setOnSeekBarChangeListener(this);
+        seekbar_M3.setTag(tvM3);
+        seekbar_M4.setOnSeekBarChangeListener(this);
+        seekbar_M4.setTag(tvM4);
+        seekbar_moonDay.setOnSeekBarChangeListener(this);
+        seekbar_moonDay.setTag(tvLastMoonDay);
+        seekbar_speed.setOnSeekBarChangeListener(this);
+        seekbar_speed.setTag(tvMotorSpeend);
 
         sw_autoWave.setOnCheckedChangeListener(this);
         sw_dayOrNight.setOnCheckedChangeListener(this);
@@ -165,13 +186,13 @@ public class WaveActivity extends AppBaseActivity implements OnClickListener,
             }
         });
 
-        init();
     }
 
 
     @Override
     protected void loadData() {
 
+        initData();
     }
 
 
@@ -179,22 +200,22 @@ public class WaveActivity extends AppBaseActivity implements OnClickListener,
         sendDataToLed();
     }
 
-    private void init() {
+    private void initData() {
         if (waveNode != null) {
 
-            hsb_channel.setProgress(waveNode.getChannel());
-            hsb_speed.setProgress(waveNode.getPower() / 10);
+            seekbar_channel.setProgress(waveNode.getChannel());
+            seekbar_speed.setProgress(waveNode.getPower() / 10);
             sw_autoWave.setChecked(waveNode.isAutoWave());
             sw_dayOrNight.setChecked(waveNode.isDayOrNight());
             sw_feed.setChecked(waveNode.isFeed());
 
             //tp_pause.setValue(waveNode.getPulseS(), waveNode.getPulseMs());
-            hsb_M1.setProgress(waveNode.getM1());
-            hsb_M2.setProgress(waveNode.getM2());
-            hsb_M3.setProgress(waveNode.getM3());
-            hsb_M4.setProgress(waveNode.getM4());
+            seekbar_M1.setProgress(waveNode.getM1());
+            seekbar_M2.setProgress(waveNode.getM2());
+            seekbar_M3.setProgress(waveNode.getM3());
+            seekbar_M4.setProgress(waveNode.getM4());
 
-            hsb_moonDay.setProgress(waveNode.getDaysAgo());
+            seekbar_moonDay.setProgress(waveNode.getDaysAgo());
             if (waveNode.getDaysAgo() < 32) {
                 functionItem = getResources().getStringArray(
                         R.array.array_wave_function_all);
@@ -272,11 +293,11 @@ public class WaveActivity extends AppBaseActivity implements OnClickListener,
 
         node.setFunction((byte) (sp_function.getSelectedItemPosition() + 1));
         node.setEffect((byte) (sp_effect.getSelectedItemPosition() + 1));
-        node.setPower((byte) ((byte) hsb_speed.getProgress() * 10));
-        node.setChannel(hsb_channel.getProgress());
+        node.setPower((byte) ((byte) seekbar_speed.getProgress() * 10));
+        node.setChannel(seekbar_channel.getProgress());
         node.setAutoWave(sw_autoWave.isChecked());
         node.setDayOrNight(sw_dayOrNight.isChecked());
-        node.setDaysAgo((byte) hsb_moonDay.getProgress());
+        node.setDaysAgo((byte) seekbar_moonDay.getProgress());
         node.setFeed(sw_feed.isChecked());
 
         //实际时间
@@ -285,16 +306,16 @@ public class WaveActivity extends AppBaseActivity implements OnClickListener,
         // Pulse
         node.setPulseS((byte) tv_pause.getleftValue());
         node.setPulseMs((byte) tv_pause.getRightValue());
-        int time_1 = hsb_M1.getProgress();
+        int time_1 = seekbar_M1.getProgress();
         node.setM1((byte) time_1);
 
-        int time_2 = hsb_M2.getProgress();
+        int time_2 = seekbar_M2.getProgress();
         node.setM2((byte) time_2);
 
-        int time_3 = hsb_M3.getProgress();
+        int time_3 = seekbar_M3.getProgress();
         node.setM3((byte) time_3);
 
-        int time_4 = hsb_M4.getProgress();
+        int time_4 = seekbar_M4.getProgress();
         node.setM4((byte) time_4);
 
         DataManager.getInstance().saveWaveNode(node, true);
@@ -322,6 +343,8 @@ public class WaveActivity extends AppBaseActivity implements OnClickListener,
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         // TODO
+        final TextView tvTag = (TextView) seekBar.getTag();
+        tvTag.setText(progress + "");
     }
 
     @Override
@@ -336,6 +359,8 @@ public class WaveActivity extends AppBaseActivity implements OnClickListener,
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        hsb_M1.setOnSeekBarChangeListener(this);
+        seekbar_M1.setOnSeekBarChangeListener(this);
     }
+
+
 }

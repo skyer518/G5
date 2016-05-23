@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/action_btn_device_scanning"
-        android:icon="@null"
-        android:showAsAction="always"
-        android:title="@string/device_menu_scan" />
+    <!--<item-->
+    <!--android:id="@+id/action_btn_device_scanning"-->
+    <!--android:icon="@null"-->
+    <!--android:showAsAction="always"-->
+    <!--android:title="@string/device_menu_scan" />-->
     <item
         android:id="@+id/action_btn_device_add_device"
         android:icon="@null"

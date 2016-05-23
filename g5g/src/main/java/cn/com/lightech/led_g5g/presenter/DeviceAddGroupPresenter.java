@@ -32,6 +32,7 @@ public class DeviceAddGroupPresenter extends LedPresenter {
             req.setIntVal(group.getNumber());
             req.setByteArray(MacUtil.convertMac(device.getMac()));
             req.setCmdType(CmdType.SetGroup);
+            req.setDeviceType(device.getType());
             ConnectionsManager.getInstance().sendaToHost(req, device.getIp());
         }
 

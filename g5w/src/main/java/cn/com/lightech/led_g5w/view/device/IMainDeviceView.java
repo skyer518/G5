@@ -6,4 +6,7 @@ package cn.com.lightech.led_g5w.view.device;
 public interface IMainDeviceView {
 
 
+    void scanLoading(boolean isScanning);
+
+    void refresh();
 }

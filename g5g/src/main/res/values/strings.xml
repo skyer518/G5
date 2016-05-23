@@ -103,7 +103,7 @@
     <string name="device_state_disconnected">Disconnected</string>
     <string name="company">CTLite</string>
     <string name="device_device_title">Online Device</string>
-    <string name="company_info">Professional lighting solution for coral system</string>
+    <string name="company_info">Professional lighting solution for greenhouse</string>
     <string name="device_device_rebooting">Device is rebooting, please try again after 1 minute
     </string>
     <string name="device_menu_addDevice">Add new device</string>

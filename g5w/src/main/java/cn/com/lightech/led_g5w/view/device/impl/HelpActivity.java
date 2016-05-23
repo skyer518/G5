@@ -42,9 +42,11 @@ public class HelpActivity extends AppBaseActivity {
         String able = getResources().getConfiguration().locale.getCountry();
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         if (able.equals("CN"))
-            webView.loadUrl("file:///android_asset/help/OperationMmanual_cn.htm");
-        else {
-            webView.loadUrl("file:///android_asset/help/OperationMmanual_en.htm");
+            webView.loadUrl("file:///android_asset/help/android_cn.htm");
+        else if (able.equals("TW")) {
+            webView.loadUrl("file:///android_asset/help/android_cn_tw.htm");
+        } else {
+            webView.loadUrl("file:///android_asset/help/android_en.htm");
 
         }
     }

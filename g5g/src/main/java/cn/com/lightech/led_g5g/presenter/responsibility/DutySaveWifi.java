@@ -39,6 +39,7 @@ public class DutySaveWifi extends DutyHandler {
             @Override
             protected void onCancelled() {
                 super.onCancelled();
+                ProgressUtil.closeDialog();
                 request.handler.sendEmptyMessage(RequestEntity.WHAT_SUCCESS);
             }
         };

@@ -48,6 +48,7 @@ public class DeviceLEDFragment extends AppBaseStateFragment implements IDeviceVi
     private ExpControllableDeviceAdapter deviceAdapter;
     private LedListPresenter presenter;
     private MenuItem scanMenu;
+    private ArrayList<DeviceGroup> devices;
 
     public DeviceLEDFragment() {
         // Required empty public constructor
@@ -170,15 +171,14 @@ public class DeviceLEDFragment extends AppBaseStateFragment implements IDeviceVi
     public void onResume() {
         super.onResume();
         Log.i("DeviceLEDFragment", "onResume");
-        System.out.print("DeviceLEDFragment onResume");
-        presenter.start();
+        // presenter.start();
     }
 
 
     @Override
     public void onStop() {
         super.onStop();
-        presenter.stop();
+        //presenter.stop();
     }
 
     @Override
@@ -188,18 +188,18 @@ public class DeviceLEDFragment extends AppBaseStateFragment implements IDeviceVi
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public void showDevices() {
-        Log.i("DeviceLEDFragment", "showDevices");
-        ArrayList<DeviceGroup> deviceGroups = presenter.getDeviceGroups();
-        if (deviceGroups == null) {
-            return;
-        }
-        deviceAdapter.setData(deviceGroups);
-        deviceAdapter.notifyDataSetChanged();
-        if (elvDevices != null && deviceGroups.size() > 0)
-            elvDevices.expandGroup(0);
-    }
+//    @Override
+//    public void showDevices() {
+//        Log.i("DeviceLEDFragment", "showDevices");
+//        ArrayList<DeviceGroup> deviceGroups = presenter.getDeviceGroups();
+//        if (deviceGroups == null) {
+//            return;
+//        }
+//        deviceAdapter.setData(deviceGroups);
+//        deviceAdapter.notifyDataSetChanged();
+//        if (elvDevices != null && deviceGroups.size() > 0)
+//            elvDevices.expandGroup(0);
+//    }
 
     @Override
     public void showMessage(String message) {
@@ -227,8 +227,8 @@ public class DeviceLEDFragment extends AppBaseStateFragment implements IDeviceVi
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_actionbar_device_led, menu);
-        scanMenu = menu.findItem(R.id.action_btn_device_scanning);
-        scanLoading(true);
+//        scanMenu = menu.findItem(R.id.action_btn_device_scanning);
+//        scanLoading(true);
         super.onCreateOptionsMenu(menu, inflater);
 
     }
@@ -267,10 +267,10 @@ public class DeviceLEDFragment extends AppBaseStateFragment implements IDeviceVi
             case R.id.action_btn_device_add_device:
                 presenter.addNewDevice();
                 break;
-            case R.id.action_btn_device_scanning:
-                presenter.scanDevice();
-                scanLoading(true);
-                break;
+//            case R.id.action_btn_device_scanning:
+//                presenter.scanDevice();
+//                scanLoading(true);
+//                break;
             case R.id.action_btn_device_add_group:
                 presenter.addGroup(getDeviceGroups());
                 break;
@@ -286,5 +286,11 @@ public class DeviceLEDFragment extends AppBaseStateFragment implements IDeviceVi
 
     public List<DeviceGroup> getDeviceGroups() {
         return presenter.getDeviceGroups();
+    }
+
+    public void setDevices(ArrayList<DeviceGroup> devices) {
+        presenter.setDeviceGroups(devices);
+        deviceAdapter.setData(devices);
+        deviceAdapter.notifyDataSetChanged();
     }
 }

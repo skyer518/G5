@@ -6,6 +6,7 @@ import java.util.List;
 
 import cn.com.lightech.led_g5g.R;
 import cn.com.lightech.led_g5g.entity.Device;
+import cn.com.lightech.led_g5g.entity.DeviceType;
 import cn.com.lightech.led_g5g.gloabal.IDataListener;
 import cn.com.lightech.led_g5g.net.ConnectManager;
 import cn.com.lightech.led_g5g.net.ConnectionsManager;
@@ -45,16 +46,22 @@ public class DeviceDeleteGroupPresenter extends LedPresenter implements IDataLis
         ProgressUtil.showPogress(mContext, mContext.getString(R.string.device_wifi_save_data_2_led), false);
         num = devices.size();
         for (Device device : devices) {
-            setGroup(device.getIp(), device.getMac());
+            createGroup(device);
         }
     }
 
-    private void setGroup(String host, String mac) {
+    private void createGroup(String host, String mac, DeviceType led) {
+
         Request request = new Request();
         request.setIntVal(0);
+        request.setDeviceType(led);
         request.setCmdType(CmdType.SetGroup);
         request.setByteArray(MacUtil.convertMac(mac));
         ConnectionsManager.getInstance().sendaToHost(request, host);
+    }
+
+    private void createGroup(Device device) {
+        createGroup(device.getIp(), device.getMac(), device.getType());
     }
 
     @Override
@@ -77,9 +84,11 @@ public class DeviceDeleteGroupPresenter extends LedPresenter implements IDataLis
                 deleteDeviceView.closeView();
             }
         } else if (response != null && response.getCmdType() == CmdType.SetGroup) {
-            setGroup(connectManager.getHost(), connectManager.getMac());
+            createGroup(connectManager.getHost(), connectManager.getMac(), DeviceType.Led);
         }
 
         return false;
     }
+
+
 }

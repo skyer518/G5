@@ -10,9 +10,9 @@ import cn.com.lightech.led_g5w.view.IBaseView;
  */
 public interface IDeviceView extends IBaseView {
 
-    void showDevices();
-
-    void scanLoading(boolean scaning);
+//    void showDevices();
+//
+//    void scanLoading(boolean scaning);
 
     void gotoDeleteGroupFragment();
 

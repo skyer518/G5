@@ -6,11 +6,13 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.lightech.led_g5g.R;
+import cn.com.lightech.led_g5g.net.wifi.WifiTask;
 import cn.com.lightech.led_g5g.presenter.responsibility.DutyConnectLed;
 import cn.com.lightech.led_g5g.presenter.responsibility.DutyConnectWifi;
 import cn.com.lightech.led_g5g.presenter.responsibility.DutyGetDeviceType;
@@ -95,6 +97,9 @@ public class ScanWifiPresenter {
                     break;
                 case RequestEntity.WHAT_UNKNOWN_DEVICE:
                     wifiView.showMessage("Unknown device");
+                    break;
+                case RequestEntity.WHAT_SUCCESS:
+                    gotoNext();
                     break;
             }
         }
@@ -354,14 +359,15 @@ public class ScanWifiPresenter {
     }
 
     //
-//
-//    public void gotoNext() {
-//        Toast.makeText(mContext, R.string.device_device_rebooting, Toast.LENGTH_LONG).show();
-//        new WifiTask(mContext).execute(lanWifi, lanWifiPwd, false);
-//        wifiView.successSetting();
-//
-//    }
-//
+
+    public void gotoNext() {
+        Toast.makeText(mContext, R.string.device_device_rebooting, Toast.LENGTH_LONG).show();
+        new WifiTask(mContext).execute(entity.lanWifi, entity.lanWifiPwd, false);
+        wifiView.successSetting();
+
+    }
+
+    //
     public List<ScanResult> getWifiScanResult() {
         List<ScanResult> scanResults = excludeDeviceFilter(ledWifi.SSID, wifiManager.getScanResults());
         return excludeDeviceFilter("\\s*", scanResults);
