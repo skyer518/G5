@@ -31,7 +31,7 @@ public abstract class AppBaseTabNavgationActivity extends AppBaseActivity implem
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
 
-        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 

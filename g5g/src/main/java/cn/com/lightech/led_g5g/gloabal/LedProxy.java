@@ -2,6 +2,7 @@ package cn.com.lightech.led_g5g.gloabal;
 
 import cn.com.lightech.led_g5g.entity.DataNode;
 import cn.com.lightech.led_g5g.entity.data.UpdateData;
+import cn.com.lightech.led_g5g.net.ConnectManager;
 import cn.com.lightech.led_g5g.net.entity.CmdType;
 import cn.com.lightech.led_g5g.entity.LampChannel;
 import cn.com.lightech.led_g5g.entity.LampState;
@@ -143,4 +144,16 @@ public class LedProxy {
     }
 
 
+    public static void setState(ConnectManager connectManager, byte workMode, boolean lighting, boolean moon, boolean acclimation) {
+        Request request = new Request();
+        LampState ls = new LampState();
+        ls.On = true;
+        ls.mode = workMode;
+        ls.lighting = lighting;
+        ls.moon = moon;
+        ls.acclimation = acclimation;
+        request.setLampState(ls);
+        request.setCmdType(CmdType.SetState);
+        connectManager.SendToLed(request);
+    }
 }

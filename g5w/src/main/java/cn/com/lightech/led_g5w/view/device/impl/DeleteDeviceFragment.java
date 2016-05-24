@@ -1,5 +1,6 @@
 package cn.com.lightech.led_g5w.view.device.impl;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import cn.com.lightech.led_g5w.entity.DeviceGroup;
 import cn.com.lightech.led_g5w.presenter.DeviceDeleteLedPresenter;
 import cn.com.lightech.led_g5w.view.AppBaseFragment;
 import cn.com.lightech.led_g5w.view.device.IDeleteDeviceView;
+import cn.com.lightech.led_g5w.view.device.IMainDeviceView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -168,6 +170,8 @@ public class DeleteDeviceFragment extends AppBaseFragment implements IDeleteDevi
     @Override
     public void closeView() {
         //getActivity().onBackPressed();
+        final MainDeviceActivity activity = (MainDeviceActivity) getActivity();
+        activity.mainDevicePresenter.scanDevice();
         getFragmentManager().popBackStack();
     }
 

@@ -69,7 +69,7 @@ public class WifiActivity extends AppBaseActivity implements IWifiView, WifiDial
         ActionBar supportActionBar = getActionBar();
         supportActionBar.setTitle(getString(R.string.device_wifi_title));
         supportActionBar.setDisplayHomeAsUpEnabled(true);
-        supportActionBar.setDisplayShowHomeEnabled(true);
+        supportActionBar.setDisplayShowHomeEnabled(false);
         lvWifi.setAdapter(new WifiAdapter(this, new ArrayList<ScanResult>(0)));
         lvWifi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -70,7 +70,6 @@
     <string name="pref_title_time2">Time 2</string>
     <string name="pref_title_time3">Time 3</string>
 
-
     <!-- TODO :  Preference Keys start -->
 
     <string name="pref_key_mode">pref_work_mode</string>
@@ -101,9 +100,15 @@
     <string name="device_control">Control</string>
     <string name="device_state_connected">Connected</string>
     <string name="device_state_disconnected">Disconnected</string>
-    <string name="company">CTLite</string>
     <string name="device_device_title">Online Device</string>
-    <string name="company_info">Professional lighting solution for greenhouse</string>
+    <string name="company_title_ctlite">CTLite</string>
+    <string name="company_info_ctlite">Professional lighting solution for greenhouse</string>
+
+    <string name="company_title_eltac">ELTAC-HYDROFARM</string>
+    <string name="company_info_eltac">www.eltac.com</string>
+
+    <string name="company_info_oem">0-70736-Stuttgart</string>
+
     <string name="device_device_rebooting">Device is rebooting, please try again after 1 minute
     </string>
     <string name="device_menu_addDevice">Add new device</string>

@@ -42,6 +42,8 @@ import cn.com.u2be.xbase.net.UDPManager;
 public class MainPresenter implements IMulticastListener, IDataListener {
 
     private static final int WHAT_UDP_SCAN_STOPED = 0xf1;
+
+    private static final int WHAT_UDP_SCAN_STARTED = 0xf2;
     private final Context mContext;
     private IMainDeviceView mainDeviceView;
 
@@ -82,6 +84,9 @@ public class MainPresenter implements IMulticastListener, IDataListener {
                 case WHAT_UDP_SCAN_STOPED:
                     mainDeviceView.scanLoading(false);
                     break;
+                case WHAT_UDP_SCAN_STARTED:
+                    mainDeviceView.scanLoading(true);
+                    break;
 
             }
 
@@ -106,6 +111,8 @@ public class MainPresenter implements IMulticastListener, IDataListener {
 
 
     public void scanDevice() {
+
+        mHandler.sendEmptyMessage(WHAT_UDP_SCAN_STARTED);
         scanCount = 0;
         if (udpScanTimer == null) {
             mainDeviceView.scanLoading(true);
@@ -137,7 +144,7 @@ public class MainPresenter implements IMulticastListener, IDataListener {
         defaultGroup.getDevices().clear();
         deviceGroups.add(defaultGroup);
         devices.clear();
-//        mainDeviceView.refresh();
+        mainDeviceView.refresh();
 //        deviceView.showDevices();
     }
 
@@ -234,6 +241,7 @@ public class MainPresenter implements IMulticastListener, IDataListener {
         MulticastManager.getInstance().registListener(this);
         MulticastManager.getInstance().connect();
         scanDevice();
+        mainDeviceView.refresh();
     }
 
     public void stop() {

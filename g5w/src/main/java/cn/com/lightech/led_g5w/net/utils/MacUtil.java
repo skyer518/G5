@@ -37,7 +37,10 @@ public class MacUtil {
     public static String convertMac(byte[] mac) {
         StringBuffer sb = new StringBuffer();
         for (byte i : mac) {
-            sb.append(Integer.toHexString(i & 0xff));
+            final String temp = Integer.toHexString(i & 0xff);
+            if (temp.length() < 2)
+                sb.append("0");
+            sb.append(temp);
         }
         return sb.toString().toUpperCase();
     }

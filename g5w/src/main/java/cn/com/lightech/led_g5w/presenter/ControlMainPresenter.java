@@ -49,7 +49,17 @@ public class ControlMainPresenter implements IDataListener {
             LampState state = DataManager.getInstance().getState();
             if (state != null)
                 LedProxy.stopPreview();
-                LedProxy.setState(workMode, state.lighting, state.moon, state.acclimation);
+            LedProxy.setState(workMode, state.lighting, state.moon, state.acclimation);
+        }
+    }
+
+
+    public void setLedState(ConnectManager connectManager, int workMode) {
+        if (isReady) {
+            LampState state = DataManager.getInstance().getState();
+            if (state != null)
+                LedProxy.stopPreview();
+            LedProxy.setState(connectManager, workMode, state.lighting, state.moon, state.acclimation);
         }
     }
 
@@ -98,13 +108,16 @@ public class ControlMainPresenter implements IDataListener {
                     this.controlView.switchMode(ls.mode);
                     isReady = true;
                     ProgressUtil.closeDialog();
+                } else {
+                    queryLedState();
                 }
                 break;
 
             case SetState:
-                if (response.IsOK()) {
+                if (!response.IsOK()) {
 //                    Toast.makeText(mContext, mContext.getString(R.string.set_state_success), Toast.LENGTH_LONG)
 //                            .show();
+                    setLedState(connectManager, DataManager.getInstance().getState().mode);
                 }
                 break;
 
@@ -119,7 +132,6 @@ public class ControlMainPresenter implements IDataListener {
                         + response.getReplyCode());
         return true;
     }
-
 
 
 }

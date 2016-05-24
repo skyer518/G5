@@ -48,7 +48,7 @@ public class ControlAutoPresenter implements IDataListener {
     }
 
     public void previewChanel(LampChannel channel) {
-        LedProxy.stopPreview();
+        //LedProxy.stopPreview();
         LedProxy.preview(channel);
     }
 

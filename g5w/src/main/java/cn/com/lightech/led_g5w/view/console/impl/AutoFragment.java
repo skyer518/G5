@@ -116,7 +116,6 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
     };
     private Dialog dialog;
     private ViewHolder holder;
-    ;
 
 
     public AutoFragment() {
@@ -543,12 +542,15 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
 
     void canPreview(boolean can) {
         if (can) {
-            btnPreview.setVisibility(View.VISIBLE);
-            btnStopPreview.setVisibility(View.GONE);
+            if (btnPreview != null)
+                btnPreview.setVisibility(View.VISIBLE);
+            if (btnStopPreview != null)
+                btnStopPreview.setVisibility(View.GONE);
         } else {
-            btnPreview.setVisibility(View.GONE);
-            btnStopPreview.setVisibility(View.VISIBLE);
-
+            if (btnPreview != null)
+                btnPreview.setVisibility(View.GONE);
+            if (btnStopPreview != null)
+                btnStopPreview.setVisibility(View.VISIBLE);
         }
     }
 

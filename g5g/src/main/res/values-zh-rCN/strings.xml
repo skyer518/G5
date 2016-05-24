@@ -10,8 +10,7 @@
     <string name="device_menu_addGroup">添加分组</string>
     <string name="device_menu_delDevice">删除设备</string>
     <string name="device_menu_delGroup">删除分组</string>
-    <string name="company">希蒂莱特</string>
-    <string name="company_info">专业植物生长灯光解决系统</string>
+
 
     <string name="device_menu_scan">扫描</string>
     <string name="device_menu_editGroup">编缉分组</string>
@@ -93,4 +92,6 @@
     <string name="app_model_self">自定义模式</string>
     <string name="app_model_vegetation">长叶模式</string>
     <string name="error_points_too_match">时间点过多，请不要超过24个！</string>
+    <string name="company_info_ctlite">专业植物生长灯光解决系统</string>
+    <string name="company_title_ctlite">希蒂莱特</string>
 </resources>

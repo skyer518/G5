@@ -53,7 +53,7 @@ public class ControlCurvePresenter implements IDataListener {
     }
 
     public void previewChanel(LampChannel channel) {
-        LedProxy.stopPreview();
+        // LedProxy.stopPreview();
         LedProxy.preview(channel);
     }
 

@@ -5,8 +5,6 @@
     <string name="intent_key_ledwifi">LED</string>
     <string name="device_device_title">線上設備</string>
     <string name="device_device_rebooting">設備正在重啓，請等待1分鐘後嘗試連接</string>
-    <string name="company_info">專業植物生長燈光解决系統</string>
-    <string name="company">希蒂莱特</string>
     <string name="device_menu_addDevice">添加新設備</string>
     <string name="device_menu_addGroup">添加分組</string>
     <string name="device_menu_delDevice">删除設備</string>
@@ -88,4 +86,6 @@
     <string name="app_model_flowering">開花模式</string>
     <string name="app_model_clone">克隆模式</string>
     <string name="error_points_too_match">時間點過多，請不要超過24箇！</string>
+    <string name="company_info_ctlite">專業植物生長燈光解决系統</string>
+    <string name="company_title_ctlite">希蒂莱特</string>
 </resources>

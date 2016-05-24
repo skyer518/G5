@@ -10,12 +10,15 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Process;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -24,7 +27,6 @@ import java.io.IOException;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.lightech.led_g5g.R;
-import cn.com.lightech.led_g5g.adapter.ExpDeviceAdapter;
 import cn.com.lightech.led_g5g.presenter.MainPresenter;
 import cn.com.lightech.led_g5g.utils.ImageUtil;
 import cn.com.lightech.led_g5g.view.AppBaseActivity;
@@ -36,6 +38,12 @@ import cn.com.lightech.led_g5g.wedgit.RoundImageView;
  */
 public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceView, View.OnLongClickListener {
 
+
+    private static final int OEM_NONE = 0x00;
+    private static final int OEM_ELTAC = 0x01;
+    private static final int OEM_ODM = 0x02;
+
+
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_g5g_head_image.jpg";
 
@@ -46,17 +54,25 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
     // 裁剪后图片的宽(X)和高(Y),480 X 480的正方形。
     private static int output_X = 360;
     private static int output_Y = 360;
-    ExpDeviceAdapter deviceAdapter;
 
     @Bind(R.id.iv_custPic)
     RoundImageView ivCustPic;
-    @Bind(R.id.ll_device_activity)
-    LinearLayout llDeviceActivity;
 
     MainPresenter mainDevicePresenter;
+    @Bind(R.id.oem_log1)
+    ImageView oemLog1;
+    @Bind(R.id.oem_log)
+    ImageView oemLog;
+    @Bind(R.id.oem_name)
+    TextView oemName;
+    @Bind(R.id.company_title)
+    TextView companyTitle;
+    @Bind(R.id.company_info)
+    TextView companyInfo;
     private ExpDeviceGroupFragment defaultFragment;
     private Fragment currentFragment;
     private PopupMenu menu;
+    private int oemVersion;
 
     public MainDeviceActivity() {
         super();
@@ -65,7 +81,7 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
 
     @Override
     protected void initVariables(Bundle savedInstanceState) {
-
+        this.oemVersion = getResources().getInteger(R.integer.oem_version);
     }
 
     @Override
@@ -83,6 +99,38 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
     @Override
     protected void loadData() {
 
+        switch (oemVersion) {
+            case OEM_NONE:
+                ivCustPic.setVisibility(View.VISIBLE);
+                companyInfo.setVisibility(View.VISIBLE);
+
+                companyTitle.setVisibility(View.GONE);
+                oemName.setVisibility(View.GONE);
+                oemLog.setVisibility(View.GONE);
+                oemLog1.setVisibility(View.GONE);
+                break;
+            case OEM_ELTAC:
+                ivCustPic.setVisibility(View.VISIBLE);
+                companyTitle.setVisibility(View.VISIBLE);
+                companyInfo.setVisibility(View.VISIBLE);
+                companyTitle.setText(R.string.company_title_eltac);
+                companyInfo.setText(R.string.company_info_eltac);
+
+                oemName.setVisibility(View.GONE);
+                oemLog.setVisibility(View.GONE);
+                oemLog1.setVisibility(View.GONE);
+                break;
+            case OEM_ODM:
+                oemName.setVisibility(View.VISIBLE);
+                companyInfo.setVisibility(View.VISIBLE);
+
+                ivCustPic.setVisibility(View.GONE);
+                companyTitle.setVisibility(View.GONE);
+                companyInfo.setText(R.string.company_info_oem);
+                break;
+            default:
+
+        }
         //将图片显示到ImageView中
         Bitmap bm = ImageUtil.readBitmapFormDirectoryPictures(IMAGE_FILE_NAME);
         if (bm != null) {
@@ -94,7 +142,7 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
     void choicePhoto() {
         Intent intentFromGallery = new Intent(
                 Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         // 设置文件类型
 //        intentFromGallery.setType("image/*");
         startActivityForResult(intentFromGallery, CODE_GALLERY_REQUEST);
@@ -307,7 +355,7 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
                 case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
-                    android.os.Process.killProcess(android.os.Process.myPid());
+                    Process.killProcess(Process.myPid());
                     break;
                 case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
                     break;

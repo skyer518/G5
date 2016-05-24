@@ -16,31 +16,66 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_vertical_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:paddingLeft="@dimen/activity_vertical_margin">
 
-        <cn.com.lightech.led_g5g.wedgit.RoundImageView
-            android:id="@+id/iv_custPic"
-            android:layout_width="@dimen/userPhoto_size"
-            android:layout_height="@dimen/userPhoto_size"
-            android:scaleType="fitXY"
-            android:src="@mipmap/ic_head"
-            zhy:borderRadius="10dp"
-            zhy:type="round" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_panel_radius"
+            android:gravity="center"
+            android:minHeight="140dp"
+            android:minWidth="@dimen/userPhoto_size"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/oem_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="OEM / ODM Name:"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/oem_log1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/oem_log" />
+
+            <cn.com.lightech.led_g5g.wedgit.RoundImageView
+                android:id="@+id/iv_custPic"
+                android:layout_width="@dimen/userPhoto_size"
+                android:layout_height="@dimen/userPhoto_size"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_head"
+                zhy:borderRadius="5dp"
+                zhy:type="round" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/oem_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/oem_log" />
 
         <TextView
+            android:id="@+id/company_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="@string/company"
+            android:text="@string/company_title_ctlite"
             android:textSize="@dimen/app_text_size_m"
             android:textStyle="bold"
             android:visibility="gone" />
 
         <TextView
+            android:id="@+id/company_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/company_info" />
+            android:text="@string/company_info_ctlite" />
+
     </LinearLayout>
 
     <FrameLayout

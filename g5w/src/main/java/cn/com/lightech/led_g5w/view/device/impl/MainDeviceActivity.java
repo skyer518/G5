@@ -67,6 +67,7 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
     private PopupMenu menu;
     private String[] deviceType;
     private MenuItem scanMenu;
+    private boolean isScanning;
 
     public MainDeviceActivity() {
         super();
@@ -216,7 +217,8 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_actionbar_device_main, menu);
         scanMenu = menu.findItem(R.id.action_btn_device_scanning);
-        scanLoading(true);
+        scanLoading(isScanning);
+
         return false;
         // return super.onCreateOptionsMenu(menu);
     }
@@ -230,7 +232,7 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
                 break;
             case R.id.action_btn_device_scanning:
                 mainDevicePresenter.scanDevice();
-                scanLoading(true);
+                //scanLoading(true);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -324,6 +326,7 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
 
     @Override
     public void scanLoading(boolean isScanning) {
+        this.isScanning = isScanning;
         if (scanMenu != null) {
             if (isScanning) {
                 scanMenu.setActionView(R.layout.actionbar_indeterminate_progress);

@@ -150,6 +150,8 @@ public class DeleteGroupFragment extends AppBaseFragment implements IDeleteGroup
     @Override
     public void closeView() {
         //getActivity().onBackPressed();
+        final MainDeviceActivity activity = (MainDeviceActivity) getActivity();
+        activity.mainDevicePresenter.scanDevice();
         getFragmentManager().popBackStack();
     }
 

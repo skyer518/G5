@@ -2,6 +2,7 @@ package cn.com.lightech.led_g5w.gloabal;
 
 import cn.com.lightech.led_g5w.entity.DataNode;
 import cn.com.lightech.led_g5w.entity.UpdataNode;
+import cn.com.lightech.led_g5w.net.ConnectManager;
 import cn.com.lightech.led_g5w.net.entity.CmdType;
 import cn.com.lightech.led_g5w.entity.LampChannel;
 import cn.com.lightech.led_g5w.entity.LampState;
@@ -62,6 +63,22 @@ public class LedProxy {
         request.setLampState(ls);
         request.setCmdType(CmdType.SetState);
         ConnectionsManager.getInstance().sendToLed(request, false);
+    }
+
+    /**
+     * 设置状态
+     */
+    public static void setState(ConnectManager connectManager, int workMode, boolean flash, boolean moon, boolean acclimation) {
+        Request request = new Request();
+        LampState ls = new LampState();
+        ls.On = true;
+        ls.mode = (byte) workMode;
+        ls.lighting = flash;
+        ls.moon = moon;
+        ls.acclimation = acclimation;
+        request.setLampState(ls);
+        request.setCmdType(CmdType.SetState);
+        connectManager.SendToLed(request);
     }
 
     /**

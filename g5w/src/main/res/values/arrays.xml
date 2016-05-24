@@ -114,6 +114,6 @@
 
     <string-array name="array_device_type">
         <item>@string/device_led</item>
-        <item>@string/device_spray</item>
+        <!--<item>@string/device_spray</item>-->
     </string-array>
 </resources>

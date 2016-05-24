@@ -28,6 +28,7 @@ public class SycnDataPresenter implements IDataListener {
     private static final int TOTAL_MODE = 14;
     private int modeIndex;
     private String ip;
+    private byte[] pkgId;
 
     public SycnDataPresenter(Context context, ISycnDataView sycnDataView, String ip) {
         this.ip = ip;
@@ -52,9 +53,14 @@ public class SycnDataPresenter implements IDataListener {
 
             case RecvDataFromLED:
                 if (response.IsOK()) {
-                    recvData(response);
-                    syncNext();
-                    break;
+                    final byte[] packageId = response.getPackageId();
+                    if (packageId != null && packageId.length == 2
+                            && pkgId != null && pkgId.length == 2
+                            && packageId[0] == pkgId[0] && packageId[1] == pkgId[1]) {
+                        recvData(response);
+                        syncNext();
+                        break;
+                    }
                 }
             case ValidateSumFailed:
             case IDFormatError: // 出现错误就跳过继续下一个吧
@@ -83,7 +89,7 @@ public class SycnDataPresenter implements IDataListener {
      */
     public void syncData() {
         // 1、逐个查询模式的曲线时间截
-        byte[] pkgId = PackageId.getPackageIdByIndex(this.modeIndex);
+        this.pkgId = PackageId.getPackageIdByIndex(this.modeIndex);
         if (pkgId == null) {
             finish();
             return;

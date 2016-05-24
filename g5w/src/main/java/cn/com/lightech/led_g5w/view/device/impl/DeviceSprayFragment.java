@@ -273,8 +273,11 @@ public class DeviceSprayFragment extends AppBaseStateFragment implements IDevice
     }
 
     public void setDevices(ArrayList<Device> devices) {
-        presenter.setDevices(devices);
-        deviceAdapter.setData(devices);
-        deviceAdapter.notifyDataSetChanged();
+        if (presenter != null)
+            presenter.setDevices(devices);
+        if (deviceAdapter != null) {
+            deviceAdapter.setData(devices);
+            deviceAdapter.notifyDataSetChanged();
+        }
     }
 }

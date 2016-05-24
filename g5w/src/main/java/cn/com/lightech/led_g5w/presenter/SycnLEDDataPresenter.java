@@ -2,6 +2,7 @@ package cn.com.lightech.led_g5w.presenter;
 
 import android.content.Context;
 
+import java.util.Arrays;
 import java.util.List;
 
 import cn.com.lightech.led_g5w.entity.AutoDataNode;
@@ -28,6 +29,7 @@ public class SycnLEDDataPresenter implements IDataListener {
     private static final int TOTAL_MODE = 5;
     private int modeIndex;
     private String ip;
+    private byte[] pkgId;
 
     public SycnLEDDataPresenter(Context context, ISycnDataView sycnDataView, String ip) {
         this.ip = ip;
@@ -52,9 +54,15 @@ public class SycnLEDDataPresenter implements IDataListener {
 
             case RecvDataFromLED:
                 if (response.IsOK()) {
-                    recvData(response);
-                    syncNext();
-                    break;
+                    final byte[] packageId = response.getPackageId();
+
+                    if (packageId != null && packageId.length == 2
+                            && pkgId != null && pkgId.length == 2
+                            && packageId[0] == pkgId[0] && packageId[1] == pkgId[1]) {
+                        recvData(response);
+                        syncNext();
+                        break;
+                    }
                 }
             case ValidateSumFailed:
             case IDFormatError: // 出现错误就跳过继续下一个吧
@@ -69,9 +77,12 @@ public class SycnLEDDataPresenter implements IDataListener {
                     syncNext();
                 return true;
         }
-        Logger.getLogger().d(
+        Logger.getLogger().e(
                 response.getCmdType().toString() + "   "
                         + response.getReplyCode());
+//        Logger.getLogger().e(
+//                response.getCmdType().toString() + "   "
+//                        + response.getReplyCode() + "  \n byte data:" + Arrays.toString(response.getByteArray()));
         return false;
 
     }
@@ -83,7 +94,7 @@ public class SycnLEDDataPresenter implements IDataListener {
      */
     public void syncData() {
         // 1、逐个查询模式的曲线时间截
-        byte[] pkgId = PackageId.getModePackageId(this.modeIndex);
+        this.pkgId = PackageId.getModePackageId(this.modeIndex);
         if (pkgId == null) {
             finish();
             return;

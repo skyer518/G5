@@ -289,8 +289,16 @@ public class DeviceLEDFragment extends AppBaseStateFragment implements IDeviceVi
     }
 
     public void setDevices(ArrayList<DeviceGroup> devices) {
-        presenter.setDeviceGroups(devices);
-        deviceAdapter.setData(devices);
-        deviceAdapter.notifyDataSetChanged();
+
+        if (devices != null) {
+            if (presenter != null)
+                presenter.setDeviceGroups(devices);
+            if (deviceAdapter != null) {
+                deviceAdapter.setData(devices);
+                deviceAdapter.notifyDataSetChanged();
+            }
+            if (elvDevices != null)
+                elvDevices.expandGroup(0);
+        }
     }
 }
