@@ -98,8 +98,16 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
 
     @Override
     protected void loadData() {
-
+        Bitmap bm;
         switch (oemVersion) {
+            case OEM_ODM:
+                oemName.setVisibility(View.VISIBLE);
+                companyInfo.setVisibility(View.VISIBLE);
+
+                ivCustPic.setVisibility(View.GONE);
+                companyTitle.setVisibility(View.GONE);
+                companyInfo.setText(R.string.company_info_oem);
+                break;
             case OEM_NONE:
                 ivCustPic.setVisibility(View.VISIBLE);
                 companyInfo.setVisibility(View.VISIBLE);
@@ -108,6 +116,11 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
                 oemName.setVisibility(View.GONE);
                 oemLog.setVisibility(View.GONE);
                 oemLog1.setVisibility(View.GONE);
+                //将图片显示到ImageView中
+                bm = ImageUtil.readBitmapFormDirectoryPictures(IMAGE_FILE_NAME);
+                if (bm != null) {
+                    ivCustPic.setImageBitmap(bm);
+                }
                 break;
             case OEM_ELTAC:
                 ivCustPic.setVisibility(View.VISIBLE);
@@ -119,23 +132,16 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
                 oemName.setVisibility(View.GONE);
                 oemLog.setVisibility(View.GONE);
                 oemLog1.setVisibility(View.GONE);
-                break;
-            case OEM_ODM:
-                oemName.setVisibility(View.VISIBLE);
-                companyInfo.setVisibility(View.VISIBLE);
-
-                ivCustPic.setVisibility(View.GONE);
-                companyTitle.setVisibility(View.GONE);
-                companyInfo.setText(R.string.company_info_oem);
+                //将图片显示到ImageView中
+                bm = ImageUtil.readBitmapFormDirectoryPictures(IMAGE_FILE_NAME);
+                if (bm != null) {
+                    ivCustPic.setImageBitmap(bm);
+                }
                 break;
             default:
 
         }
-        //将图片显示到ImageView中
-        Bitmap bm = ImageUtil.readBitmapFormDirectoryPictures(IMAGE_FILE_NAME);
-        if (bm != null) {
-            ivCustPic.setImageBitmap(bm);
-        }
+
 
     }
 

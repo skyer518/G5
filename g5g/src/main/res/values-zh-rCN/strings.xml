@@ -48,7 +48,7 @@
     <string name="app_effect_acclimation">植物适应</string>
     <string name="error_set_flag_failed">保存分组失败！</string>
     <string name="intent_key_ledwifi">LED</string>
-    <string name="pref_summary_acclimation">启用/禁用珊瑚适应功能</string>
+    <string name="pref_summary_acclimation">启用/禁用植物适应功能</string>
     <string name="pref_summary_flash">启用/禁用闪电功能</string>
     <string name="pref_summary_flash_time1">启用/禁用第一个时间点</string>
     <string name="pref_summary_flash_time2">启用/禁用第二个时间点</string>

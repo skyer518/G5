@@ -4,7 +4,7 @@ package cn.com.u2be.framework.net;
  * Created by alek on 2016/5/13.
  */
 public class Const {
-    public static final String SOCKET_SERVER = "192.168.16.254";
+    public static final String SOCKET_SERVER = "192.168.1.101";
     public static final int SOCKET_PORT = 8080;
     // 默认timeout 时间 60s
     public final static int SOCKET_TIMOUT = 60 * 1000;

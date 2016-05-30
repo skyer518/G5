@@ -6,9 +6,11 @@ import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
+import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.Iterator;
 
 
 /**
@@ -125,11 +127,17 @@ public class TCPClient {
      */
     public void sendMsg(String message) throws IOException {
         ByteBuffer writeBuffer = ByteBuffer.wrap(message.getBytes("utf-8"));
-
-        if (socketChannel == null) {
-            throw new IOException();
+        selector.select();
+        final Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
+        while (iterator.hasNext()) {
+            final SelectionKey nextKey = iterator.next();
+            iterator.remove();
+            if (nextKey.isWritable()) {
+                final SocketChannel channel = (SocketChannel) nextKey.channel();
+                channel.write(writeBuffer);
+            }
         }
-        socketChannel.write(writeBuffer);
+
     }
 
     /**
