@@ -1,5 +1,6 @@
 package cn.com.lightech.led_g5w.view.device.impl;
 
+import android.Manifest;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -7,8 +8,10 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -91,15 +94,45 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
         //gotoDeviceGroupFragment();
         ivCustPic.setOnLongClickListener(this);
         registerForContextMenu(ivCustPic);
+
     }
+
 
     @Override
     protected void loadData() {
         super.loadData();
+        checkPremision();
         //将图片显示到ImageView中
         Bitmap bm = ImageUtil.readBitmapFormDirectoryPictures(IMAGE_FILE_NAME);
         if (bm != null) {
             ivCustPic.setImageBitmap(bm);
+        }
+
+    }
+
+    public void checkPremision() {
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        )) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0xAb);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 0xAb) {
+            boolean isAllGranted = true;
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    isAllGranted = false;
+                }
+            }
+            if (!isAllGranted) {
+                finish();
+            }
         }
 
     }

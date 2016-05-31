@@ -22,7 +22,22 @@
     #保护注解
     -keepattributes *Annotation*
 
+    #butterknife
+    -keep class butterknife.** { *; }
+    -dontwarn butterknife.internal.**
+    -keep class **$$ViewBinder { *; }
+
+    -keepclasseswithmembernames class * {
+        @butterknife.* <fields>;
+    }
+
+    -keepclasseswithmembernames class * {
+        @butterknife.* <methods>;
+    }
+
     # 保持哪些类不被混淆
+    -keep class cn.com.lightech.led_g5w.entity.** { *; } #实体类不参与混淆
+    -keep class cn.com.lightech.led_g5w.wedgit.** { *; } #自定义控件不参与混淆
     -keep public class * extends android.app.Fragment
     -keep public class * extends android.app.Activity
     -keep public class * extends android.app.Application
@@ -141,18 +156,8 @@
         public static <fields>;
     }
 
-    #避免混淆泛型 如果混淆报错建议关掉
-    #–keepattributes Signature
 
-    #移除log 测试了下没有用还是建议自己定义一个开关控制是否输出日志
-    #-assumenosideeffects class android.util.Log {
-    #    public static boolean isLoggable(java.lang.String, int);
-    #    public static int v(...);
-    #    public static int i(...);
-    #    public static int w(...);
-    #    public static int d(...);
-    #    public static int e(...);
-    #}
+
 
     #如果用用到Gson解析包的，直接添加下面这几行就能成功混淆，不然会报错。
     #gson

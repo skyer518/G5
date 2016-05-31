@@ -1,13 +1,16 @@
 package cn.com.lightech.led_g5g.view.device.impl;
 
+import android.Manifest;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Process;
@@ -98,6 +101,7 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
 
     @Override
     protected void loadData() {
+        checkPremision();
         Bitmap bm;
         switch (oemVersion) {
             case OEM_ODM:
@@ -144,6 +148,34 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
 
 
     }
+
+    public void checkPremision() {
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        )) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0xAb);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 0xAb) {
+            boolean isAllGranted = true;
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    isAllGranted = false;
+                }
+            }
+            if (!isAllGranted) {
+                finish();
+            }
+        }
+
+    }
+
 
     void choicePhoto() {
         Intent intentFromGallery = new Intent(

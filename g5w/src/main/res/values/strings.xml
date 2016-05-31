@@ -123,7 +123,7 @@
     <string name="device_wifi_save_data_2_led">Saving data to LED</string>
     <string name="device_wifi_scanning">Scanning WiFi</string>
     <string name="device_wifi_title">Please select home/ office network</string>
-    <string name="error_led_connect_failed">Failed to make new group</string>
+    <string name="error_led_connect_failed">Connection led lamp failure</string>
     <string name="msg_dosomething">DATA is being uploaded </string>
     <string name="msg_updataLed">Upgrading software, please wait ......</string>
     <string name="device_wifi_connecting">Connecting to WiFi</string>
@@ -152,5 +152,6 @@
     <!--device Type -->
     <string name="device_led">LED</string>
     <string name="device_spray">Wave </string>
+    <string name="tips_m_delete_configured_wifi">android M（6.0） or later, set the first target Wifi delete the existing configuration and then often try in wifi.</string>
 
 </resources>

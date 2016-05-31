@@ -94,4 +94,5 @@
     <string name="error_points_too_match">时间点过多，请不要超过24个！</string>
     <string name="company_info_ctlite">专业植物生长灯光解决系统</string>
     <string name="company_title_ctlite">希蒂莱特</string>
+    <string name="tips_m_delete_configured_wifi">android M（6.0） 以上的版本，请在wifi设置中先删除已存在的目标Wifi配置后再常试。</string>
 </resources>

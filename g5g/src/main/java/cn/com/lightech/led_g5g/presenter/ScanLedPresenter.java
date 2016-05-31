@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -56,7 +57,11 @@ public class ScanLedPresenter {
 
             } else if (msg.what == WHAT_LED_FAILED) {
                 ProgressUtil.closeDialog();
-                newDeviceView.showMessage(mContext.getString(R.string.error_led_connect_failed));
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
+                    newDeviceView.showMessage(mContext.getString(R.string.tips_m_delete_configured_wifi));
+                } else {
+                    newDeviceView.showMessage(mContext.getString(R.string.error_led_connect_failed));
+                }
             }
         }
     };

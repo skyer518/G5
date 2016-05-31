@@ -7,6 +7,23 @@ android {
         checkReleaseBuilds false
 
     }
+
+    signingConfigs {
+        release {
+            // 下面各值的意思将在后续进行讲解
+            storeFile file('signature')
+            storePassword "lightech"
+            keyAlias "led signature"
+            keyPassword "lightech"
+        }
+        debug {
+            storeFile file('signature')
+            storePassword "lightech"
+            keyAlias "led signature"
+            keyPassword "lightech"
+        }
+    }
+
     defaultConfig {
         applicationId "cn.com.lightech.led_g5w"
         minSdkVersion 15
@@ -18,7 +35,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 

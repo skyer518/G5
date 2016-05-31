@@ -3,6 +3,7 @@ package cn.com.lightech.led_g5g.presenter;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -76,7 +77,11 @@ public class ScanWifiPresenter {
                     break;
                 case RequestEntity.WHAT_WIFI_FAILED:
                     ProgressUtil.closeDialog();
-                    wifiView.showMessage(mContext.getString(R.string.error_wifi_connect_failed));
+                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
+                        wifiView.showMessage(mContext.getString(R.string.tips_m_delete_configured_wifi));
+                    } else {
+                        wifiView.showMessage(mContext.getString(R.string.error_wifi_connect_failed));
+                    }
                     break;
                 case RequestEntity.WHAT_GET_MAC_ADDRESS_FAILED:
                     ProgressUtil.closeDialog();

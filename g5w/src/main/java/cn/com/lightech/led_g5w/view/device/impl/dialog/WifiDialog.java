@@ -156,6 +156,9 @@ public class WifiDialog extends Dialog {
 
 
         if (config == null || password == null) {
+            if (config != null) {
+                mWifiManager.removeNetwork(config.networkId);
+            }
             mWifiContent = new NewNetworkView(this, mWifiManager, mScanResult);
         } else {
             final boolean isCurrentNetwork_ConfigurationStatus = config.status == WifiConfiguration.Status.CURRENT;

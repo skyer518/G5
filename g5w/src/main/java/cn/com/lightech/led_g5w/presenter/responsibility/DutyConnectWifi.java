@@ -65,7 +65,7 @@ public class DutyConnectWifi extends DutyHandler {
                     task.cancel(false);
                 }
             }
-        }, 10000);
+        }, 100000);
     }
 
 
