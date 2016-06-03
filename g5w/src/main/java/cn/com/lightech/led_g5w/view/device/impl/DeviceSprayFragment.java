@@ -129,7 +129,7 @@ public class DeviceSprayFragment extends AppBaseStateFragment implements IDevice
                     }
                     count++;
                     if (count == 7) {
-                        UIHelper.showUpdataLedDialog(getActivity(), (Device) deviceAdapter.getItem(position));
+                        UIHelper.showUpdateLedDialog(getActivity(), (Device) deviceAdapter.getItem(position));
                         count = 0;
                     }
 

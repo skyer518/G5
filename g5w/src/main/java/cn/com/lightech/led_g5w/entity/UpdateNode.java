@@ -3,7 +3,7 @@ package cn.com.lightech.led_g5w.entity;
 /**
  * Created by 明 on 2016/4/27.
  */
-public class UpdataNode {
+public class UpdateNode {
     // 模式ID1
     protected final byte ID1 = 0x04;
     // 模式ID2
@@ -12,10 +12,10 @@ public class UpdataNode {
 
     private byte[] data;
 
-    public UpdataNode() {
+    public UpdateNode() {
     }
 
-    public UpdataNode(byte ID2) {
+    public UpdateNode(byte ID2) {
         this.ID2 = ID2;
     }
 

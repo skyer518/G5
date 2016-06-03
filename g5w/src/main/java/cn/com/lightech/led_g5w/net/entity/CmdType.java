@@ -55,10 +55,6 @@ public enum CmdType {
      */
     QueryGroup0x1A(0x1A),
 
-    /**
-     * 查询组号命令
-     */
-    QueryGroup0xF1(0xF1),
 
     /**
      * 指定组号命令
@@ -93,7 +89,7 @@ public enum CmdType {
     /**
      * 确认灯具
      */
-    ConfirmLed(0xFF),
+    ConfirmLed(0x1D),
 
     /**
      * 查找灯具

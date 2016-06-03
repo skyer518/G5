@@ -1,4 +1,4 @@
-package cn.com.lightech.led_g5g.presenter;
+package cn.com.lightech.led_g5w.presenter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,33 +8,33 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import cn.com.lightech.led_g5g.entity.data.UpdateData;
-import cn.com.lightech.led_g5g.gloabal.IDataListener;
-import cn.com.lightech.led_g5g.gloabal.LedProxy;
-import cn.com.lightech.led_g5g.net.ConnectManager;
-import cn.com.lightech.led_g5g.net.ConnectionsManager;
-import cn.com.lightech.led_g5g.net.entity.ConnState;
-import cn.com.lightech.led_g5g.net.entity.Response;
-import cn.com.lightech.led_g5g.net.utils.Logger;
-import cn.com.lightech.led_g5g.view.console.IUpdataLedView;
+import cn.com.lightech.led_g5w.entity.UpdateNode;
+import cn.com.lightech.led_g5w.gloabal.IDataListener;
+import cn.com.lightech.led_g5w.gloabal.LedProxy;
+import cn.com.lightech.led_g5w.net.ConnectManager;
+import cn.com.lightech.led_g5w.net.ConnectionsManager;
+import cn.com.lightech.led_g5w.net.entity.ConnState;
+import cn.com.lightech.led_g5w.net.entity.Response;
+import cn.com.lightech.led_g5w.net.utils.Logger;
+import cn.com.lightech.led_g5w.view.console.IUpdateLedView;
 
 /**
  * Created by 明 on 2016/4/18.
  */
-public class UpdataLedPresenter implements IDataListener {
+public class UpdateLedPresenter implements IDataListener {
 
     private final int LED_MAX_LENGTH = 0X4000;
 
-    private final IUpdataLedView updataLedView;
-    private Logger logger = Logger.getLogger(UpdataLedPresenter.class);
+    private final IUpdateLedView updateLedView;
+    private Logger logger = Logger.getLogger(UpdateLedPresenter.class);
     private static final int TOTAL_PACKAGE = 0x80;
     private int id2 = 0x00;
     private Context mContext;
     private byte[] bytes;
 
-    public UpdataLedPresenter(Context context, IUpdataLedView updataLedView) {
+    public UpdateLedPresenter(Context context, IUpdateLedView updateLedView) {
         this.mContext = context;
-        this.updataLedView = updataLedView;
+        this.updateLedView = updateLedView;
     }
 
     @Override
@@ -81,15 +81,15 @@ public class UpdataLedPresenter implements IDataListener {
             finish();
             return;
         }
-        UpdateData updateData = genUpdataNode();
-        LedProxy.sendToLed(updateData);
+        UpdateNode updateNode = genUpdateNode();
+        LedProxy.sendToLed(updateNode);
     }
 
 
     @NonNull
-    private UpdateData genUpdataNode() {
+    private UpdateNode genUpdateNode() {
         byte[] data;
-        UpdateData updateData = new UpdateData((byte) id2);
+        UpdateNode updateNode = new UpdateNode((byte) id2);
         if (id2 == 0x80) {
             data = new byte[4];
             data[0] = 1;
@@ -107,8 +107,8 @@ public class UpdataLedPresenter implements IDataListener {
                 data[i] = bytes[begin + i];
             }
         }
-        updateData.setData(data);
-        return updateData;
+        updateNode.setData(data);
+        return updateNode;
     }
 
 
@@ -116,7 +116,7 @@ public class UpdataLedPresenter implements IDataListener {
         String txt = String.format("stop ; current: %d  ; total: %d  ;",
                 this.id2, TOTAL_PACKAGE);
         logger.e(txt);
-        updataLedView.stopUpdata();
+        updateLedView.stopUpdate();
     }
 
     public void register() {
@@ -128,13 +128,13 @@ public class UpdataLedPresenter implements IDataListener {
     }
 
 
-    public void starUpdata() {
+    public void starUpdate() {
         bytes = readLedData();
         if (bytes == null || bytes.length != LED_MAX_LENGTH) {
-            updataLedView.stopUpdata();
+            updateLedView.stopUpdate();
             return;
         }
-        LedProxy.sendToLed(genUpdataNode());
+        LedProxy.sendToLed(genUpdateNode());
 
     }
 

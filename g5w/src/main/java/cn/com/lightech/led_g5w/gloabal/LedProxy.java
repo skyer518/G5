@@ -1,7 +1,7 @@
 package cn.com.lightech.led_g5w.gloabal;
 
 import cn.com.lightech.led_g5w.entity.DataNode;
-import cn.com.lightech.led_g5w.entity.UpdataNode;
+import cn.com.lightech.led_g5w.entity.UpdateNode;
 import cn.com.lightech.led_g5w.net.ConnectManager;
 import cn.com.lightech.led_g5w.net.entity.CmdType;
 import cn.com.lightech.led_g5w.entity.LampChannel;
@@ -101,10 +101,10 @@ public class LedProxy {
         ConnectionsManager.getInstance().sendToLed(request, false);
     }
 
-    public static void sendToLed(UpdataNode updataNode) {
+    public static void sendToLed(UpdateNode updateNode) {
         Request request = new Request();
         request.setCmdType(CmdType.SendDataToLED);
-        request.setData(updataNode);
+        request.setData(updateNode);
         ConnectionsManager.getInstance().sendToLed(request, false);
     }
 
@@ -133,7 +133,7 @@ public class LedProxy {
      */
     public static void queryGroup(boolean allSend) {
         Request req = new Request();
-        req.setCmdType(CmdType.QueryGroup0xF1);
+        req.setCmdType(CmdType.QueryGroup0x1A);
         byte[] data = CmdBuilder.Build(req);
         ConnectionsManager.getInstance().sendToLed(data, allSend);
     }

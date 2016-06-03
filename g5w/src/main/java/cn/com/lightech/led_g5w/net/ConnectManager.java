@@ -14,6 +14,7 @@ import cn.com.lightech.led_g5w.gloabal.IDataListener;
 import cn.com.lightech.led_g5w.net.entity.CmdType;
 import cn.com.lightech.led_g5w.net.entity.ConnState;
 import cn.com.lightech.led_g5w.net.entity.DataMessage;
+import cn.com.lightech.led_g5w.net.entity.ReplyErrorCode;
 import cn.com.lightech.led_g5w.net.entity.Request;
 import cn.com.lightech.led_g5w.net.entity.Response;
 import cn.com.lightech.led_g5w.net.socket.ClientSocket;
@@ -142,6 +143,9 @@ public class ConnectManager {
                     break;
                 case Data:
                     Response rsp = CmdParser.Parse(dataMsg.getByteArray());
+                    if (rsp.getReplyCode() == ReplyErrorCode.NotThisDeviceResponse) {
+                        break;
+                    }
                     if (rsp != null && rsp.getCmdType() == CmdType.CheckReady) {
                         bLedReady = rsp.IsOK();
                         if (bLedReady)

@@ -1,4 +1,4 @@
-package cn.com.lightech.led_g5w.view.console.impl;
+package cn.com.lightech.led_g5g.view.console.impl;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -8,23 +8,23 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.com.lightech.led_g5w.R;
-import cn.com.lightech.led_g5w.presenter.UpdataLedPresenter;
-import cn.com.lightech.led_g5w.view.console.IUpdataLedView;
+import cn.com.lightech.led_g5g.R;
+import cn.com.lightech.led_g5g.presenter.UpdateLedPresenter;
+import cn.com.lightech.led_g5g.view.console.IUpdateLedView;
 
-public class UpdataLedDialog extends Dialog implements IUpdataLedView {
+public class UpdateLedDialog extends Dialog implements IUpdateLedView {
 
 
     @Bind(R.id.tv_msg)
     TextView tvMsg;
 
     private Context mContext;
-    private UpdataLedPresenter updataLedPresenter;
+    private UpdateLedPresenter updateLedPresenter;
 
 
-    public UpdataLedDialog(Context context) {
+    public UpdateLedDialog(Context context) {
         super(context, android.R.style.Theme_Holo_Light_Dialog);
-        updataLedPresenter = new UpdataLedPresenter(context, this);
+        updateLedPresenter = new UpdateLedPresenter(context, this);
         this.mContext = context;
         setCanceledOnTouchOutside(false);
     }
@@ -35,9 +35,9 @@ public class UpdataLedDialog extends Dialog implements IUpdataLedView {
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_somthing);
         ButterKnife.bind(this);
-        showMessage(R.string.msg_updataLed);
-        updataLedPresenter.register();
-        updataLedPresenter.starUpdata();
+        showMessage(R.string.msg_updateLed);
+        updateLedPresenter.register();
+        updateLedPresenter.starUpdate();
     }
 
 
@@ -53,11 +53,11 @@ public class UpdataLedDialog extends Dialog implements IUpdataLedView {
     @Override
     protected void onStop() {
         super.onStop();
-        updataLedPresenter.unRegister();
+        updateLedPresenter.unRegister();
     }
 
     @Override
-    public void stopUpdata() {
+    public void stopUpdate() {
         dismiss();
     }
 

@@ -14,6 +14,7 @@ import cn.com.lightech.led_g5g.gloabal.IDataListener;
 import cn.com.lightech.led_g5g.net.entity.CmdType;
 import cn.com.lightech.led_g5g.net.entity.ConnState;
 import cn.com.lightech.led_g5g.net.entity.DataMessage;
+import cn.com.lightech.led_g5g.net.entity.ReplyErrorCode;
 import cn.com.lightech.led_g5g.net.entity.Request;
 import cn.com.lightech.led_g5g.net.entity.Response;
 import cn.com.lightech.led_g5g.net.socket.ClientSocket;
@@ -142,6 +143,9 @@ public class ConnectManager {
                     break;
                 case Data:
                     Response rsp = CmdParser.Parse(dataMsg.getByteArray());
+                    if (rsp.getReplyCode() == ReplyErrorCode.NotThisDeviceResponse) {
+                        break;
+                    }
                     if (rsp != null && rsp.getCmdType() == CmdType.CheckReady) {
                         bLedReady = rsp.IsOK();
                         if (bLedReady)
@@ -183,9 +187,7 @@ public class ConnectManager {
         this.dataListenerList.add(listener);
         Logger.getLogger().d(
                 "registerHigh :" + listener.getClass().getSimpleName().toString());
-//        List<IDataListener> temp = new ArrayList<>(dataListenerList);
-//        Collections.sort(temp, comparator);
-//        temp=null;
+
     }
 
     /**

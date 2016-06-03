@@ -35,7 +35,7 @@
     <string name="device_wifi_dialog_button_delete">不保存</string>
     <string name="device_wifi_dialog_button_modify">修改密码</string>
     <string name="msg_dosomething">数据正在上传 ...</string>
-    <string name="msg_updataLed">正在升级Led灯固件，请耐心等待... ...</string>
+    <string name="msg_updateLed">正在升级Led灯固件，请耐心等待... ...</string>
     <string name="error_led_connect_failed">LED 灯连接失败！</string>
     <string name="error_wifi_connect_failed">WiFi 连接失败！</string>
     <string name="action_menu_update">升级</string>

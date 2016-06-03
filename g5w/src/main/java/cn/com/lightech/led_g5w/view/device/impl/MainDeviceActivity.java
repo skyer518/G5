@@ -8,6 +8,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -19,22 +20,21 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.lightech.led_g5w.R;
-import cn.com.lightech.led_g5w.adapter.ExpControllableDeviceAdapter;
+import cn.com.lightech.led_g5w.gloabal.Const;
 import cn.com.lightech.led_g5w.net.utils.Logger;
 import cn.com.lightech.led_g5w.presenter.MainPresenter;
 import cn.com.lightech.led_g5w.utils.ImageUtil;
 import cn.com.lightech.led_g5w.view.AppBaseTabNavgationActivity;
-import cn.com.lightech.led_g5w.view.console.impl.AutoFragment;
 import cn.com.lightech.led_g5w.view.device.IMainDeviceView;
 import cn.com.lightech.led_g5w.wedgit.CustViewPager;
 import cn.com.lightech.led_g5w.wedgit.RoundImageView;
@@ -54,14 +54,11 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
     // 裁剪后图片的宽(X)和高(Y),480 X 480的正方形。
     private static int output_X = 360;
     private static int output_Y = 360;
-    ExpControllableDeviceAdapter deviceAdapter;
 
     @Bind(R.id.container)
     CustViewPager mViewPager;
     @Bind(R.id.iv_custPic)
     RoundImageView ivCustPic;
-    @Bind(R.id.ll_device_activity)
-    LinearLayout llDeviceActivity;
 
     MainPresenter mainDevicePresenter;
 
@@ -89,6 +86,7 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
         ActionBar supportActionBar = getActionBar();
         supportActionBar.setTitle(getString(R.string.device_device_title));
 
+
         setmViewPager(mViewPager);
         setmSectionsPagerAdapter(new SectionsPagerAdapter4Device(getFragmentManager()));
         //gotoDeviceGroupFragment();
@@ -102,12 +100,56 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
     protected void loadData() {
         super.loadData();
         checkPremision();
+        loadUUID();
         //将图片显示到ImageView中
         Bitmap bm = ImageUtil.readBitmapFormDirectoryPictures(IMAGE_FILE_NAME);
         if (bm != null) {
             ivCustPic.setImageBitmap(bm);
         }
 
+    }
+
+    private void loadUUID() {
+        byte[] uuid = new byte[4];
+        final SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        int uuid1 = sharedPreferences.getInt("UUID1", -1);
+        int uuid2 = sharedPreferences.getInt("UUID2", -1);
+        int uuid3 = sharedPreferences.getInt("UUID3", -1);
+        int uuid4 = sharedPreferences.getInt("UUID4", -1);
+
+        if (uuid1 == -1 && uuid2 == -1 && uuid3 == -1 && uuid4 == -1) {
+            uuid = createUUIDByRandom();
+            saveUUID(uuid);
+        } else {
+            uuid[0] = (byte) uuid1;
+            uuid[1] = (byte) uuid2;
+            uuid[2] = (byte) uuid3;
+            uuid[3] = (byte) uuid4;
+        }
+
+
+        Const.getInstance().setUUID(uuid);
+
+
+    }
+
+    private void saveUUID(byte[] uuid) {
+        final SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        final SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt("UUID1", uuid[0]);
+        edit.putInt("UUID2", uuid[1]);
+        edit.putInt("UUID3", uuid[2]);
+        edit.putInt("UUID4", uuid[3]);
+    }
+
+    private byte[] createUUIDByRandom() {
+        byte[] uuid = new byte[4];
+        for (int i = 0; i < 4; i++) {
+            Random random = new Random();
+            Integer next = random.nextInt();
+            uuid[i] = next.byteValue();
+        }
+        return uuid;
     }
 
     public void checkPremision() {

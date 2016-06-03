@@ -19,8 +19,6 @@ public class Request {
         this.data = data;
     }
 
-    //    // 模式节点数据
-//    private Object modelDate;
     // 模式节点数据
     private Object data;
     // 模式序号
@@ -34,17 +32,9 @@ public class Request {
 
     private byte[] byteArray;
 
-//    private UpdataNode updataNode;
 
     private DeviceType deviceType;
 
-//    public DataNode getModelDate() {
-//        return modelDate;
-//    }
-
-//    public void setModelDate(DataNode modelDate) {
-//        this.modelDate = modelDate;
-//    }
 
     public int getIntVal() {
         return intVal;
@@ -94,14 +84,6 @@ public class Request {
         this.byteArray = byteArray;
     }
 
-
-//    public void setUpdataNode(UpdataNode updataNode) {
-//        this.updataNode = updataNode;
-//    }
-//
-//    public UpdataNode getUpdataNode() {
-//        return updataNode;
-//    }
 
     public void setDeviceType(DeviceType deviceType) {
         this.deviceType = deviceType;

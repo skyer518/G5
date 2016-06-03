@@ -50,7 +50,12 @@ public enum ReplyErrorCode {
     /**
      * 数据包校验和失败
      */
-    ValidateSumFailed(9);
+    ValidateSumFailed(9),
+
+    /**
+     * 不是此设备的响应
+     */
+    NotThisDeviceResponse(10);
 
     private int value;
 

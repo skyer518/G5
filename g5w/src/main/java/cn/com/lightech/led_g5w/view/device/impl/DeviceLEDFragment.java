@@ -135,7 +135,7 @@ public class DeviceLEDFragment extends AppBaseStateFragment implements IDeviceVi
                     }
                     count++;
                     if (count == 7) {
-                        UIHelper.showUpdataLedDialog(getActivity(), (Device) deviceAdapter.getChild(groupPosition, childPosition));
+                        UIHelper.showUpdateLedDialog(getActivity(), (Device) deviceAdapter.getChild(groupPosition, childPosition));
                         count = 0;
                     }
 

@@ -36,7 +36,7 @@ public class CmdParser {
         result.setByteArray(content);
 
         // 基本长度检测
-        if (content == null || content.length < 5) {
+        if (content == null || content.length < 9) {
             result.setReplyCode(ReplyErrorCode.NotEnoughData);
             logger.e("返回数据长度不足，len:%d", content == null ? 0 : content.length);
             return result;
@@ -48,105 +48,99 @@ public class CmdParser {
             logger.e("包头不对，d1:%d,d2:%d", content[0], content[1]);
             return result;
         }
-        if (content[2] == (byte) 0xf1 && content.length == 64) {
-            if (!valideSize(content, result)) return result;
-            result = ParseQueryGroup0xF1(content);
-            ReplyErrorCode replyCode = result.getReplyCode();
-            result.setByteArray(content);
 
-            result.setCmdType(CmdType.QueryGroup0x1A);
-            result.setReplyCode(replyCode);
-            logger.i("recv data，len:%d,cmdType:%s,errorcode:%s", content.length,
-                    CmdType.QueryGroup0x1A.toString(), replyCode.toString());
+        // 设备标识符检测
+        if (content[2] != Const.getInstance().getUUID()[0]
+                || content[3] != Const.getInstance().getUUID()[1]
+                || content[4] != Const.getInstance().getUUID()[2]
+                || content[5] != Const.getInstance().getUUID()[3]) {
 
-        } else {
-            // 数据包长度检测
-            if (!valideDataLength(content)) {
-                result.setReplyCode(ReplyErrorCode.DataLengthError);
-                logger.e("包长度不对，len:%d", content.length);
-                return result;
-            }
-            if (!valideSize(content, result)) return result;
+            result.setReplyCode(ReplyErrorCode.NotThisDeviceResponse);
+            logger.e("不是我的命令，d1:%d,d2:%d,d3:%d,d4:%d", content[2], content[3], content[4], content[5]);
+            return result;
+        }
+        // 数据包长度检测
+        if (!valideDataLength(content)) {
+            result.setReplyCode(ReplyErrorCode.DataLengthError);
+            logger.e("包长度不对，len:%d", content.length);
+            return result;
+        }
+        if (!valideSize(content, result)) return result;
 
 
-            ReplyErrorCode replyCode = ReplyErrorCode.UnKnow;
-            int rspCmd = content[3] & 0xff;// 命令
-            CmdType cmdType = CmdType.Parse(rspCmd);
+        ReplyErrorCode replyCode = ReplyErrorCode.UnKnow;
+        int rspCmd = content[7] & 0xff;// 命令
+        CmdType cmdType = CmdType.Parse(rspCmd);
 
-            switch (cmdType) {
-                case CheckReady:
-                    replyCode = ParseNormal(content);
-                    break;
-                case SyncTime: // 时间同步
-                    replyCode = ParseNormal(content);
-                    break;
-                case QueryState: // 查询灯的状态
-                    result = ParseQueryState(content);
-                    replyCode = result.getReplyCode();
-                    break;
-                case SetState: // 设置灯的状态
-                    replyCode = ParseNormal(content);
-                    break;
-                case OnOff: // 开关灯
-                    replyCode = ParseNormal(content);
-                    break;
-                case PreviewMode: // 预览模式
-                    replyCode = ParseNormal(content);
-                    break;
-                case PreViewCurve: // 预览曲线
-                    replyCode = ParseNormal(content);
-                    break;
-                case StopPreview: // 结束预览命令
-                    replyCode = ParseNormal(content);
-                    break;
-                case AttachSub:// 关联从灯命令
-                    replyCode = ParseNormal(content);
-                    break;
-                case QueryGroup0x1A:// 查询组号命令
-                    result = ParseQueryGroup0x1A(content);
-                    replyCode = result.getReplyCode();
-                    break;
-                case SetGroup:// 设置组号命令
-                    replyCode = ParseNormal(content);
-                    break;
-                case SendDataToLED: // 下载曲线数据到单片机
-                    result = ParseSendDataToLED(content);
-                    replyCode = result.getReplyCode();
-                    break;
-                case RecvDataFromLED: // 上传曲线数据到平板端
-                    result = ParseRecvDataFromLED(content);
-                    replyCode = result.getReplyCode();
-                    break;
-                case ValidateData: // 查询曲线数据有效性
-                    result = ParseValidateData(content);
-                    replyCode = result.getReplyCode();
-                    break;
-                case QueryType:
-                    result = ParseQueryType(content);
-                    replyCode = result.getReplyCode();
-                    break;
-                case IDFormatError:
-                    replyCode = ReplyErrorCode.IDFormatError;
-                    logger.e("ID格式错误");
-                    break;
-                case ValidateSumFailed:
-                    replyCode = ReplyErrorCode.ValidateSumFailed;
-                    logger.e("LED数据包校验和失败");
-                    break;
-                default:
-                    break;
+        switch (cmdType) {
+            case CheckReady:
+                replyCode = ParseNormal(content);
+                break;
+            case SyncTime: // 时间同步
+                replyCode = ParseNormal(content);
+                break;
+            case QueryState: // 查询灯的状态
+                result = ParseQueryState(content);
+                replyCode = result.getReplyCode();
+                break;
+            case SetState: // 设置灯的状态
+                replyCode = ParseNormal(content);
+                break;
+            case OnOff: // 开关灯
+                replyCode = ParseNormal(content);
+                break;
+            case PreviewMode: // 预览模式
+                replyCode = ParseNormal(content);
+                break;
+            case PreViewCurve: // 预览曲线
+                replyCode = ParseNormal(content);
+                break;
+            case StopPreview: // 结束预览命令
+                replyCode = ParseNormal(content);
+                break;
+            case AttachSub:// 关联从灯命令
+                replyCode = ParseNormal(content);
+                break;
+            case QueryGroup0x1A:// 查询组号命令
+                result = ParseQueryGroup0x1A(content);
+                replyCode = result.getReplyCode();
+                break;
+            case SetGroup:// 设置组号命令
+                replyCode = ParseNormal(content);
+                break;
+            case SendDataToLED: // 下载曲线数据到单片机
+                result = ParseSendDataToLED(content);
+                replyCode = result.getReplyCode();
+                break;
+            case RecvDataFromLED: // 上传曲线数据到平板端
+                result = ParseRecvDataFromLED(content);
+                replyCode = result.getReplyCode();
+                break;
+            case ValidateData: // 查询曲线数据有效性
+                result = ParseValidateData(content);
+                replyCode = result.getReplyCode();
+                break;
 
-            }
-
-            // TODO:测试用！正式去掉这里
-            result.setByteArray(content);
-
-            result.setCmdType(cmdType);
-            result.setReplyCode(replyCode);
-            logger.i("recv data，len:%d,cmdType:%s,errorcode:%s", content.length,
-                    cmdType.toString(), replyCode.toString());
+            case IDFormatError:
+                replyCode = ReplyErrorCode.IDFormatError;
+                logger.e("ID格式错误");
+                break;
+            case ValidateSumFailed:
+                replyCode = ReplyErrorCode.ValidateSumFailed;
+                logger.e("LED数据包校验和失败");
+                break;
+            default:
+                break;
 
         }
+
+        // TODO:测试用！正式去掉这里
+        result.setByteArray(content);
+
+        result.setCmdType(cmdType);
+        result.setReplyCode(replyCode);
+        logger.i("recv data，len:%d,cmdType:%s,errorcode:%s", content.length,
+                cmdType.toString(), replyCode.toString());
 
 
         return result;
@@ -155,10 +149,8 @@ public class CmdParser {
 
     private static boolean valideSize(byte[] content, Response result) {
 
-        int dataLen = content[2] & 0xff; // byte [-127~128]，表示长度时要转换
-        if (dataLen == 0xf1) {
-            dataLen = 60;
-        }
+        int dataLen = content[6] & 0xff; // byte [-127~128]，表示长度时要转换
+
         // 校验和检测
         int nValideSize = content[dataLen + 3] & 0xff;
         int acSize = 0;
@@ -179,7 +171,7 @@ public class CmdParser {
      */
     public static boolean needMoreData(byte[] content) {
         // 基本长度检测
-        if (content == null || content.length < 5) {
+        if (content == null || content.length < 9) {
             logger.e("返回数据长度不足，len:%d", content == null ? 0 : content.length);
             return true;
         }
@@ -192,18 +184,16 @@ public class CmdParser {
 
         // 数据包长度检测
         if (!valideDataLength(content)) {
-            logger.e("pid1: " + content[4] + " ; pid2: " + content[5]);
-            logger.e("包长度不对，len:%1d; dataLen:%2d", content.length, content[2] & 0xff);
+            logger.e("pid1: " + content[8] + " ; pid2: " + content[9]);
+            logger.e("包长度不对，len:%1d; dataLen:%2d", content.length, content[6] & 0xff);
             return true;
         }
-        ;
+
         return false;
     }
 
     private static boolean valideDataLength(byte[] content) {
-        int dataLen = content[2] & 0xff;
-        if (dataLen == 0xf1 && content.length == 64)
-            return true;
+        int dataLen = content[6] & 0xff;
         if (content.length < dataLen + 4) {
             return false;
         }
@@ -213,7 +203,7 @@ public class CmdParser {
     // 通用解析
     private static ReplyErrorCode ParseNormal(byte[] content) {
         // 一般0x55 (接收成功) 0xff（接收出错，重发）
-        if (content != null && content.length > 4 && content[4] == 0x55)
+        if (content != null && content.length > 8 && content[8] == 0x55)
             return ReplyErrorCode.OK;
         return ReplyErrorCode.LogicError;
     }
@@ -223,11 +213,11 @@ public class CmdParser {
      */
     private static Response ParseSendDataToLED(byte[] content) {
         Response result = new Response();
-        if (content.length < 7) {
+        if (content.length < 11) {
             result.setReplyCode(ReplyErrorCode.LogicError);
             return result;
         }
-        int nPos = 4;
+        int nPos = 8;
         byte id1 = content[nPos];
         byte id2 = content[nPos + 1];
         byte ErroNo = content[nPos + 2];
@@ -246,7 +236,7 @@ public class CmdParser {
     private static Response ParseQueryState(byte[] content) {
         Response result = new Response();
 
-        int nPos = 4;
+        int nPos = 8;
         byte ErroNo = content[nPos];
         if (ErroNo != 0xff) {
             LampState ls = new LampState();
@@ -282,11 +272,11 @@ public class CmdParser {
      */
     private static Response ParseRecvDataFromLED(byte[] content) {
         Response result = new Response();
-        if (content.length < 7) {
+        if (content.length < 11) {
             result.setReplyCode(ReplyErrorCode.LogicError);
             return result;
         }
-        int nPos = 4;
+        int nPos = 8;
         byte id1 = content[nPos];
         byte id2 = content[nPos + 1];
         byte[] ids = new byte[]{id1, id2};
@@ -447,11 +437,11 @@ public class CmdParser {
     /* 查询曲线数据有效性 */
     private static Response ParseValidateData(byte[] content) {
         Response result = new Response();
-        if (content.length < 7) {
+        if (content.length < 11) {
             result.setReplyCode(ReplyErrorCode.LogicError);
             return result;
         }
-        int startIndex = 4;
+        int startIndex = 8;
         byte id1 = content[startIndex++];
         byte id2 = content[startIndex++];
 
@@ -466,52 +456,18 @@ public class CmdParser {
         return result;
     }
 
-    private static Response ParseQueryType(byte[] content) {
-        Response result = new Response();
-        if (content != null && content.length != 6) {
-            result.setReplyCode(ReplyErrorCode.LogicError);
-            return result;
-        }
-        result.setDeviceType(DeviceType.parseInt(content[4] & 0xff));
-        result.setReplyCode(ReplyErrorCode.OK);
-        return result;
-    }
 
-
-    /* 查询曲线数据有效性 */
-    private static Response ParseQueryGroup0xF1(byte[] content) {
-        Response result = new Response();
-        if (content.length < 7) {
-            result.setReplyCode(ReplyErrorCode.LogicError);
-            return result;
-        }
-        //
-        int startIndex = 3;
-        int device = content[startIndex++] & 0xff;
-        int num = content[startIndex++];
-        byte[] mac = new byte[]{content[startIndex++],
-                content[startIndex++],
-                content[startIndex++],
-                content[startIndex++],
-                content[startIndex++],
-                content[startIndex++]};
-
-        result.setDeviceType(DeviceType.parseInt(device));
-        result.setGroupNum(num);
-        result.setMac(mac);
-        result.setReplyCode(ReplyErrorCode.OK);
-        return result;
-    }
 
     /* 查询曲线数据有效性 */
     private static Response ParseQueryGroup0x1A(byte[] content) {
         Response result = new Response();
-        if (content.length < 7) {
+        if (content.length < 11) {
             result.setReplyCode(ReplyErrorCode.LogicError);
             return result;
         }
         //
-        int startIndex = 4;
+        int startIndex = 8;
+        int device = content[startIndex++] & 0xff;
         int num = content[startIndex++];
         byte[] mac = new byte[]{content[startIndex++],
                 content[startIndex++],
@@ -520,7 +476,11 @@ public class CmdParser {
                 content[startIndex++],
                 content[startIndex++]};
 
-        int device = content[startIndex++] & 0xff;
+
+        int unUse01 = content[startIndex++] & 0xff;
+        int unUse02 = content[startIndex++] & 0xff;
+        int unUse03 = content[startIndex++] & 0xff;
+        int unUse04 = content[startIndex++] & 0xff;
 
         result.setDeviceType(DeviceType.parseInt(device));
         result.setGroupNum(num);

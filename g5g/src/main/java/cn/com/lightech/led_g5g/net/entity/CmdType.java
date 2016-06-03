@@ -89,7 +89,7 @@ public enum CmdType {
     /**
      * 确认灯具
      */
-    ConfirmLed(0xFF),
+    ConfirmLed(0x1D),
 
     /**
      * 查找灯具

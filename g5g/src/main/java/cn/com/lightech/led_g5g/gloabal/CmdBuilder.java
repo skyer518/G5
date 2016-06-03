@@ -21,7 +21,7 @@ import cn.com.lightech.led_g5g.net.entity.Request;
  */
 public class CmdBuilder {
 
-    private static final int ADDTION_LENGTH = 4;// 用来计算数据包内长度
+    private static final int ADDTION_LENGTH = 8;// 用来计算数据包内长度
 
     /**
      * 构建发送给LED的命令
@@ -32,8 +32,6 @@ public class CmdBuilder {
      */
     public static byte[] Build(Request request) throws IllegalArgumentException {
         switch (request.getCmdType()) {
-            case AttachSub:
-                return CmdBuilder.CreateAttachSubCmd();
             case CheckReady:
                 return CmdBuilder.CreateCheckReadyCmd();
             case QueryGroup:
@@ -64,8 +62,6 @@ public class CmdBuilder {
                 return CmdBuilder.CreateValidateDataCmd(request.getByteArray());
             case ConfirmLed:
                 return CmdBuilder.CreateConfirmLedDataCmd(request.getIntVal());
-            case QueryType:
-                return CmdBuilder.CreateQueryTypeCmd();
             case FindLed:
                 return "HLK".getBytes();
             default:
@@ -73,15 +69,6 @@ public class CmdBuilder {
         }
     }
 
-    private static byte[] CreateQueryTypeCmd() {
-        byte[] cmd = new byte[5];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x01;
-        cmd[3] = 0x02;
-        cmd[4] = Sum(cmd, 0, 3);
-        return cmd;
-    }
 
     /**
      * 灯具确认
@@ -90,14 +77,21 @@ public class CmdBuilder {
      * @return
      */
     private static byte[] CreateConfirmLedDataCmd(int groupNo) {
+        // TODO   ConfirmLed
+        byte[] cmd = new byte[11];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
 
-        byte[] cmd = new byte[6];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = (byte) 0xff;
-        cmd[3] = (byte) 0xA6;
-        cmd[4] = (byte) groupNo;
-        cmd[5] = Sum(cmd, 0, 4);
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = (byte) 0x03;// package length
+        cmd[startIndex++] = (byte) 0x1D;// cmd
+        cmd[startIndex++] = (byte) 0xA6;// deviceType
+        cmd[startIndex++] = (byte) groupNo; //group number
+        cmd[startIndex++] = Sum(cmd, 0, startIndex - 1); //check sum
         return cmd;
     }
 
@@ -108,22 +102,28 @@ public class CmdBuilder {
 
         Calendar calendar = Calendar.getInstance();
 
-        byte[] cmd = new byte[12];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x08;// 数据包长度
-        cmd[3] = 0x01;// 命令
+        byte[] cmd = new byte[16];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = 0x08;// 数据包长度
+        cmd[startIndex++] = 0x01;// 命令
         int year = calendar.get(Calendar.YEAR);
         int year1 = (year & 0xFF00) >> 8;
         int year2 = (year & 0xFF);
-        cmd[4] = (byte) year1;
-        cmd[5] = (byte) year2;
-        cmd[6] = (byte) (calendar.get(Calendar.MONTH) + 1);
-        cmd[7] = (byte) calendar.get(Calendar.DAY_OF_MONTH);
-        cmd[8] = (byte) calendar.get(Calendar.HOUR_OF_DAY);
-        cmd[9] = (byte) calendar.get(Calendar.MINUTE);
-        cmd[10] = (byte) calendar.get(Calendar.SECOND);
-        cmd[11] = Sum(cmd, 0, 10);
+        cmd[startIndex++] = (byte) year1;
+        cmd[startIndex++] = (byte) year2;
+        cmd[startIndex++] = (byte) (calendar.get(Calendar.MONTH) + 1);
+        cmd[startIndex++] = (byte) calendar.get(Calendar.DAY_OF_MONTH);
+        cmd[startIndex++] = (byte) calendar.get(Calendar.HOUR_OF_DAY);
+        cmd[startIndex++] = (byte) calendar.get(Calendar.MINUTE);
+        cmd[startIndex++] = (byte) calendar.get(Calendar.SECOND);
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
 
         return cmd;
     }
@@ -132,12 +132,18 @@ public class CmdBuilder {
      * 查询灯的状态
      */
     private static byte[] CreateQueryStateCmd() {
-        byte[] cmd = new byte[5];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x01;
-        cmd[3] = 0x03;
-        cmd[4] = Sum(cmd, 0, 3);
+        byte[] cmd = new byte[9];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = 0x01;// 长度
+        cmd[startIndex++] = 0x03;// 命令
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
     }
 
@@ -145,13 +151,19 @@ public class CmdBuilder {
      * 开关灯
      */
     private static byte[] CreateSetOnOffCmd(boolean on) {
-        byte[] cmd = new byte[6];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x02;// 长度
-        cmd[3] = 0x06;// 命令
-        cmd[4] = (byte) (on ? 1 : 0);// ID
-        cmd[5] = Sum(cmd, 0, 4);
+        byte[] cmd = new byte[10];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = 0x02;// 长度
+        cmd[startIndex++] = 0x06;// 命令
+        cmd[startIndex++] = (byte) (on ? 1 : 0);// ID
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
     }
 
@@ -162,13 +174,19 @@ public class CmdBuilder {
      * @return
      */
     private static byte[] CreatePreviewCurveCmd(int speed) {
-        byte[] cmd = new byte[6];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x02;
-        cmd[3] = 0x08; // 预览命令
-        cmd[4] = (byte) speed; // 预览速度
-        cmd[5] = Sum(cmd, 0, 4);
+        byte[] cmd = new byte[10];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = 0x02;
+        cmd[startIndex++] = 0x08; // 预览命令
+        cmd[startIndex++] = (byte) speed; // 预览速度
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
     }
 
@@ -178,18 +196,24 @@ public class CmdBuilder {
     private static byte[] CreatePreviewCmd(LampState ls) {
         if (ls == null)
             throw new IllegalArgumentException("missing lampstate argument");
-        byte[] cmd = new byte[10];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x06;
-        cmd[3] = 0x07; // 模式预览，各个通道的预览也是这样，
+        byte[] cmd = new byte[14];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = 0x06;
+        cmd[startIndex++] = 0x07; // 模式预览，各个通道的预览也是这样，
         /* 这里通道调整下顺序 */
-        cmd[4] = ls.purple;
-        cmd[5] = ls.blue;
-        cmd[6] = ls.white;
-        cmd[7] = ls.green;
-        cmd[8] = ls.red;
-        cmd[9] = Sum(cmd, 0, 8);
+        cmd[startIndex++] = ls.purple;
+        cmd[startIndex++] = ls.blue;
+        cmd[startIndex++] = ls.white;
+        cmd[startIndex++] = ls.green;
+        cmd[startIndex++] = ls.red;
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
     }
 
@@ -216,9 +240,9 @@ public class CmdBuilder {
             }
         } else {
             if (updateData.getId2() == (byte) 0x80)
-                return createCheckUpdataLedCmd(request);
+                return createUpdateLedCmd0x80(request);
             else
-                return createUpdataLedCmd(request);
+                return createUpdateLedCmd(request);
         }
 
         return null;
@@ -227,16 +251,22 @@ public class CmdBuilder {
 
     private static byte[] createManualDataToLedCmd(Request request) {
         ManualData effectMode = (ManualData) request.getData();
-        int length = 17;
+        int length = 21;
         byte[] cmd = new byte[length];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
-        cmd[3] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[4] = effectMode.getId1(); // 包ID1
-        cmd[5] = effectMode.getId2();// 包ID2
-        cmd[6] = (byte) (cmd.length - 8); // 包长度
-        int startIndex = 7;
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
+        cmd[startIndex++] = (byte) 0x20; // 命令 下载曲线数据到单片机
+        cmd[startIndex++] = effectMode.getId1(); // 包ID1
+        cmd[startIndex++] = effectMode.getId2();// 包ID2
+        cmd[startIndex++] = (byte) (cmd.length - 12); // 包长度
+
         LampChannel lc = effectMode.getChannel();
         cmd[startIndex++] = (byte) (lc != null ? lc.getPurple() : 0);
         cmd[startIndex++] = (byte) (lc != null ? lc.getBlue() : 0);
@@ -258,16 +288,22 @@ public class CmdBuilder {
 
     private static byte[] createMoonDataToLedCmd(Request request) {
         MoonData moonData = (MoonData) request.getData();
-        int length = 17;
+        int length = 21;
         byte[] cmd = new byte[length];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
-        cmd[3] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[4] = moonData.getId1(); // 包ID1
-        cmd[5] = moonData.getId2();// 包ID2
-        cmd[6] = (byte) (cmd.length - 8); // 包长度
-        int startIndex = 7;
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
+        cmd[startIndex++] = (byte) 0x20; // 命令 下载曲线数据到单片机
+        cmd[startIndex++] = moonData.getId1(); // 包ID1
+        cmd[startIndex++] = moonData.getId2();// 包ID2
+        cmd[startIndex++] = (byte) (cmd.length - 12); // 包长度
+
         TimeBucket time = moonData.getTime();
         cmd[startIndex++] = (byte) moonData.getLastFullMoonDay();
         cmd[startIndex++] = (byte) (time != null ? time.getStartHour() : 0);
@@ -291,19 +327,23 @@ public class CmdBuilder {
      */
     private static byte[] createAutoTimingDataToLedCmd(Request request) {
         CurveData modelData = (CurveData) request.getData();
-        int length = 60;
-//        if (modelData.isPreview()) {
-//            length = 56;
-//        }
+        int length = 64;
+
         byte[] cmd = new byte[length];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
-        cmd[3] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[4] = modelData.getId1(); // 包ID1
-        cmd[5] = modelData.getId2();// 包ID2
-        cmd[6] = (byte) (cmd.length - 8); // 包长度
-        int startIndex = 7;
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
+        cmd[startIndex++] = (byte) 0x20; // 命令 下载曲线数据到单片机
+        cmd[startIndex++] = modelData.getId1(); // 包ID1
+        cmd[startIndex++] = modelData.getId2();// 包ID2
+        cmd[startIndex++] = (byte) (cmd.length - 12); // 包长度
+
         // 时间曲线
         List<CurvePoint> points = modelData.getPoints();
         for (int i = 0; i < Constants.HOUR_NUM; i++) {
@@ -334,16 +374,21 @@ public class CmdBuilder {
      */
     private static byte[] creatFlashDataToLedCmd(Request request) {
         FlashData dataNode = (FlashData) request.getData();
-        int length = 24;
+        int length = 28;
         byte[] cmd = new byte[length];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
-        cmd[3] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[4] = dataNode.getId1(); // 包ID1
-        cmd[5] = dataNode.getId2();// 包ID2
-        cmd[6] = (byte) (cmd.length - 8); // 包长度
-        int startIndex = 7;
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
+        cmd[startIndex++] = (byte) 0x20; // 命令 下载曲线数据到单片机
+        cmd[startIndex++] = dataNode.getId1(); // 包ID1
+        cmd[startIndex++] = dataNode.getId2();// 包ID2
+        cmd[startIndex++] = (byte) (cmd.length - 12); // 包长度
 
         TimeBucket time1 = dataNode.getTime1();
         TimeBucket time2 = dataNode.getTime2();
@@ -380,19 +425,21 @@ public class CmdBuilder {
      */
     private static byte[] createAutoDataToLedCmd(Request request) {
         CurveData dataNode = (CurveData) request.getData();
-        int length = 132;
-//        if (dataNode.isPreview()) {
-//            length = 128;
-//        }
+        int length = 136;
         byte[] cmd = new byte[length];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
-        cmd[3] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[4] = dataNode.getId1(); // 包ID1
-        cmd[5] = dataNode.getId2();// 包ID2
-        cmd[6] = (byte) (cmd.length - 8); // 包长度
-        int startIndex = 7;
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
+        cmd[startIndex++] = (byte) 0x20; // 命令 下载曲线数据到单片机
+        cmd[startIndex++] = dataNode.getId1(); // 包ID1
+        cmd[startIndex++] = dataNode.getId2();// 包ID2
+        cmd[startIndex++] = (byte) (cmd.length - 12); // 包长度
 
         List<CurvePoint> points = dataNode.getPoints();
         if (points == null)
@@ -425,18 +472,24 @@ public class CmdBuilder {
     /**
      * 发送模式数据到led
      */
-    private static byte[] createUpdataLedCmd(Request request) {
+    private static byte[] createUpdateLedCmd(Request request) {
         UpdateData updateData = request.getUpdateData();
-        int length = 136;
+        int length = 140;
         byte[] cmd = new byte[length];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
-        cmd[3] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[4] = updateData.getId1(); // 包ID1
-        cmd[5] = updateData.getId2();// 包ID2
-        cmd[6] = (byte) (0x80); // 包长度
-        int startIndex = 7;
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
+        cmd[startIndex++] = (byte) 0x20; // 命令 下载曲线数据到单片机
+        cmd[startIndex++] = updateData.getId1(); // 包ID1
+        cmd[startIndex++] = updateData.getId2();// 包ID2
+        cmd[startIndex++] = (byte) (0x80); // 包长度
+
         byte[] data = updateData.getData();
         for (int i = 0; i < data.length; i++) {
             cmd[startIndex++] = data[i];
@@ -448,18 +501,24 @@ public class CmdBuilder {
     /**
      * 发送模式数据到led
      */
-    private static byte[] createCheckUpdataLedCmd(Request request) {
+    private static byte[] createUpdateLedCmd0x80(Request request) {
         UpdateData updateData = request.getUpdateData();
-        int length = 12;
+        int length = 16;
         byte[] cmd = new byte[length];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
-        cmd[3] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[4] = updateData.getId1(); // 包ID1
-        cmd[5] = updateData.getId2();// 包ID2
-        cmd[6] = (byte) (0x04); // 包长度
-        int startIndex = 7;
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
+        cmd[startIndex++] = (byte) 0x20; // 命令 下载曲线数据到单片机
+        cmd[startIndex++] = updateData.getId1(); // 包ID1
+        cmd[startIndex++] = updateData.getId2();// 包ID2
+        cmd[startIndex++] = (byte) (0x04); // 包长度
+
         byte[] data = updateData.getData();
         for (int i = 0; i < data.length; i++) {
             cmd[startIndex++] = data[i];
@@ -479,14 +538,20 @@ public class CmdBuilder {
 
         if (pkgId == null || pkgId.length != 2)
             return null;
-        byte[] cmd = new byte[7];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x03;// 命令数据长度
-        cmd[3] = (byte) 0x21; // 命令 下载曲线数据到单片机
-        cmd[4] = pkgId[0]; // 包ID1
-        cmd[5] = pkgId[1];// 包ID2
-        cmd[6] = Sum(cmd, 0, 5); // 校验和
+        byte[] cmd = new byte[11];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = 0x03;// 命令数据长度
+        cmd[startIndex++] = (byte) 0x21; // 命令 下载曲线数据到单片机
+        cmd[startIndex++] = pkgId[0]; // 包ID1
+        cmd[startIndex++] = pkgId[1];// 包ID2
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1); // 校验和
         return cmd;
     }
 
@@ -494,108 +559,92 @@ public class CmdBuilder {
      * 停止预览
      */
     private static byte[] CreateStopPreviewCmd() {
-        byte[] cmd = new byte[5];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x01;
-        cmd[3] = 0x09;
-        cmd[4] = Sum(cmd, 0, 3);// (byte) 0x94;
+        byte[] cmd = new byte[9];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = 0x01;
+        cmd[startIndex++] = 0x09;
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);// (byte) 0x94;
         return cmd;
     }
 
-    /**
-     * 查询SN
-     */
-    private static byte[] CreateQuerySNCmd() {
-        byte[] cmd = new byte[5];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x01;
-        cmd[3] = (byte) 0xf7;
-        cmd[4] = (byte) 0x82;
-        return cmd;
-    }
 
     /**
      * 检查灯是否就绪
      */
     private static byte[] CreateCheckReadyCmd() {
-        byte[] cmd = new byte[5];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x01;
-        cmd[3] = 0x1C;
-        cmd[4] = Sum(cmd, 0, 3);
+        byte[] cmd = new byte[9];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = 0x01;
+        cmd[startIndex++] = 0x1C;
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
     }
 
-    /**
-     * 从灯建立与当前主灯关联命令 AttachSub
-     */
-    private static byte[] CreateAttachSubCmd() {
-        byte[] cmd = new byte[5];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x01;
-        cmd[3] = 0x10;
-        cmd[4] = Sum(cmd, 0, 3);// 0x9B;
-        return cmd;
-    }
 
     /**
      * 查询组号
      */
     private static byte[] CreateQueryGroupCmd() {
-        byte[] cmd = new byte[4];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = (byte) 0xF1;
-        cmd[3] = Sum(cmd, 0, 2);
+        byte[] cmd = new byte[8];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = (byte) 0x1A;
+        cmd[startIndex++] = Sum(cmd, 0, 2);
         return cmd;
-//        byte[] cmd = new byte[5];
-//        cmd[0] = 0x34;
-//        cmd[1] = 0x56;
-//        cmd[2] = 0x01;
-//        cmd[3] = 0x1A;
-//        cmd[4] = Sum(cmd, 0, 3);
-//        return cmd;
+
     }
 
     /**
      * 设置组号
      */
     private static byte[] CreateSetGroupCmd(Request request) {
-        byte[] cmd = new byte[14];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x0A;
-        cmd[3] = 0x1B;
-        cmd[4] = (byte) request.getIntVal();
-        final byte[] mac = request.getByteArray();
-        cmd[5] = (byte) mac[0];
-        cmd[6] = (byte) mac[1];
-        cmd[7] = (byte) mac[2];
-        cmd[8] = (byte) mac[3];
-        cmd[9] = (byte) mac[4];
-        cmd[10] = (byte) mac[5];
-        cmd[11] = (byte) request.getDeviceType().getIntValue();
-        cmd[12] = (byte) 0x11;
-        cmd[13] = Sum(cmd, 0, 12);
+        byte[] cmd = new byte[20];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = 0x0c;
+        cmd[startIndex++] = 0x1B;
+        cmd[startIndex++] = (byte) request.getIntVal();//组号
+        final byte[] mac = request.getByteArray();//mac
+        cmd[startIndex++] = mac[0];
+        cmd[startIndex++] = mac[1];
+        cmd[startIndex++] = mac[2];
+        cmd[startIndex++] = mac[3];
+        cmd[startIndex++] = mac[4];
+        cmd[startIndex++] = mac[5];
+        cmd[startIndex++] = (byte) 0x00;// temp 暂时没有用
+        cmd[startIndex++] = (byte) 0x00;// temp 暂时没有用
+        cmd[startIndex++] = (byte) 0x00;// temp 暂时没有用
+        cmd[startIndex++] = (byte) 0x00;// temp 暂时没有用
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
     }
 
-    /**
-     * 检查硬件
-     */
-    private static byte[] CreateCheckHardWareCmd() {
-        byte[] cmd = new byte[5];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x01;
-        cmd[3] = (byte) 0xf4;
-        cmd[4] = Sum(cmd, 0, 3);// 0x7F;
-        return cmd;
-    }
 
     /*
      * 查询曲线数据有效性
@@ -604,30 +653,23 @@ public class CmdBuilder {
 
         if (pkgId == null || pkgId.length != 2)
             return null;
-        byte[] cmd = new byte[7];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);
-        cmd[3] = (byte) 0x22;
-        cmd[4] = pkgId[0];
-        cmd[5] = pkgId[1];
-        cmd[6] = Sum(cmd, 0, 5);
+        byte[] cmd = new byte[11];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);
+        cmd[startIndex++] = (byte) 0x22;
+        cmd[startIndex++] = pkgId[0];
+        cmd[startIndex++] = pkgId[1];
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
     }
 
-    /*
-     * 查询Storm
-     */
-    private static byte[] CreateQueryStormCmd() {
-
-        byte[] cmd = new byte[5];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = 0x01;
-        cmd[3] = 0x0A;
-        cmd[4] = Sum(cmd, 0, 3);
-        return cmd;
-    }
 
     /**
      * 设置灯的状态
@@ -635,33 +677,26 @@ public class CmdBuilder {
     private static byte[] CreateSetStateCmd(LampState ls) {
         if (ls == null)
             return null;
-        byte[] cmd = new byte[9];
-        cmd[0] = 0x34;
-        cmd[1] = 0x56;
-        cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 长度
-        cmd[3] = 0x04;// 命令
-        cmd[4] = (byte) (ls.On ? 0x1 : 0);
-        cmd[5] = ls.mode;
-        cmd[6] = (byte) (ls.lighting ? 0x1 : 0);
-        // cmd[7] = (byte) (ls.moon ? 0x1 : 0);
-        cmd[7] = (byte) (ls.acclimation ? 0x1 : 0);
-        cmd[8] = Sum(cmd, 0, 7);
+        byte[] cmd = new byte[13];
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
+
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 长度
+        cmd[startIndex++] = 0x04;// 命令
+        cmd[startIndex++] = (byte) (ls.On ? 0x1 : 0);
+        cmd[startIndex++] = ls.mode;
+        cmd[startIndex++] = (byte) (ls.lighting ? 0x1 : 0);
+        cmd[startIndex++] = (byte) (ls.acclimation ? 0x1 : 0);
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
 
         return cmd;
     }
 
-    /**
-     * 更新硬件
-     */
-    private static byte[] CreateUpdateHardwareCmd() {
-
-        byte[] cmd = new byte[5];
-        /*
-         * cmd[0]=0x34; cmd[1]=0x56; cmd[2]=0x01; cmd[3]=0x0A; cmd[4]=(byte)
-		 * ((cmd[0]+cmd[1]+cmd[2]+cmd[3])&0xff);
-		 */
-        return cmd;
-    }
 
     /**
      * 计算包校验码

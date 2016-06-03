@@ -179,7 +179,7 @@ public class MainPresenter implements IMulticastListener, IDataListener {
     public boolean onReceive(Response response, ConnectManager connectManager) {
         if (response.IsOK() && response.getCmdType() == CmdType.CheckReady) {
             queryGroup(connectManager);
-        } else if (response.getCmdType() == CmdType.QueryGroup0xF1 || response.getCmdType() == CmdType.QueryGroup0x1A) {
+        } else if (response.getCmdType() == CmdType.QueryGroup0x1A) {
             if (response.IsOK()) {
                 DeviceType deviceType = response.getDeviceType();
                 if (deviceType == DeviceType.Led) {
