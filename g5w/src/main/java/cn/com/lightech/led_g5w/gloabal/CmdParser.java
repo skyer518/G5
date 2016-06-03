@@ -152,9 +152,9 @@ public class CmdParser {
         int dataLen = content[6] & 0xff; // byte [-127~128]，表示长度时要转换
 
         // 校验和检测
-        int nValideSize = content[dataLen + 3] & 0xff;
+        int nValideSize = content[dataLen + 7] & 0xff;
         int acSize = 0;
-        for (int i = 0; i < 3 + dataLen; i++) {
+        for (int i = 0; i < 7 + dataLen; i++) {
             acSize += (content[i] & 0xff);
         }
         if ((acSize & 0xff) != nValideSize) {

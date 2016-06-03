@@ -132,7 +132,7 @@ public class SycnLEDDataPresenter implements IDataListener {
             return;
         DataNode wn = response.getDataNode();
         if (wn != null) {
-            if (response.getPackageId()[1] == 0x01) {
+            if (wn.getID2() == 0x01) {// AutoTiming
                 AutoDataNode node = (AutoDataNode) wn;
                 List<CurvePoint> points = node.getPoints();
 
