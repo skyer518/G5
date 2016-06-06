@@ -226,7 +226,7 @@ public class DeviceLEDFragment extends AppBaseStateFragment implements IDeviceVi
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_actionbar_device_l1ed, menu);
+        inflater.inflate(R.menu.menu_actionbar_device_led, menu);
 //        scanMenu = menu.findItem(R.id.action_btn_device_scanning);
 //        scanLoading(true);
         super.onCreateOptionsMenu(menu, inflater);
