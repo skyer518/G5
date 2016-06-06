@@ -94,7 +94,7 @@ public class CmdBuilder {
         cmd[startIndex++] = (byte) 0x1D;// cmd
         cmd[startIndex++] = (byte) 0xA5;// deviceType
         cmd[startIndex++] = (byte) groupNo; //group number
-        cmd[startIndex] = Sum(cmd, 0, -1);
+        cmd[startIndex] = Sum(cmd, 0, startIndex-1);
         return cmd;
     }
 

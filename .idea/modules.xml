@@ -4,13 +4,23 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LED_G5W.iml" filepath="$PROJECT_DIR$/LED_G5W.iml" />
       <module fileurl="file://$PROJECT_DIR$/chartLib/chartLib.iml" filepath="$PROJECT_DIR$/chartLib/chartLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chartLib/chartLib.iml" filepath="$PROJECT_DIR$/chartLib/chartLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/g5.iml" filepath="$PROJECT_DIR$/g5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/g5g/g5g.iml" filepath="$PROJECT_DIR$/g5g/g5g.iml" />
       <module fileurl="file://$PROJECT_DIR$/g5g/g5g.iml" filepath="$PROJECT_DIR$/g5g/g5g.iml" />
       <module fileurl="file://$PROJECT_DIR$/g5w/g5w.iml" filepath="$PROJECT_DIR$/g5w/g5w.iml" />
+      <module fileurl="file://$PROJECT_DIR$/g5w/g5w.iml" filepath="$PROJECT_DIR$/g5w/g5w.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myutils/myutils.iml" filepath="$PROJECT_DIR$/myutils/myutils.iml" />
       <module fileurl="file://$PROJECT_DIR$/myutils/myutils.iml" filepath="$PROJECT_DIR$/myutils/myutils.iml" />
       <module fileurl="file://$PROJECT_DIR$/net/net.iml" filepath="$PROJECT_DIR$/net/net.iml" />
+      <module fileurl="file://$PROJECT_DIR$/net/net.iml" filepath="$PROJECT_DIR$/net/net.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spray/spray.iml" filepath="$PROJECT_DIR$/spray/spray.iml" />
       <module fileurl="file://$PROJECT_DIR$/spray/spray.iml" filepath="$PROJECT_DIR$/spray/spray.iml" />
       <module fileurl="file://$PROJECT_DIR$/testnetlib/testnetlib.iml" filepath="$PROJECT_DIR$/testnetlib/testnetlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testnetlib/testnetlib.iml" filepath="$PROJECT_DIR$/testnetlib/testnetlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/wifiLib/wifiLib.iml" filepath="$PROJECT_DIR$/wifiLib/wifiLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wifiLib/wifiLib.iml" filepath="$PROJECT_DIR$/wifiLib/wifiLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xbase/xbase.iml" filepath="$PROJECT_DIR$/xbase/xbase.iml" />
       <module fileurl="file://$PROJECT_DIR$/xbase/xbase.iml" filepath="$PROJECT_DIR$/xbase/xbase.iml" />
     </modules>
   </component>
