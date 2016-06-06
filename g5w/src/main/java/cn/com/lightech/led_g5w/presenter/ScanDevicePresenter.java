@@ -1,9 +1,12 @@
 package cn.com.lightech.led_g5w.presenter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
@@ -148,6 +151,7 @@ public class ScanDevicePresenter {
 
 
     public List<ScanResult> getWifiScanResult() {
+
         List<ScanResult> scanResults = mWifiManager.getScanResults();
         return deviceWifiFilter(REG_HI_LINK_WIFI_SSID, scanResults);
     }

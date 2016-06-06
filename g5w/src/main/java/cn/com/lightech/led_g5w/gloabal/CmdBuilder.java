@@ -655,7 +655,7 @@ public class CmdBuilder {
         cmd[startIndex++] = Const.getInstance().getUUID()[2];
         cmd[startIndex++] = Const.getInstance().getUUID()[3];
 
-        cmd[startIndex++] = 0x01;
+        cmd[startIndex++] = 0x01;//长度
         cmd[startIndex++] = 0x1C;
         cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
@@ -686,7 +686,8 @@ public class CmdBuilder {
      * 设置组号
      */
     private static byte[] CreateSetGroupCmd(Request request) {
-        byte[] cmd = new byte[20];
+        int length = 20;
+        byte[] cmd = new byte[length];
         int startIndex = 0;
         cmd[startIndex++] = 0x34;
         cmd[startIndex++] = 0x56;
@@ -695,20 +696,22 @@ public class CmdBuilder {
         cmd[startIndex++] = Const.getInstance().getUUID()[1];
         cmd[startIndex++] = Const.getInstance().getUUID()[2];
         cmd[startIndex++] = Const.getInstance().getUUID()[3];
-        cmd[startIndex++] = 0x0c;
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);//长度
         cmd[startIndex++] = 0x1B;
         cmd[startIndex++] = (byte) request.getIntVal();//组号
-        final byte[] mac = request.getByteArray();//mac
-        cmd[startIndex++] = mac[0];
-        cmd[startIndex++] = mac[1];
-        cmd[startIndex++] = mac[2];
-        cmd[startIndex++] = mac[3];
-        cmd[startIndex++] = mac[4];
-        cmd[startIndex++] = mac[5];
-        cmd[startIndex++] = (byte) 0x00;// temp 暂时没有用
-        cmd[startIndex++] = (byte) 0x00;// temp 暂时没有用
-        cmd[startIndex++] = (byte) 0x00;// temp 暂时没有用
-        cmd[startIndex++] = (byte) 0x00;// temp 暂时没有用
+
+        cmd[startIndex++] = (byte) 0xFF;// temp 暂时没有用
+        cmd[startIndex++] = (byte) 0xFF;// temp 暂时没有用
+
+        cmd[startIndex++] = (byte) 0xFF;// temp 暂时没有用
+        cmd[startIndex++] = (byte) 0xFF;// temp 暂时没有用
+        cmd[startIndex++] = (byte) 0xFF;// temp 暂时没有用
+        cmd[startIndex++] = (byte) 0xFF;// temp 暂时没有用
+
+        cmd[startIndex++] = (byte) 0xFF;// temp 暂时没有用
+        cmd[startIndex++] = (byte) 0xFF;// temp 暂时没有用
+        cmd[startIndex++] = (byte) 0xFF;// temp 暂时没有用
+        cmd[startIndex++] = (byte) 0xFF;// temp 暂时没有用
         cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
     }

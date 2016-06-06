@@ -37,8 +37,8 @@ public class DutySetGroup extends DutyHandler {
                 Request cmd = new Request();
                 cmd.setCmdType(CmdType.SetGroup);
                 cmd.setIntVal(0);
-                cmd.setByteArray(request.mac);
-                cmd.setDeviceType(request.deviceType);
+                // cmd.setByteArray(request.mac);
+                // cmd.setDeviceType(request.deviceType);
                 connectManager.SendToLed(CmdBuilder.Build(cmd));
             }
 

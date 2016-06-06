@@ -171,7 +171,7 @@ public class MainPresenter implements IMulticastListener, IDataListener {
 
     private void queryGroup(ConnectManager connectManager) {
         Request request = new Request();
-        request.setCmdType(CmdType.QueryGroup0x1A);
+        request.setCmdType(CmdType.QueryState);
         connectManager.SendToLed(request);
     }
 

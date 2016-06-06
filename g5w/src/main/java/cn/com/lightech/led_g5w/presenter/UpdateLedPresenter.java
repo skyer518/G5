@@ -1,10 +1,16 @@
 package cn.com.lightech.led_g5w.presenter;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -129,7 +135,24 @@ public class UpdateLedPresenter implements IDataListener {
 
 
     public void starUpdate() {
-        bytes = readLedData();
+        InputStream stream = null;
+        final File sdRootPath = Environment.getExternalStorageDirectory();
+
+        File file = new File(sdRootPath + File.separator + "firmware_upgrade_package.bin");
+        try {
+            if (file.exists()) {
+                stream = new FileInputStream(file);
+            } else {
+                stream = mContext.getAssets().open("firmware_upgrade_package.bin");
+            }
+        } catch (FileNotFoundException e) {
+            logger.i("SD card root directory of the upgrade file not found...");
+        } catch (IOException e) {
+            logger.i("The default upgrade file read error...");
+        }
+
+
+        bytes = readUpgradeFirmware(stream);
         if (bytes == null || bytes.length != LED_MAX_LENGTH) {
             updateLedView.stopUpdate();
             return;
@@ -138,10 +161,11 @@ public class UpdateLedPresenter implements IDataListener {
 
     }
 
-    private byte[] readLedData() {
+    private byte[] readUpgradeFirmware(InputStream stream) {
+        ByteArrayOutputStream swapStream = null;
         try {
-            ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
-            InputStream stream = mContext.getAssets().open("g5_a_160427_9a29.Bin");
+            // stream = mContext.getAssets().open("firmware_upgrade_package.bin");
+            swapStream = new ByteArrayOutputStream();
             int total = 0;
             byte[] buff = new byte[100];
             int rc = 0;
@@ -155,11 +179,22 @@ public class UpdateLedPresenter implements IDataListener {
                     swapStream.write(buffer, 0, 1);
                 }
             }
-            Log.i("readLedData", swapStream.size() + " / " + LED_MAX_LENGTH);
+            Log.i("readUpgradeFirmware", swapStream.size() + " / " + LED_MAX_LENGTH);
             return swapStream.toByteArray();
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (stream != null) {
+                    stream.close();
+                }
+                if (swapStream != null) {
+                    swapStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }

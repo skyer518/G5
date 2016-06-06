@@ -118,8 +118,8 @@ public class ScanWifiPresenter {
         entity.isUpdate = isUpdate;
         DutySaveWifi saveWifi = new DutySaveWifi();
         DutySetGroup setGroup = new DutySetGroup(saveWifi);
-        DutyGetMac getMac = new DutyGetMac(setGroup);
-        DutyConnectLed connectLed = new DutyConnectLed(getMac);
+        //DutyGetMac getMac = new DutyGetMac(setGroup);
+        DutyConnectLed connectLed = new DutyConnectLed(setGroup);
         DutyConnectWifi connectWifi = new DutyConnectWifi(connectLed);
         connectWifi.handleRequest(entity);
 
