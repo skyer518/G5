@@ -30,7 +30,7 @@
     <string name="error_set_flag_failed">保存分组失敗！</string>
     <string name="error_wifi_connect_failed">WIFI連接失敗！</string>
     <string name="msg_dosomething">數據正在上傳 ...</string>
-    <string name="msg_updataLed">正在陞級Led燈固件，請耐心等待….</string>
+    <string name="msg_updateLed">正在陞級Led燈固件，請耐心等待….</string>
     <string name="pref_summary_acclimation">啟用/禁用植物適應功能</string>
     <string name="pref_summary_flash">啟用/禁用閃電功能</string>
     <string name="pref_summary_flash_time1">啟用/禁用第一個時間點</string>

@@ -37,32 +37,32 @@ public class CmdParser {
 
         // 基本长度检测
         if (content == null || content.length < 5) {
-            result.setReplyCode(ReplyErrorCode.NotEnoughData);
+            result.setReplyErrorCode(ReplyErrorCode.NotEnoughData);
             logger.e("返回数据长度不足，len:%d", content == null ? 0 : content.length);
             return result;
         }
 
         // 包头检测
         if (content[0] != 0x65 || content[1] != 0x43) {
-            result.setReplyCode(ReplyErrorCode.HeaderError);
+            result.setReplyErrorCode(ReplyErrorCode.HeaderError);
             logger.e("包头不对，d1:%d,d2:%d", content[0], content[1]);
             return result;
         }
         if (content[2] == (byte) 0xf1 && content.length == 64) {
             if (!valideSize(content, result)) return result;
             result = ParseQueryGroup0xF1(content);
-            ReplyErrorCode replyCode = result.getReplyCode();
+            ReplyErrorCode replyCode = result.getReplyErrorCode();
             result.setByteArray(content);
 
             result.setCmdType(CmdType.QueryGroup0x1A);
-            result.setReplyCode(replyCode);
+            result.setReplyErrorCode(replyCode);
             logger.i("recv data，len:%d,cmdType:%s,errorcode:%s", content.length,
                     CmdType.QueryGroup0x1A.toString(), replyCode.toString());
 
         } else {
             // 数据包长度检测
             if (!valideDataLength(content)) {
-                result.setReplyCode(ReplyErrorCode.DataLengthError);
+                result.setReplyErrorCode(ReplyErrorCode.DataLengthError);
                 logger.e("包长度不对，len:%d", content.length);
                 return result;
             }
@@ -82,7 +82,7 @@ public class CmdParser {
                     break;
                 case QueryState: // 查询灯的状态
                     result = ParseQueryState(content);
-                    replyCode = result.getReplyCode();
+                    replyCode = result.getReplyErrorCode();
                     break;
                 case SetState: // 设置灯的状态
                     replyCode = ParseNormal(content);
@@ -104,26 +104,26 @@ public class CmdParser {
                     break;
                 case QueryGroup0x1A:// 查询组号命令
                     result = ParseQueryGroup0x1A(content);
-                    replyCode = result.getReplyCode();
+                    replyCode = result.getReplyErrorCode();
                     break;
                 case SetGroup:// 设置组号命令
                     replyCode = ParseNormal(content);
                     break;
                 case SendDataToLED: // 下载曲线数据到单片机
                     result = ParseSendDataToLED(content);
-                    replyCode = result.getReplyCode();
+                    replyCode = result.getReplyErrorCode();
                     break;
                 case RecvDataFromLED: // 上传曲线数据到平板端
                     result = ParseRecvDataFromLED(content);
-                    replyCode = result.getReplyCode();
+                    replyCode = result.getReplyErrorCode();
                     break;
                 case ValidateData: // 查询曲线数据有效性
                     result = ParseValidateData(content);
-                    replyCode = result.getReplyCode();
+                    replyCode = result.getReplyErrorCode();
                     break;
                 case QueryType:
                     result = ParseQueryType(content);
-                    replyCode = result.getReplyCode();
+                    replyCode = result.getReplyErrorCode();
                     break;
                 case IDFormatError:
                     replyCode = ReplyErrorCode.IDFormatError;
@@ -133,6 +133,9 @@ public class CmdParser {
                     replyCode = ReplyErrorCode.ValidateSumFailed;
                     logger.e("LED数据包校验和失败");
                     break;
+                case GetVersion:
+                    result = ParseGetVersion(content);
+                    replyCode = result.getReplyErrorCode();
                 default:
                     break;
 
@@ -142,7 +145,7 @@ public class CmdParser {
             result.setByteArray(content);
 
             result.setCmdType(cmdType);
-            result.setReplyCode(replyCode);
+            result.setReplyErrorCode(replyCode);
             logger.i("recv data，len:%d,cmdType:%s,errorcode:%s", content.length,
                     cmdType.toString(), replyCode.toString());
 
@@ -166,7 +169,7 @@ public class CmdParser {
             acSize += (content[i] & 0xff);
         }
         if ((acSize & 0xff) != nValideSize) {
-            result.setReplyCode(ReplyErrorCode.ValidateCodeError);
+            result.setReplyErrorCode(ReplyErrorCode.ValidateCodeError);
             logger.e("校验和检测失败");
             return false;
 
@@ -224,7 +227,7 @@ public class CmdParser {
     private static Response ParseSendDataToLED(byte[] content) {
         Response result = new Response();
         if (content.length < 7) {
-            result.setReplyCode(ReplyErrorCode.LogicError);
+            result.setReplyErrorCode(ReplyErrorCode.LogicError);
             return result;
         }
         int nPos = 4;
@@ -233,10 +236,10 @@ public class CmdParser {
         byte ErroNo = content[nPos + 2];
         if (ErroNo == 0x55) {
             result.setPackageId(new byte[]{id1, id2});
-            result.setReplyCode(ReplyErrorCode.OK);
+            result.setReplyErrorCode(ReplyErrorCode.OK);
             return result;
         }
-        result.setReplyCode(ReplyErrorCode.LogicError);
+        result.setReplyErrorCode(ReplyErrorCode.LogicError);
         return result;
     }
 
@@ -268,10 +271,10 @@ public class CmdParser {
             ls.Power = content[nPos++];
 
             result.setLampState(ls);
-            result.setReplyCode(ReplyErrorCode.OK);
+            result.setReplyErrorCode(ReplyErrorCode.OK);
             return result;
         } else {
-            result.setReplyCode(ReplyErrorCode.LogicError);
+            result.setReplyErrorCode(ReplyErrorCode.LogicError);
             return result;
         }
 
@@ -283,7 +286,7 @@ public class CmdParser {
     private static Response ParseRecvDataFromLED(byte[] content) {
         Response result = new Response();
         if (content.length < 7) {
-            result.setReplyCode(ReplyErrorCode.LogicError);
+            result.setReplyErrorCode(ReplyErrorCode.LogicError);
             return result;
         }
         int nPos = 4;
@@ -296,7 +299,7 @@ public class CmdParser {
         if (ids[0] == 0x02) {
             if (dataLength != 0x10) {
                 // 数据包长度不对
-                result.setReplyCode(ReplyErrorCode.DataLengthError);
+                result.setReplyErrorCode(ReplyErrorCode.DataLengthError);
                 logger.e("数据包内长度不足：%d,应为0x19", dataLength);
                 return result;
             }
@@ -332,7 +335,7 @@ public class CmdParser {
                 case Auto:
                     if (dataLength != 0x7c) {
                         // 数据包长度不对
-                        result.setReplyCode(ReplyErrorCode.DataLengthError);
+                        result.setReplyErrorCode(ReplyErrorCode.DataLengthError);
                         logger.e("Auto数据包内长度不足：%d,应为0x7c", dataLength);
                         return result;
                     }
@@ -357,7 +360,7 @@ public class CmdParser {
                 case Flash:
                     if (dataLength != 0x10) {
                         // 数据包长度不对
-                        result.setReplyCode(ReplyErrorCode.DataLengthError);
+                        result.setReplyErrorCode(ReplyErrorCode.DataLengthError);
                         logger.e("Flash 数据包内长度不足：%d,应为0x10", dataLength);
                         return result;
                     }
@@ -372,7 +375,7 @@ public class CmdParser {
                 case Moon:
                     if (dataLength != 0x09) {
                         // 数据包长度不对
-                        result.setReplyCode(ReplyErrorCode.DataLengthError);
+                        result.setReplyErrorCode(ReplyErrorCode.DataLengthError);
                         logger.e("Moon 数据包内长度不足：%d,应为0x09", dataLength);
                         return result;
                     }
@@ -384,7 +387,7 @@ public class CmdParser {
                 case Manual:
                     if (dataLength != 0x09) {
                         // 数据包长度不对
-                        result.setReplyCode(ReplyErrorCode.DataLengthError);
+                        result.setReplyErrorCode(ReplyErrorCode.DataLengthError);
                         logger.e(" Manual 数据包内长度不足：%d,应为0x09", dataLength);
                         return result;
                     }
@@ -401,7 +404,7 @@ public class CmdParser {
                 case AutoTiming:
                     if (dataLength != 0x34) {
                         // 数据包长度不对
-                        result.setReplyCode(ReplyErrorCode.DataLengthError);
+                        result.setReplyErrorCode(ReplyErrorCode.DataLengthError);
                         logger.e("AutoTiming数据包内长度不足：%d,应为0x34", dataLength);
                         return result;
                     }
@@ -434,12 +437,12 @@ public class CmdParser {
 
             result.setUnixTime(unixTIme);
         }
-        result.setReplyCode(ReplyErrorCode.OK);
+        result.setReplyErrorCode(ReplyErrorCode.OK);
 
         return result;
 
         /*
-         * TODO:出错的情况？ result.setReplyCode(ReplyErrorCode.LogicError); return
+         * TODO:出错的情况？ result.setReplyErrorCode(ReplyErrorCode.LogicError); return
 		 * result;
 		 */
     }
@@ -448,7 +451,7 @@ public class CmdParser {
     private static Response ParseValidateData(byte[] content) {
         Response result = new Response();
         if (content.length < 7) {
-            result.setReplyCode(ReplyErrorCode.LogicError);
+            result.setReplyErrorCode(ReplyErrorCode.LogicError);
             return result;
         }
         int startIndex = 4;
@@ -462,18 +465,31 @@ public class CmdParser {
         long unixTIme = (data1 << 24) + (data2 << 16) + (data3 << 8) + data4;
         result.setUnixTime(unixTIme);
         result.setPackageId(new byte[]{id1, id2});
-        result.setReplyCode(ReplyErrorCode.OK);
+        result.setReplyErrorCode(ReplyErrorCode.OK);
         return result;
     }
 
     private static Response ParseQueryType(byte[] content) {
         Response result = new Response();
         if (content != null && content.length != 6) {
-            result.setReplyCode(ReplyErrorCode.LogicError);
+            result.setReplyErrorCode(ReplyErrorCode.LogicError);
             return result;
         }
         result.setDeviceType(DeviceType.parseInt(content[4] & 0xff));
-        result.setReplyCode(ReplyErrorCode.OK);
+        result.setReplyErrorCode(ReplyErrorCode.OK);
+        return result;
+    }
+
+
+    private static Response ParseGetVersion(byte[] content) {
+        Response result = new Response();
+        if (content != null && content.length != 6) {
+            result.setReplyErrorCode(ReplyErrorCode.LogicError);
+            return result;
+        }
+        result.setVersion1(content[4] & 0xff);
+        result.setVersion2(content[5] & 0xff);
+        result.setReplyErrorCode(ReplyErrorCode.OK);
         return result;
     }
 
@@ -482,7 +498,7 @@ public class CmdParser {
     private static Response ParseQueryGroup0xF1(byte[] content) {
         Response result = new Response();
         if (content.length < 7) {
-            result.setReplyCode(ReplyErrorCode.LogicError);
+            result.setReplyErrorCode(ReplyErrorCode.LogicError);
             return result;
         }
         //
@@ -499,7 +515,7 @@ public class CmdParser {
         result.setDeviceType(DeviceType.parseInt(device));
         result.setGroupNum(num);
         result.setMac(mac);
-        result.setReplyCode(ReplyErrorCode.OK);
+        result.setReplyErrorCode(ReplyErrorCode.OK);
         return result;
     }
 
@@ -507,7 +523,7 @@ public class CmdParser {
     private static Response ParseQueryGroup0x1A(byte[] content) {
         Response result = new Response();
         if (content.length < 7) {
-            result.setReplyCode(ReplyErrorCode.LogicError);
+            result.setReplyErrorCode(ReplyErrorCode.LogicError);
             return result;
         }
         //
@@ -525,7 +541,7 @@ public class CmdParser {
         result.setDeviceType(DeviceType.parseInt(device));
         result.setGroupNum(num);
         result.setMac(mac);
-        result.setReplyCode(ReplyErrorCode.OK);
+        result.setReplyErrorCode(ReplyErrorCode.OK);
         return result;
     }
 

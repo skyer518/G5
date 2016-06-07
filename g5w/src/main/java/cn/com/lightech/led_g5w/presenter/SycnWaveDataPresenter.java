@@ -66,7 +66,7 @@ public class SycnWaveDataPresenter implements IDataListener {
         }
         Logger.getLogger().d(
                 response.getCmdType().toString() + "   "
-                        + response.getReplyCode());
+                        + response.getReplyErrorCode());
         return false;
 
     }

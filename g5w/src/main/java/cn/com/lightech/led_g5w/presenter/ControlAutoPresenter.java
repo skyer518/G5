@@ -92,7 +92,7 @@ public class ControlAutoPresenter implements IDataListener {
             return true;
         switch (response.getCmdType()) {
             case SendDataToLED:
-                if (response.getReplyCode() == ReplyErrorCode.OK) {
+                if (response.getReplyErrorCode() == ReplyErrorCode.OK) {
                     DataNode dataNode = response.getDataNode();
                     if (dataNode instanceof AutoDataNode) {
 
@@ -100,12 +100,12 @@ public class ControlAutoPresenter implements IDataListener {
                 }
                 break;
             case StopPreview:
-                if (response.getReplyCode() == ReplyErrorCode.OK) {
+                if (response.getReplyErrorCode() == ReplyErrorCode.OK) {
                     this.autoView.stopPreview();
                 }
                 break;
             case PreViewCurve:
-                if (response.getReplyCode() == ReplyErrorCode.OK) {
+                if (response.getReplyErrorCode() == ReplyErrorCode.OK) {
                     this.autoView.preview();
                 }
                 break;
@@ -114,7 +114,7 @@ public class ControlAutoPresenter implements IDataListener {
         }
         Logger.getLogger().d(
                 response.getCmdType().toString() + "   "
-                        + response.getReplyCode());
+                        + response.getReplyErrorCode());
         return true;
     }
 

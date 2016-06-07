@@ -1,15 +1,18 @@
 package cn.com.lightech.led_g5w.presenter;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
-import cn.com.lightech.led_g5w.entity.UpdataNode;
+import cn.com.lightech.led_g5w.entity.UpdateNode;
 import cn.com.lightech.led_g5w.gloabal.IDataListener;
 import cn.com.lightech.led_g5w.gloabal.LedProxy;
 import cn.com.lightech.led_g5w.net.ConnectManager;
@@ -17,25 +20,25 @@ import cn.com.lightech.led_g5w.net.ConnectionsManager;
 import cn.com.lightech.led_g5w.net.entity.ConnState;
 import cn.com.lightech.led_g5w.net.entity.Response;
 import cn.com.lightech.led_g5w.net.utils.Logger;
-import cn.com.lightech.led_g5w.view.console.IUpdataLedView;
+import cn.com.lightech.led_g5w.view.console.IUpdateLedView;
 
 /**
  * Created by 明 on 2016/4/18.
  */
-public class UpdataLedPresenter implements IDataListener {
+public class UpdateLedPresenter implements IDataListener {
 
     private final int LED_MAX_LENGTH = 0X4000;
 
-    private final IUpdataLedView updataLedView;
-    private Logger logger = Logger.getLogger(UpdataLedPresenter.class);
+    private final IUpdateLedView updateLedView;
+    private Logger logger = Logger.getLogger(UpdateLedPresenter.class);
     private static final int TOTAL_PACKAGE = 0x80;
     private int id2 = 0x00;
     private Context mContext;
     private byte[] bytes;
 
-    public UpdataLedPresenter(Context context, IUpdataLedView updataLedView) {
+    public UpdateLedPresenter(Context context, IUpdateLedView updateLedView) {
         this.mContext = context;
-        this.updataLedView = updataLedView;
+        this.updateLedView = updateLedView;
     }
 
     @Override
@@ -53,6 +56,9 @@ public class UpdataLedPresenter implements IDataListener {
         if (response == null)
             return false;
         switch (response.getCmdType()) {
+            case GetVersion:
+                // response.getVersion1()+
+                break;
             case SendDataToLED:
                 if (!response.IsOK())
                     logger.e("SendDataToLED failed modeIndex:%02d", this.id2);
@@ -71,7 +77,7 @@ public class UpdataLedPresenter implements IDataListener {
         }
         Logger.getLogger().d(
                 response.getCmdType().toString() + "   "
-                        + response.getReplyCode());
+                        + response.getReplyErrorCode());
         return false;
 
     }
@@ -82,15 +88,15 @@ public class UpdataLedPresenter implements IDataListener {
             finish();
             return;
         }
-        UpdataNode updataNode = genUpdataNode();
-        LedProxy.sendToLed(updataNode);
+        UpdateNode updateNode = genUpdateNode();
+        LedProxy.sendToLed(updateNode);
     }
 
 
     @NonNull
-    private UpdataNode genUpdataNode() {
+    private UpdateNode genUpdateNode() {
         byte[] data;
-        UpdataNode updataNode = new UpdataNode((byte) id2);
+        UpdateNode updateNode = new UpdateNode((byte) id2);
         if (id2 == 0x80) {
             data = new byte[4];
             data[0] = 1;
@@ -108,8 +114,8 @@ public class UpdataLedPresenter implements IDataListener {
                 data[i] = bytes[begin + i];
             }
         }
-        updataNode.setData(data);
-        return updataNode;
+        updateNode.setData(data);
+        return updateNode;
     }
 
 
@@ -117,7 +123,7 @@ public class UpdataLedPresenter implements IDataListener {
         String txt = String.format("stop ; current: %d  ; total: %d  ;",
                 this.id2, TOTAL_PACKAGE);
         logger.e(txt);
-        updataLedView.stopUpdata();
+        updateLedView.stopUpdate();
     }
 
     public void register() {
@@ -129,20 +135,37 @@ public class UpdataLedPresenter implements IDataListener {
     }
 
 
-    public void starUpdata() {
-        bytes = readLedData();
+    public void starUpdate() {
+        InputStream stream = null;
+        final File sdRootPath = Environment.getExternalStorageDirectory();
+
+        File file = new File(sdRootPath + File.separator + "firmware_upgrade_package.bin");
+        try {
+            if (file.exists()) {
+                stream = new FileInputStream(file);
+            } else {
+                stream = mContext.getAssets().open("firmware_upgrade_package.bin");
+            }
+        } catch (FileNotFoundException e) {
+            logger.i("SD card root directory of the upgrade file not found...");
+        } catch (IOException e) {
+            logger.i("The default upgrade file read error...");
+        }
+
+
+        bytes = readUpgradeFirmware(stream);
         if (bytes == null || bytes.length != LED_MAX_LENGTH) {
-            updataLedView.stopUpdata();
+            updateLedView.stopUpdate();
             return;
         }
-        LedProxy.sendToLed(genUpdataNode());
+        LedProxy.sendToLed(genUpdateNode());
 
     }
 
-    private byte[] readLedData() {
+    private byte[] readUpgradeFirmware(InputStream stream) {
+        ByteArrayOutputStream swapStream = null;
         try {
-            ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
-            InputStream stream = mContext.getAssets().open("g5_a_160427_9a29.Bin");
+            swapStream = new ByteArrayOutputStream();
             int total = 0;
             byte[] buff = new byte[100];
             int rc = 0;
@@ -156,11 +179,22 @@ public class UpdataLedPresenter implements IDataListener {
                     swapStream.write(buffer, 0, 1);
                 }
             }
-            Log.i("readLedData", swapStream.size() + " / " + LED_MAX_LENGTH);
+            Log.i("readUpgradeFirmware", swapStream.size() + " / " + LED_MAX_LENGTH);
             return swapStream.toByteArray();
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (stream != null) {
+                    stream.close();
+                }
+                if (swapStream != null) {
+                    swapStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }

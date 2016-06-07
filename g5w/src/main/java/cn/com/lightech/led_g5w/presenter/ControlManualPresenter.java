@@ -60,7 +60,7 @@ public class ControlManualPresenter implements IDataListener {
             return true;
         switch (response.getCmdType()) {
             case SendDataToLED:
-                if (response.getReplyCode() == ReplyErrorCode.OK) {
+                if (response.getReplyErrorCode() == ReplyErrorCode.OK) {
                     DataNode dataNode = response.getDataNode();
                     if (dataNode instanceof ManualDataNode) {
 
@@ -68,7 +68,7 @@ public class ControlManualPresenter implements IDataListener {
                 }
                 break;
             case StopPreview:
-                if (response.getReplyCode() == ReplyErrorCode.OK) {
+                if (response.getReplyErrorCode() == ReplyErrorCode.OK) {
                 }
                 break;
             case PreviewMode:
@@ -79,7 +79,7 @@ public class ControlManualPresenter implements IDataListener {
 
         Logger.getLogger().d(
                 response.getCmdType().toString() + "   "
-                        + response.getReplyCode());
+                        + response.getReplyErrorCode());
         return true;
     }
 

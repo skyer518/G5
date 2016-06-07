@@ -15,7 +15,7 @@ import cn.com.lightech.led_g5g.net.ConnectionsManager;
 import cn.com.lightech.led_g5g.gloabal.LedProxy;
 import cn.com.lightech.led_g5g.utils.ProgressUtil;
 import cn.com.lightech.led_g5g.view.console.IControlView;
-import cn.com.lightech.led_g5g.view.console.impl.UpdataLedDialog;
+import cn.com.lightech.led_g5g.view.console.impl.UpdateLedDialog;
 
 /**
  * Created by 明 on 2016/3/15.

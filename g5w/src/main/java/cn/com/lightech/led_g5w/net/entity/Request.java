@@ -34,7 +34,7 @@ public class Request {
 
     private byte[] byteArray;
 
-//    private UpdataNode updataNode;
+//    private UpdateNode updateNode;
 
     private DeviceType deviceType;
 
@@ -95,12 +95,12 @@ public class Request {
     }
 
 
-//    public void setUpdataNode(UpdataNode updataNode) {
-//        this.updataNode = updataNode;
+//    public void setUpdateNode(UpdateNode updateNode) {
+//        this.updateNode = updateNode;
 //    }
 //
-//    public UpdataNode getUpdataNode() {
-//        return updataNode;
+//    public UpdateNode getUpdateNode() {
+//        return updateNode;
 //    }
 
     public void setDeviceType(DeviceType deviceType) {

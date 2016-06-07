@@ -270,13 +270,13 @@ public class WaveActivity extends AppBaseActivity implements OnClickListener,
         switch (response.getCmdType()) {
 //            case RecvDataFromLED:
 //                WaveNode waveNode = response.getWaveNode();
-//                if (response.getReplyCode() == ReplyErrorCode.OK) {
+//                if (response.getReplyErrorCode() == ReplyErrorCode.OK) {
 //                    this.waveNode = waveNode;
 //                    LoadLedData();
 //                }
 
             case SendDataToLED:
-                if (response.getReplyCode() == ReplyErrorCode.OK) {
+                if (response.getReplyErrorCode() == ReplyErrorCode.OK) {
                 }
                 break;
             default:

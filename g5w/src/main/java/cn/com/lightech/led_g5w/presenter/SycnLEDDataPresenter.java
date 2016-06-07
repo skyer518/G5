@@ -2,7 +2,6 @@ package cn.com.lightech.led_g5w.presenter;
 
 import android.content.Context;
 
-import java.util.Arrays;
 import java.util.List;
 
 import cn.com.lightech.led_g5w.entity.AutoDataNode;
@@ -79,10 +78,10 @@ public class SycnLEDDataPresenter implements IDataListener {
         }
         Logger.getLogger().e(
                 response.getCmdType().toString() + "   "
-                        + response.getReplyCode());
+                        + response.getReplyErrorCode());
 //        Logger.getLogger().e(
 //                response.getCmdType().toString() + "   "
-//                        + response.getReplyCode() + "  \n byte data:" + Arrays.toString(response.getByteArray()));
+//                        + response.getReplyErrorCode() + "  \n byte data:" + Arrays.toString(response.getByteArray()));
         return false;
 
     }

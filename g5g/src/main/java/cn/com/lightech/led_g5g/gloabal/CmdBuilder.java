@@ -216,9 +216,9 @@ public class CmdBuilder {
             }
         } else {
             if (updateData.getId2() == (byte) 0x80)
-                return createCheckUpdataLedCmd(request);
+                return createCheckUpdateLedCmd(request);
             else
-                return createUpdataLedCmd(request);
+                return createUpdateLedCmd(request);
         }
 
         return null;
@@ -425,7 +425,7 @@ public class CmdBuilder {
     /**
      * 发送模式数据到led
      */
-    private static byte[] createUpdataLedCmd(Request request) {
+    private static byte[] createUpdateLedCmd(Request request) {
         UpdateData updateData = request.getUpdateData();
         int length = 136;
         byte[] cmd = new byte[length];
@@ -448,7 +448,7 @@ public class CmdBuilder {
     /**
      * 发送模式数据到led
      */
-    private static byte[] createCheckUpdataLedCmd(Request request) {
+    private static byte[] createCheckUpdateLedCmd(Request request) {
         UpdateData updateData = request.getUpdateData();
         int length = 12;
         byte[] cmd = new byte[length];

@@ -15,10 +15,13 @@ public class Response {
     private CmdType cmdType;
 
     // 返回代码
-    private ReplyErrorCode ReplyCode;
+    private ReplyErrorCode replyErrorCode;
 
     // 灯状态
-    private LampState LampState;
+    private LampState lampState;
+
+    private int version1;
+    private int version2;
 
     // 模式节点数据
     private DataNode dataNode;
@@ -46,6 +49,7 @@ public class Response {
 
     /* 组号 */
     private int groupNum;
+    /*MAC 地址*/
     private byte[] mac;
 
     public long getUnixTime() {
@@ -59,7 +63,7 @@ public class Response {
     }
 
     public boolean IsOK() {
-        return this.ReplyCode == ReplyErrorCode.OK;
+        return this.replyErrorCode == ReplyErrorCode.OK;
     }
 
     public CmdType getCmdType() {
@@ -78,29 +82,29 @@ public class Response {
         ModeIndex = modeIndex;
     }
 
-    public ReplyErrorCode getReplyCode() {
-        return ReplyCode;
+    public ReplyErrorCode getReplyErrorCode() {
+        return replyErrorCode;
     }
 
-    public void setReplyCode(ReplyErrorCode replyCode) {
-        ReplyCode = replyCode;
+    public void setReplyErrorCode(ReplyErrorCode replyErrorCode) {
+        this.replyErrorCode = replyErrorCode;
     }
 
     public cn.com.lightech.led_g5w.entity.LampState getLampState() {
-        return LampState;
+        return lampState;
     }
 
     public void setLampState(LampState lampState) {
-        LampState = lampState;
+        this.lampState = lampState;
     }
 
     public Response() {
 
     }
 
-    public Response(ReplyErrorCode replyCode, LampState ls) {
-        this.ReplyCode = replyCode;
-        this.LampState = ls;
+    public Response(ReplyErrorCode replyErrorCode, LampState ls) {
+        this.replyErrorCode = replyErrorCode;
+        this.lampState = ls;
     }
 
     public byte[] getByteArray() {
@@ -149,5 +153,21 @@ public class Response {
 
     public byte[] getMac() {
         return mac;
+    }
+
+    public int getVersion1() {
+        return version1;
+    }
+
+    public void setVersion1(int version1) {
+        this.version1 = version1;
+    }
+
+    public int getVersion2() {
+        return version2;
+    }
+
+    public void setVersion2(int version2) {
+        this.version2 = version2;
     }
 }

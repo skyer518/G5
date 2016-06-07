@@ -1,9 +1,7 @@
 package cn.com.lightech.led_g5w.presenter;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import cn.com.lightech.led_g5w.R;
 import cn.com.lightech.led_g5w.gloabal.DataManager;
 import cn.com.lightech.led_g5w.gloabal.IDataListener;
 import cn.com.lightech.led_g5w.net.ConnectManager;
@@ -15,7 +13,6 @@ import cn.com.lightech.led_g5w.net.ConnectionsManager;
 import cn.com.lightech.led_g5w.gloabal.LedProxy;
 import cn.com.lightech.led_g5w.utils.ProgressUtil;
 import cn.com.lightech.led_g5w.view.console.IControlView;
-import cn.com.lightech.led_g5w.view.console.impl.UpdataLedDialog;
 
 /**
  * Created by 明 on 2016/3/15.
@@ -129,7 +126,7 @@ public class ControlMainPresenter implements IDataListener {
         }
         Logger.getLogger().d(
                 response.getCmdType().toString() + "   "
-                        + response.getReplyCode());
+                        + response.getReplyErrorCode());
         return true;
     }
 

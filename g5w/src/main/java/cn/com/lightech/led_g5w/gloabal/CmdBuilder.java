@@ -12,7 +12,7 @@ import cn.com.lightech.led_g5w.entity.LampState;
 import cn.com.lightech.led_g5w.entity.ManualDataNode;
 import cn.com.lightech.led_g5w.entity.MoonDataNode;
 import cn.com.lightech.led_g5w.entity.TimeBucket;
-import cn.com.lightech.led_g5w.entity.UpdataNode;
+import cn.com.lightech.led_g5w.entity.UpdateNode;
 import cn.com.lightech.led_g5w.net.entity.Request;
 import cn.com.lightech.led_g5w.view.spray.entity.WaveNode;
 
@@ -44,7 +44,7 @@ public class CmdBuilder {
             case SetGroup:
                 return CmdBuilder.CreateSetGroupCmd(request);
             case GetVersion:
-                return null;
+                return CmdBuilder.CreateGegVersionCmd();
             case OnOff:
                 return CmdBuilder.CreateSetOnOffCmd(request.getBoolVal());
             case PreViewCurve:
@@ -74,6 +74,16 @@ public class CmdBuilder {
             default:
                 throw new IllegalArgumentException("god bless you");
         }
+    }
+
+    private static byte[] CreateGegVersionCmd() {
+        byte[] cmd = new byte[5];
+        cmd[0] = 0x34;
+        cmd[1] = 0x56;
+        cmd[2] = 0x01;
+        cmd[3] = 0x24;
+        cmd[4] = Sum(cmd, 0, 3);
+        return cmd;
     }
 
     private static byte[] CreateQueryTypeCmd() {
@@ -217,12 +227,12 @@ public class CmdBuilder {
                 default:
                     break;
             }
-        } else if (data instanceof UpdataNode) {
-            UpdataNode updataNode = (UpdataNode) data;
-            if (updataNode.getID2() == (byte) 0x80)
-                return createCheckUpdataLedCmd(request);
+        } else if (data instanceof UpdateNode) {
+            UpdateNode updateNode = (UpdateNode) data;
+            if (updateNode.getID2() == (byte) 0x80)
+                return createCheckUpdateLedCmd(request);
             else
-                return createUpdataLedCmd(request);
+                return createUpdateLedCmd(request);
         } else if (data instanceof WaveNode) {
             WaveNode waveNode = (WaveNode) data;
             return createSendWaveDataCmd(request);
@@ -472,19 +482,19 @@ public class CmdBuilder {
     /**
      * 发送模式数据到led
      */
-    private static byte[] createUpdataLedCmd(Request request) {
-        UpdataNode updataNode = (UpdataNode) request.getData();
+    private static byte[] createUpdateLedCmd(Request request) {
+        UpdateNode updateNode = (UpdateNode) request.getData();
         int length = 136;
         byte[] cmd = new byte[length];
         cmd[0] = 0x34;
         cmd[1] = 0x56;
         cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
         cmd[3] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[4] = updataNode.getID1(); // 包ID1
-        cmd[5] = updataNode.getID2();// 包ID2
+        cmd[4] = updateNode.getID1(); // 包ID1
+        cmd[5] = updateNode.getID2();// 包ID2
         cmd[6] = (byte) (0x80); // 包长度
         int startIndex = 7;
-        byte[] data = updataNode.getData();
+        byte[] data = updateNode.getData();
         for (int i = 0; i < data.length; i++) {
             cmd[startIndex++] = data[i];
         }
@@ -495,19 +505,19 @@ public class CmdBuilder {
     /**
      * 发送模式数据到led
      */
-    private static byte[] createCheckUpdataLedCmd(Request request) {
-        UpdataNode updataNode = (UpdataNode) request.getData();
+    private static byte[] createCheckUpdateLedCmd(Request request) {
+        UpdateNode updateNode = (UpdateNode) request.getData();
         int length = 12;
         byte[] cmd = new byte[length];
         cmd[0] = 0x34;
         cmd[1] = 0x56;
         cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
         cmd[3] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[4] = updataNode.getID1(); // 包ID1
-        cmd[5] = updataNode.getID2();// 包ID2
+        cmd[4] = updateNode.getID1(); // 包ID1
+        cmd[5] = updateNode.getID2();// 包ID2
         cmd[6] = (byte) (0x04); // 包长度
         int startIndex = 7;
-        byte[] data = updataNode.getData();
+        byte[] data = updateNode.getData();
         for (int i = 0; i < data.length; i++) {
             cmd[startIndex++] = data[i];
         }

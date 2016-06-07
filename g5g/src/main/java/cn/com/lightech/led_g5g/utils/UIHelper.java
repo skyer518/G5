@@ -16,7 +16,7 @@ import cn.com.lightech.led_g5g.gloabal.App;
 import cn.com.lightech.led_g5g.gloabal.LocalPhoneParms;
 import cn.com.lightech.led_g5g.net.ConnectionsManager;
 import cn.com.lightech.led_g5g.view.console.impl.ConnectDialogView;
-import cn.com.lightech.led_g5g.view.console.impl.UpdataLedDialog;
+import cn.com.lightech.led_g5g.view.console.impl.UpdateLedDialog;
 
 public class UIHelper implements OnDismissListener {
 
@@ -62,7 +62,7 @@ public class UIHelper implements OnDismissListener {
 
     }
 
-    public static void showUpdataLedDialog(final Context context, final Device device) {
+    public static void showUpdateLedDialog(final Context context, final Device device) {
         AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setMessage("确定要升级此灯？")
                 .setPositiveButton(R.string.device_wifi_dialog_button_ok, new DialogInterface.OnClickListener() {
@@ -70,10 +70,10 @@ public class UIHelper implements OnDismissListener {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         ConnectionsManager.getInstance().priorityConnect(device.getIp(), 8080);
-                        UpdataLedDialog updataLedDialog = new UpdataLedDialog(context);
-                        updataLedDialog.setCancelable(false);
-                        updataLedDialog.show();
-                        updataLedDialog.setOnDismissListener(new OnDismissListener() {
+                        UpdateLedDialog updateLedDialog = new UpdateLedDialog(context);
+                        updateLedDialog.setCancelable(false);
+                        updateLedDialog.show();
+                        updateLedDialog.setOnDismissListener(new OnDismissListener() {
                             @Override
                             public void onDismiss(DialogInterface dialog) {
                                 ConnectionsManager.getInstance().clearPriorityConnections();

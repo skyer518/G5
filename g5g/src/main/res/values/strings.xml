@@ -135,7 +135,7 @@
     <string name="device_wifi_title">Please select home/ office network</string>
     <string name="error_led_connect_failed">Connection led lamp failure</string>
     <string name="msg_dosomething">DATA is being uploaded </string>
-    <string name="msg_updataLed">Upgrading software, please wait ......</string>
+    <string name="msg_updateLed">Upgrading software, please wait ......</string>
     <string name="device_wifi_connecting">Connecting to WiFi</string>
     <string name="error_wifi_connect_failed">WiFi connection failed</string>
     <string name="led_chanel">Channel data</string>
