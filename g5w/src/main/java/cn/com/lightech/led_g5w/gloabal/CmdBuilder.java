@@ -94,7 +94,7 @@ public class CmdBuilder {
         cmd[startIndex++] = (byte) 0x1D;// cmd
         cmd[startIndex++] = (byte) 0xA5;// deviceType
         cmd[startIndex++] = (byte) groupNo; //group number
-        cmd[startIndex] = Sum(cmd, 0, startIndex-1);
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
     }
 
@@ -541,26 +541,26 @@ public class CmdBuilder {
     private static byte[] createUpdateLedCmd(Request request) {
         UpdateNode updateNode = (UpdateNode) request.getData();
         int length = 140;
-        int index = 0;
+        int startIndex = 0;
         byte[] cmd = new byte[length];
-        cmd[index++] = 0x34;
-        cmd[index++] = 0x56;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
 
-        cmd[index++] = Const.getInstance().getUUID()[0];
-        cmd[index++] = Const.getInstance().getUUID()[1];
-        cmd[index++] = Const.getInstance().getUUID()[2];
-        cmd[index++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
 
-        cmd[index++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
-        cmd[index++] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[index++] = updateNode.getID1(); // 包ID1
-        cmd[index++] = updateNode.getID2();// 包ID2
-        cmd[index++] = (byte) (0x80); // 包长度
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
+        cmd[startIndex++] = (byte) 0x20; // 命令 下载曲线数据到单片机
+        cmd[startIndex++] = updateNode.getID1(); // 包ID1
+        cmd[startIndex++] = updateNode.getID2();// 包ID2
+        cmd[startIndex++] = (byte) (0x80); // 包长度
         byte[] data = updateNode.getData();
         for (int i = 0; i < data.length; i++) {
-            cmd[index++] = data[i];
+            cmd[startIndex++] = data[i];
         }
-        cmd[index] = Sum(cmd, 0, index - 1); // 校验和
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1); // 校验和
         return cmd;
     }
 
@@ -571,26 +571,26 @@ public class CmdBuilder {
         UpdateNode updateNode = (UpdateNode) request.getData();
         int length = 16;
         byte[] cmd = new byte[length];
-        int index = 0;
-        cmd[index++] = 0x34;
-        cmd[index++] = 0x56;
+        int startIndex = 0;
+        cmd[startIndex++] = 0x34;
+        cmd[startIndex++] = 0x56;
 
-        cmd[index++] = Const.getInstance().getUUID()[0];
-        cmd[index++] = Const.getInstance().getUUID()[1];
-        cmd[index++] = Const.getInstance().getUUID()[2];
-        cmd[index++] = Const.getInstance().getUUID()[3];
+        cmd[startIndex++] = Const.getInstance().getUUID()[0];
+        cmd[startIndex++] = Const.getInstance().getUUID()[1];
+        cmd[startIndex++] = Const.getInstance().getUUID()[2];
+        cmd[startIndex++] = Const.getInstance().getUUID()[3];
 
-        cmd[index++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
-        cmd[index++] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[index++] = updateNode.getID1(); // 包ID1
-        cmd[index++] = updateNode.getID2();// 包ID2
-        cmd[index++] = (byte) (0x04); // 包长度
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
+        cmd[startIndex++] = (byte) 0x20; // 命令 下载曲线数据到单片机
+        cmd[startIndex++] = updateNode.getID1(); // 包ID1
+        cmd[startIndex++] = updateNode.getID2();// 包ID2
+        cmd[startIndex++] = (byte) (0x04); // 包长度
 
         byte[] data = updateNode.getData();
         for (int i = 0; i < data.length; i++) {
-            cmd[index++] = data[i];
+            cmd[startIndex++] = data[i];
         }
-        cmd[index] = Sum(cmd, 0, index - 1); // 校验和
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1); // 校验和
         return cmd;
     }
 

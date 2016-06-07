@@ -91,7 +91,7 @@ public class CmdBuilder {
         cmd[startIndex++] = (byte) 0x1D;// cmd
         cmd[startIndex++] = (byte) 0xA6;// deviceType
         cmd[startIndex++] = (byte) groupNo; //group number
-        cmd[startIndex++] = Sum(cmd, 0, startIndex - 1); //check sum
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1); //check sum
         return cmd;
     }
 
@@ -609,7 +609,7 @@ public class CmdBuilder {
         cmd[startIndex++] = Const.getInstance().getUUID()[2];
         cmd[startIndex++] = Const.getInstance().getUUID()[3];
         cmd[startIndex++] = (byte) 0x1A;
-        cmd[startIndex++] = Sum(cmd, 0, 2);
+        cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
 
     }

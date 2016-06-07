@@ -117,9 +117,9 @@ public class ScanWifiPresenter {
         entity.lanWifiPwd = password;
         entity.isUpdate = isUpdate;
         DutySaveWifi saveWifi = new DutySaveWifi();
-        DutySetGroup setGroup = new DutySetGroup(saveWifi);
+        //DutySetGroup setGroup = new DutySetGroup(saveWifi);
         //DutyGetMac getMac = new DutyGetMac(setGroup);
-        DutyConnectLed connectLed = new DutyConnectLed(setGroup);
+        DutyConnectLed connectLed = new DutyConnectLed(saveWifi);
         DutyConnectWifi connectWifi = new DutyConnectWifi(connectLed);
         connectWifi.handleRequest(entity);
 

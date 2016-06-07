@@ -424,9 +424,9 @@ public class CmdParser {
             result.setReplyCode(ReplyErrorCode.LogicError);
             return result;
         }
-        int startIndex = 7;
+        int startIndex = 8;
         int device = content[startIndex++] & 0xff;
-        int num = content[startIndex++];
+        int groupNum = content[startIndex++];
         byte[] mac = new byte[]{content[startIndex++],
                 content[startIndex++],
                 content[startIndex++],
@@ -434,8 +434,20 @@ public class CmdParser {
                 content[startIndex++],
                 content[startIndex++]};
 
+
+        int unUse00 = content[startIndex++] & 0xff;
+        int unUse01 = content[startIndex++] & 0xff;
+        int unUse02 = content[startIndex++] & 0xff;
+        int unUse03 = content[startIndex++] & 0xff;
+        int unUse04 = content[startIndex++] & 0xff;
+        int unUse05 = content[startIndex++] & 0xff;
+        int unUse06 = content[startIndex++] & 0xff;
+        int unUse07 = content[startIndex++] & 0xff;
+        int unUse08 = content[startIndex++] & 0xff;
+        int unUse09 = content[startIndex++] & 0xff;
+
         result.setDeviceType(DeviceType.parseInt(device));
-        result.setGroupNum(num);
+        result.setGroupNum(groupNum);
         result.setMac(mac);
         result.setReplyCode(ReplyErrorCode.OK);
         return result;
