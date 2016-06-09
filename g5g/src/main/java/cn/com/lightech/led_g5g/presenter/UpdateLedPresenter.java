@@ -141,7 +141,7 @@ public class UpdateLedPresenter implements IDataListener {
     private byte[] readLedData() {
         try {
             ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
-            InputStream stream = mContext.getAssets().open("g5_a_160427_9a29.Bin");
+            InputStream stream = mContext.getAssets().open("firmware_upgrade_package_grow.bin");
             int total = 0;
             byte[] buff = new byte[100];
             int rc = 0;

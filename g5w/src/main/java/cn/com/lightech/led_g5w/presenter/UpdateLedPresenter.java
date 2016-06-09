@@ -139,12 +139,12 @@ public class UpdateLedPresenter implements IDataListener {
         InputStream stream = null;
         final File sdRootPath = Environment.getExternalStorageDirectory();
 
-        File file = new File(sdRootPath + File.separator + "firmware_upgrade_package.bin");
+        File file = new File(sdRootPath + File.separator + "firmware_upgrade_package_water.bin");
         try {
             if (file.exists()) {
                 stream = new FileInputStream(file);
             } else {
-                stream = mContext.getAssets().open("firmware_upgrade_package.bin");
+                stream = mContext.getAssets().open("firmware_upgrade_package_water.bin");
             }
         } catch (FileNotFoundException e) {
             logger.i("SD card root directory of the upgrade file not found...");
