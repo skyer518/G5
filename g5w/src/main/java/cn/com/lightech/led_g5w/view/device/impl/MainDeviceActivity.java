@@ -99,8 +99,9 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
     @Override
     protected void loadData() {
         super.loadData();
-        checkPremision();
         loadUUID();
+        checkPremision();
+
         //将图片显示到ImageView中
         Bitmap bm = ImageUtil.readBitmapFormDirectoryPictures(IMAGE_FILE_NAME);
         if (bm != null) {
@@ -310,6 +311,9 @@ public class MainDeviceActivity extends AppBaseTabNavgationActivity implements I
                 mainDevicePresenter.scanDevice();
                 //scanLoading(true);
                 break;
+//            case R.id.action_btn_about:
+//                mainDevicePresenter.showAbout();
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }

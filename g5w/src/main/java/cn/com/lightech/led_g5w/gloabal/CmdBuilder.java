@@ -63,7 +63,6 @@ public class CmdBuilder {
                 return CmdBuilder.CreateValidateDataCmd(request.getByteArray());
             case ConfirmLed:
                 return CmdBuilder.CreateConfirmLedDataCmd(request.getIntVal());
-
             case FindLed:
                 return "HLK".getBytes();
             default:
@@ -445,11 +444,11 @@ public class CmdBuilder {
         cmd[startIndex++] = Const.getInstance().getUUID()[2];
         cmd[startIndex++] = Const.getInstance().getUUID()[3];
 
-        cmd[2] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
-        cmd[3] = (byte) 0x20; // 命令 下载曲线数据到单片机
-        cmd[4] = dataNode.getID1(); // 包ID1
-        cmd[5] = dataNode.getID2();// 包ID2
-        cmd[6] = (byte) (cmd.length - 12); // 包长度
+        cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 0x7e;// 命令数据长度
+        cmd[startIndex++] = (byte) 0x20; // 命令 下载曲线数据到单片机
+        cmd[startIndex++] = dataNode.getID1(); // 包ID1
+        cmd[startIndex++] = dataNode.getID2();// 包ID2
+        cmd[startIndex++] = (byte) (cmd.length - 12); // 包长度
 
         TimeBucket time1 = dataNode.getTime1();
         TimeBucket time2 = dataNode.getTime2();

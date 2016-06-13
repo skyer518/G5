@@ -43,8 +43,9 @@ public class ControlAutoPresenter implements IDataListener {
 
 
     public void previewAuto() {
-        LedProxy.stopPreview();
+        // LedProxy.stopPreview();
         LedProxy.previewCurve();
+        this.autoView.preview();
     }
 
     public void previewChanel(LampChannel channel) {
@@ -105,8 +106,8 @@ public class ControlAutoPresenter implements IDataListener {
                 }
                 break;
             case PreViewCurve:
-                if (response.getReplyCode() == ReplyErrorCode.OK) {
-                    this.autoView.preview();
+                if (response.getReplyCode() != ReplyErrorCode.OK) {
+                    this.autoView.stopPreview();
                 }
                 break;
             default:

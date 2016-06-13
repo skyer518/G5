@@ -40,6 +40,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/company_info" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ver: 1.5" />
     </LinearLayout>
 
     <cn.com.lightech.led_g5w.wedgit.CustViewPager

@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -26,10 +27,12 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.lightech.led_g5g.R;
+import cn.com.lightech.led_g5g.gloabal.Const;
 import cn.com.lightech.led_g5g.presenter.MainPresenter;
 import cn.com.lightech.led_g5g.utils.ImageUtil;
 import cn.com.lightech.led_g5g.view.AppBaseActivity;
@@ -102,6 +105,7 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
     @Override
     protected void loadData() {
         checkPremision();
+        loadUUID();
         Bitmap bm;
         switch (oemVersion) {
             case OEM_ODM:
@@ -148,6 +152,50 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
 
 
     }
+
+    private void loadUUID() {
+        byte[] uuid = new byte[4];
+        final SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        int uuid1 = sharedPreferences.getInt("UUID1", -1);
+        int uuid2 = sharedPreferences.getInt("UUID2", -1);
+        int uuid3 = sharedPreferences.getInt("UUID3", -1);
+        int uuid4 = sharedPreferences.getInt("UUID4", -1);
+
+        if (uuid1 == -1 && uuid2 == -1 && uuid3 == -1 && uuid4 == -1) {
+            uuid = createUUIDByRandom();
+            saveUUID(uuid);
+        } else {
+            uuid[0] = (byte) uuid1;
+            uuid[1] = (byte) uuid2;
+            uuid[2] = (byte) uuid3;
+            uuid[3] = (byte) uuid4;
+        }
+
+
+        Const.getInstance().setUUID(uuid);
+
+
+    }
+
+    private void saveUUID(byte[] uuid) {
+        final SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        final SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt("UUID1", uuid[0]);
+        edit.putInt("UUID2", uuid[1]);
+        edit.putInt("UUID3", uuid[2]);
+        edit.putInt("UUID4", uuid[3]);
+    }
+
+    private byte[] createUUIDByRandom() {
+        byte[] uuid = new byte[4];
+        for (int i = 0; i < 4; i++) {
+            Random random = new Random();
+            Integer next = random.nextInt();
+            uuid[i] = next.byteValue();
+        }
+        return uuid;
+    }
+
 
     public void checkPremision() {
         if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M

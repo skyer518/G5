@@ -153,5 +153,6 @@
     <string name="device_led">LED</string>
     <string name="device_spray">Wave </string>
     <string name="tips_m_delete_configured_wifi">android M（6.0） or later, set the first target Wifi delete the existing configuration and then often try in wifi.</string>
+    <string name="device_menu_about">about</string>
 
 </resources>
