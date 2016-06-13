@@ -7,4 +7,20 @@
         android:showAsAction="always"
         android:title="@string/device_menu_scan" />
 
+
+    <!--<item-->
+    <!--android:id="@+id/action_btn_about"-->
+    <!--android:icon="@null"-->
+    <!--android:orderInCategory="9"-->
+    <!--android:showAsAction="collapseActionView"-->
+    <!--android:title="@string/device_menu_about" />-->
+
+    <item
+        android:id="@+id/action_btn_help"
+        android:icon="@null"
+        android:orderInCategory="10"
+        android:showAsAction="collapseActionView"
+        android:title="@string/device_menu_help" />
+
+
 </menu>

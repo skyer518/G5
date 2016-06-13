@@ -17,9 +17,4 @@
         android:showAsAction="collapseActionView"
         android:title="@string/device_menu_delDevice" />
 
-    <item
-        android:id="@+id/action_btn_help"
-        android:icon="@null"
-        android:showAsAction="collapseActionView"
-        android:title="@string/device_menu_help" />
 </menu>

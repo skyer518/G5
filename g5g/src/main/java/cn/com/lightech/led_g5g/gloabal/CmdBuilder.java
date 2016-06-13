@@ -599,7 +599,7 @@ public class CmdBuilder {
      * 查询组号
      */
     private static byte[] CreateQueryGroupCmd() {
-        byte[] cmd = new byte[8];
+        byte[] cmd = new byte[9];
         int startIndex = 0;
         cmd[startIndex++] = 0x34;
         cmd[startIndex++] = 0x56;
@@ -608,7 +608,8 @@ public class CmdBuilder {
         cmd[startIndex++] = Const.getInstance().getUUID()[1];
         cmd[startIndex++] = Const.getInstance().getUUID()[2];
         cmd[startIndex++] = Const.getInstance().getUUID()[3];
-        cmd[startIndex++] = (byte) 0x1A;
+        cmd[startIndex++] = 0x01;
+        cmd[startIndex++] = 0x1A;
         cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
 

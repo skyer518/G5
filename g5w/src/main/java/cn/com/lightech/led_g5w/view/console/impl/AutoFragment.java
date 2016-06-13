@@ -530,13 +530,13 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
     }
 
     public void preview() {
-        this.lcChart.animateX(50000);
+        this.lcChart.animateX(25 * 1000);
         previewTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 handler.sendEmptyMessage(0);
             }
-        }, new Date(System.currentTimeMillis() + 50000));
+        }, new Date(System.currentTimeMillis() + 25 * 1000));
         canPreview(false);
     }
 

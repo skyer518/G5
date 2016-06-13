@@ -44,7 +44,7 @@ public class LedProxy {
      */
     public static void previewCurve() {
         Request request = new Request();
-        request.setIntVal(1);// 正常速度预览
+        request.setIntVal(3);// 正常速度预览
         request.setCmdType(CmdType.PreViewCurve);
         ConnectionsManager.getInstance().sendToLed(request, false);
     }
