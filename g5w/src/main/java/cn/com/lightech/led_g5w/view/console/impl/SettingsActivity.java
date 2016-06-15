@@ -79,9 +79,9 @@ public class SettingsActivity extends AppBaseActivity {
                 .commit();
 
         LampState state = DataManager.getInstance().getState();
-        edit.putBoolean(getString(R.string.pref_key_flash), state.lighting)
-                .putBoolean(getString(R.string.pref_key_moon), state.moon)
-                .putBoolean(getString(R.string.pref_key_acclimation), state.acclimation)
+        edit.putBoolean(getString(R.string.pref_key_flash), state.isLighting())
+                .putBoolean(getString(R.string.pref_key_moon), state.isMoon())
+                .putBoolean(getString(R.string.pref_key_acclimation), state.isAcclimation())
                 .commit();
 
 

@@ -25,7 +25,7 @@ public abstract class BasePreferenceFragment extends PreferenceFragment {
         public boolean onPreferenceChange(Preference preference, Object value) {
             SharedPreferences dsp = PreferenceManager.getDefaultSharedPreferences(getActivity());
             LampState state = DataManager.getInstance().getState();
-            int mode = state.mode;
+            int mode = state.getMode();
             boolean flash = dsp.getBoolean(getString(R.string.pref_key_flash), false);
             boolean moon = dsp.getBoolean(getString(R.string.pref_key_moon), false);
             boolean acclimation = dsp.getBoolean(getString(R.string.pref_key_acclimation), false);
@@ -40,9 +40,9 @@ public abstract class BasePreferenceFragment extends PreferenceFragment {
 
 
             LedProxy.setState(mode, flash, moon, acclimation);
-            state.lighting = flash;
-            state.moon = moon;
-            state.acclimation = acclimation;
+            state.setLighting(flash);
+            state.setMoon(moon);
+            state.setAcclimation(acclimation);
 
             return true;
         }

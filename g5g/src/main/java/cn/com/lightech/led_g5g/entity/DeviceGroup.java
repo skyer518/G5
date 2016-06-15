@@ -17,10 +17,11 @@ public class DeviceGroup implements Serializable {
     private List<Device> devices = new ArrayList<>(0);
 
     public DeviceGroup(int number) {
-        this.number = number;
+        setNumber(number);
     }
 
     public DeviceGroup() {
+        setNumber(0);
     }
 
     public int getNumber() {
@@ -28,6 +29,10 @@ public class DeviceGroup implements Serializable {
     }
 
     public void setNumber(int number) {
+        if (number > 254)
+            number = 254;
+        if (number < 0)
+            number = 0;
         this.number = number;
     }
 
@@ -43,6 +48,10 @@ public class DeviceGroup implements Serializable {
             }
         }
         devices.add(device);
+    }
+
+    public String getDisplayNumber() {
+        return new Integer(number + 1).toString();
     }
 
 

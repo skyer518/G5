@@ -85,7 +85,7 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
 
     private MyMarkerView mv;
     private int[] colors = {0XFFABCBED, 0XFF00D700};
-
+    private boolean previewing = false;
 
     private float yAxisMax = Float.MIN_VALUE;
     private float yAxisMin = Float.MAX_VALUE;
@@ -526,18 +526,23 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
     public void stopPreview() {
         // lcChart.getAnimator().
         this.lcChart.animateXStop();
+        previewing = false;
         canPreview(true);
     }
 
+
     public void preview() {
-        this.lcChart.animateX(25 * 1000);
-        previewTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.sendEmptyMessage(0);
-            }
-        }, new Date(System.currentTimeMillis() + 25 * 1000));
-        canPreview(false);
+        if (!previewing) {
+            this.lcChart.animateX(25 * 1000);
+            previewTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.sendEmptyMessage(0);
+                }
+            }, new Date(System.currentTimeMillis() + 25 * 1000));
+            previewing = true;
+            canPreview(false);
+        }
     }
 
     void canPreview(boolean can) {

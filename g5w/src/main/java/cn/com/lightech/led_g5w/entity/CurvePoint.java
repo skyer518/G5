@@ -14,31 +14,31 @@ public class CurvePoint implements Comparable<CurvePoint> {
     private LampChannel channel;
 
     public CurvePoint() {
-        channel = new LampChannel();
+        setChannel(new LampChannel());
     }
 
     public CurvePoint(int time) {
         setTime(time);
-        channel = new LampChannel();
+        setChannel(new LampChannel());
     }
 
     public CurvePoint(int hour, int minute) {
         setTime(hour, minute);
-        channel = new LampChannel();
+        setChannel(new LampChannel());
     }
 
     public CurvePoint(LampChannel channel) {
-        this.channel = channel;
+        setChannel(channel);
     }
 
     public CurvePoint(int time, LampChannel channel) {
         setTime(time);
-        this.channel = channel;
+        setChannel(channel);
     }
 
     public CurvePoint(int hour, int minute, LampChannel channel) {
         setTime(hour, minute);
-        this.channel = channel;
+        setChannel(channel);
     }
 
     public int getTime() {
@@ -55,13 +55,13 @@ public class CurvePoint implements Comparable<CurvePoint> {
 
 
     public void setTime(int hour, int minute) {
-        this.time = hour * 6 + minute;
+        setTime(hour * 6 + minute);
     }
 
     public void setTime(int time) {
         this.time = time;
-        if (time > 24 * 6 + 1) {
-            this.time = 24 * 6 + 1;
+        if (time > 24 * 6) {
+            this.time = 24 * 6;
         }
         if (time < 0) {
             this.time = 0;

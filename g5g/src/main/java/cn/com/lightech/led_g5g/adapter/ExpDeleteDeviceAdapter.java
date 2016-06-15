@@ -100,7 +100,7 @@ public class ExpDeleteDeviceAdapter extends BaseExpandableListAdapter {
             holder = (GroupViewHolder) convertView.getTag();
         }
         DeviceGroup group = (DeviceGroup) getGroup(groupPosition);
-        holder.ivDeviceGroupNumber.setText(mContext.getString(R.string.group) + (group.getNumber() + 1));
+        holder.ivDeviceGroupNumber.setText(mContext.getString(R.string.group) + group.getDisplayNumber());
         convertView.setTag(R.id.expend_listview_group_tag, groupPosition);
         convertView.setTag(R.id.expend_listview_child_tag, -1);
         return convertView;

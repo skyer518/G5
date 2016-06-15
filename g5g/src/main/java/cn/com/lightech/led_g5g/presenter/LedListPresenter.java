@@ -93,14 +93,14 @@ public class LedListPresenter extends LedPresenter implements Serializable, IMul
             udpScanTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (scanCount > 4) {
+                    if (scanCount > 24) {
                         stopUdpScan();
                     }
                     LedProxy.queryGroup(true);
                     MulticastManager.getInstance().send(data);
                     scanCount++;
                 }
-            }, 1, 3000);
+            }, 1, 5000);
         }
 
 

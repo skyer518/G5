@@ -59,6 +59,7 @@ public class DataManager implements IDataListener {
 
     private DataManager() {
         this.readDataFromFile();
+        state = new LampState();
     }
 
     public void switchGroup() {

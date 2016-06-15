@@ -92,7 +92,7 @@ public abstract class ExpControllableDeviceAdapter extends BaseExpandableListAda
         }
         DeviceGroup group = (DeviceGroup) getGroup(groupPosition);
         holder.btnControl.setTag(group);
-        holder.ivDeviceGroupNumber.setText(mContext.getString(R.string.group) + (group.getNumber() + 1));
+        holder.ivDeviceGroupNumber.setText(mContext.getString(R.string.group) + group.getDisplayNumber());
         convertView.setTag(R.id.expend_listview_group_tag, groupPosition);
         convertView.setTag(R.id.expend_listview_child_tag, -1);
         return convertView;

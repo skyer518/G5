@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -75,6 +76,9 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
     TextView companyTitle;
     @Bind(R.id.company_info)
     TextView companyInfo;
+    @Bind(R.id.version)
+    TextView version;
+
     private ExpDeviceGroupFragment defaultFragment;
     private Fragment currentFragment;
     private PopupMenu menu;
@@ -94,6 +98,12 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
     protected void initView() {
         setContentView(R.layout.activity_device);
         ButterKnife.bind(this);
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            version.setText("Ver: " + packageInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         ActionBar supportActionBar = getActionBar();
         supportActionBar.setTitle(getString(R.string.device_device_title));
         supportActionBar.setDisplayShowHomeEnabled(false);

@@ -38,7 +38,7 @@ public class ControlMainPresenter implements IDataListener {
 
     public void initData() {
         if (!isReady) {
-            ProgressUtil.showPogress(mContext, "初始化", false);
+            //ProgressUtil.showPogress(mContext, "初始化", false);
             queryLedState();
         }
     }
@@ -48,15 +48,16 @@ public class ControlMainPresenter implements IDataListener {
             LampState state = DataManager.getInstance().getState();
             if (state != null)
                 LedProxy.stopPreview();
-            LedProxy.setState(connectManager, mode, state.lighting, state.moon, state.acclimation);
+            LedProxy.setState(connectManager, mode, state.isLighting(), state.isMoon(), state.isAcclimation());
         }
     }
+
     public void setLedState(int workMode) {
         if (isReady) {
             LampState state = DataManager.getInstance().getState();
             if (state != null)
                 LedProxy.stopPreview();
-            LedProxy.setState(workMode, state.lighting, state.moon, state.acclimation);
+            LedProxy.setState(workMode, state.isLighting(), state.isMoon(), state.isAcclimation());
         }
     }
 
@@ -102,9 +103,9 @@ public class ControlMainPresenter implements IDataListener {
                     // 查询状态成功后，再获取曲线数据到手机
                     LampState ls = response.getLampState();
                     DataManager.getInstance().setState(ls);
-                    this.controlView.switchMode(ls.mode);
+                    this.controlView.switchMode(ls.getMode());
                     isReady = true;
-                    ProgressUtil.closeDialog();
+                    // ProgressUtil.closeDialog();
                 } else {
                     queryLedState();
                 }
@@ -115,7 +116,7 @@ public class ControlMainPresenter implements IDataListener {
 //                    Toast.makeText(mContext, mContext.getString(R.string.set_state_success), Toast.LENGTH_LONG)
 //                            .show();
 
-                    setLedState(connectManager, DataManager.getInstance().getState().mode);
+                    setLedState(connectManager, DataManager.getInstance().getState().getMode());
                 }
                 break;
 

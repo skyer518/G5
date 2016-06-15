@@ -17,11 +17,11 @@ public class LampChannel {
     private float green;
 
     public LampChannel(float blue, float white, float purple, float red, float green) {
-        this.blue = blue;
-        this.white = white;
-        this.purple = purple;
-        this.red = red;
-        this.green = green;
+        setBlue(blue);
+        setWhite(white);
+        setPurple(purple);
+        setRed(red);
+        setGreen(green);
     }
 
     public LampChannel() {

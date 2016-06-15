@@ -211,11 +211,11 @@ public class CmdBuilder {
         cmd[startIndex++] = 0x06;// 长度
         cmd[startIndex++] = 0x07; // 模式预览，各个通道的预览也是这样，
         /* 这里通道调整下顺序 */
-        cmd[startIndex++] = ls.purple;
-        cmd[startIndex++] = ls.blue;
-        cmd[startIndex++] = ls.white;
-        cmd[startIndex++] = ls.green;
-        cmd[startIndex++] = ls.red;
+        cmd[startIndex++] = ls.getPurple();
+        cmd[startIndex++] = ls.getBlue();
+        cmd[startIndex++] = ls.getWhite();
+        cmd[startIndex++] = ls.getGreen();
+        cmd[startIndex++] = ls.getRed();
         cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
         return cmd;
     }
@@ -758,11 +758,11 @@ public class CmdBuilder {
         cmd[startIndex++] = Const.getInstance().getUUID()[3];
         cmd[startIndex++] = (byte) (cmd.length - ADDTION_LENGTH);// 长度
         cmd[startIndex++] = 0x04;// 命令
-        cmd[startIndex++] = (byte) (ls.On ? 0x1 : 0);
-        cmd[startIndex++] = ls.mode;
-        cmd[startIndex++] = (byte) (ls.lighting ? 0x1 : 0);
-        cmd[startIndex++] = (byte) (ls.moon ? 0x1 : 0);
-        cmd[startIndex++] = (byte) (ls.acclimation ? 0x1 : 0);
+        cmd[startIndex++] = (byte) (ls.isOn() ? 0x1 : 0);
+        cmd[startIndex++] = ls.getMode();
+        cmd[startIndex++] = (byte) (ls.isLighting() ? 0x1 : 0);
+        cmd[startIndex++] = (byte) (ls.isMoon() ? 0x1 : 0);
+        cmd[startIndex++] = (byte) (ls.isAcclimation() ? 0x1 : 0);
         cmd[startIndex] = Sum(cmd, 0, startIndex - 1);
 
         return cmd;

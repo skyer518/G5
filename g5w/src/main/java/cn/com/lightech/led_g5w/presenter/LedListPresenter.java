@@ -88,7 +88,6 @@ public class LedListPresenter extends LedPresenter
     }
 
 
-
     public void gotoControl(int groupNo) {
         DeviceGroup group = null;
         for (DeviceGroup deviceGroup : deviceGroups) {
@@ -99,8 +98,6 @@ public class LedListPresenter extends LedPresenter
             UIHelper.getInstance().showConnectDialog(mContext, false, group);
 
     }
-
-
 
 
     public void deleteGroup() {

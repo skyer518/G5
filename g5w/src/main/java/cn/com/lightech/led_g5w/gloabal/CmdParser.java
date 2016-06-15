@@ -243,19 +243,19 @@ public class CmdParser {
 
             int year1 = content[nPos++] & 0xff;
             int year2 = content[nPos++] & 0xff;
-            ls.Year = (year1 << 8) + year2;
-            ls.Month = content[nPos++];
-            ls.Day = content[nPos++];
-            ls.Hour = content[nPos++];
-            ls.Minute = content[nPos++];
-            ls.IsSwitch = content[nPos++] == 0 ? false : true;
-            ls.mode = content[nPos++];
-            ls.lighting = content[nPos++] == 0 ? false : true;
-            ls.moon = content[nPos++] == 0 ? false : true;
-            ls.acclimation = content[nPos++] == 0 ? false : true;
+            ls.setYear((year1 << 8) + year2);
+            ls.setMonth(content[nPos++] & 0xff);
+            ls.setDay(content[nPos++] & 0xff);
+            ls.setHour(content[nPos++] & 0xff);
+            ls.setMinute(content[nPos++] & 0xff);
+            ls.setSwitch(content[nPos++] == 0 ? false : true);
+            ls.setMode(content[nPos++]);
+            ls.setLighting(content[nPos++] == 0 ? false : true);
+            ls.setMoon(content[nPos++] == 0 ? false : true);
+            ls.setAcclimation(content[nPos++] == 0 ? false : true);
 
-            ls.IsFanSwitch = content[nPos++] == 0 ? false : true;
-            ls.Power = content[nPos++];
+            ls.setFanSwitch(content[nPos++] == 0 ? false : true);
+            ls.setPower(content[nPos++]);
 
             result.setLampState(ls);
             result.setReplyCode(ReplyErrorCode.OK);

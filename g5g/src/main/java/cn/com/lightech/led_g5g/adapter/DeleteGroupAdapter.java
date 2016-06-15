@@ -87,7 +87,7 @@ public class DeleteGroupAdapter extends BaseAdapter {
             holder.cbItemChecked.setChecked(false);
         }
 
-        holder.tvDeviceNumber.setText((group.getNumber() + 1) + "");
+        holder.tvDeviceNumber.setText(group.getDisplayNumber());
         holder.cbItemChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

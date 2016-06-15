@@ -20,11 +20,11 @@ public class LedProxy {
         Request req = new Request();
         req.setCmdType(CmdType.PreviewMode);
         LampState ls = new LampState();
-        ls.white = (byte) lc.getWhite();
-        ls.red = (byte) lc.getRed();
-        ls.green = (byte) lc.getGreen();
-        ls.blue = (byte) lc.getBlue();
-        ls.purple = (byte) lc.getPurple();
+        ls.setWhite((byte) lc.getWhite());
+        ls.setRed((byte) lc.getRed());
+        ls.setGreen((byte) lc.getGreen());
+        ls.setBlue((byte) lc.getBlue());
+        ls.setPurple((byte) lc.getPurple());
         req.setLampState(ls);
         ConnectionsManager.getInstance().sendToLed(req, false);
         return true;
@@ -55,11 +55,11 @@ public class LedProxy {
     public static void setState(int workMode, boolean flash, boolean moon, boolean acclimation) {
         Request request = new Request();
         LampState ls = new LampState();
-        ls.On = true;
-        ls.mode = (byte) workMode;
-        ls.lighting = flash;
-        ls.moon = moon;
-        ls.acclimation = acclimation;
+        ls.setOn(true);
+        ls.setMode((byte) workMode);
+        ls.setLighting(flash);
+        ls.setMoon(moon);
+        ls.setAcclimation(acclimation);
         request.setLampState(ls);
         request.setCmdType(CmdType.SetState);
         ConnectionsManager.getInstance().sendToLed(request, false);
@@ -147,11 +147,11 @@ public class LedProxy {
     public static void setState(ConnectManager connectManager, byte workMode, boolean lighting, boolean moon, boolean acclimation) {
         Request request = new Request();
         LampState ls = new LampState();
-        ls.On = true;
-        ls.mode = workMode;
-        ls.lighting = lighting;
-        ls.moon = moon;
-        ls.acclimation = acclimation;
+        ls.setOn(true);
+        ls.setMode((byte) workMode);
+        ls.setLighting(lighting);
+        ls.setMoon(moon);
+        ls.setAcclimation(acclimation);
         request.setLampState(ls);
         request.setCmdType(CmdType.SetState);
         connectManager.SendToLed(request);

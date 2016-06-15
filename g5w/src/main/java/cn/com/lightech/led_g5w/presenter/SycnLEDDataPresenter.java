@@ -8,6 +8,7 @@ import java.util.List;
 import cn.com.lightech.led_g5w.entity.AutoDataNode;
 import cn.com.lightech.led_g5w.entity.CurvePoint;
 import cn.com.lightech.led_g5w.entity.DataNode;
+import cn.com.lightech.led_g5w.entity.LampChannel;
 import cn.com.lightech.led_g5w.entity.PackageId;
 import cn.com.lightech.led_g5w.gloabal.DataManager;
 import cn.com.lightech.led_g5w.gloabal.IDataListener;
@@ -136,10 +137,14 @@ public class SycnLEDDataPresenter implements IDataListener {
             if (packageId[1] == 0x01) {// AutoTiming
                 AutoDataNode node = (AutoDataNode) wn;
                 List<CurvePoint> points = node.getPoints();
-
+                List<CurvePoint> dataPoints = DataManager.getInstance().getAutoDataNode().getPoints();
                 for (int i = 0; i < points.size(); i++) {
                     CurvePoint point = points.get(i);
-                    point.setChannel(DataManager.getInstance().getAutoDataNode().getPoints().get(i).getChannel());
+                    try {
+                        point.setChannel(dataPoints.get(i).getChannel());
+                    } catch (IndexOutOfBoundsException e) {
+                        point.setChannel(new LampChannel());
+                    }
                 }
                 DataManager.getInstance().saveDataNode(node, false);
             } else {

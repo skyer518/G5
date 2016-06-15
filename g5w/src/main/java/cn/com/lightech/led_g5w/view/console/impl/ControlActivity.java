@@ -147,7 +147,7 @@ public class ControlActivity extends AppBaseActivity implements ActionBar.TabLis
     public void saveTempState(byte workMode) {
         LampState state = DataManager.getInstance().getState();
         if (state != null) {
-            state.mode = workMode;
+            state.setMode(workMode);
             DataManager.getInstance().setState(state);
         }
     }
