@@ -106,9 +106,7 @@ public class ControlAutoPresenter implements IDataListener {
                 }
                 break;
             case PreViewCurve:
-                if (response.getReplyCode() != ReplyErrorCode.OK) {
-                    this.autoView.stopPreview();
-                } else {
+                if (response.getReplyCode() == ReplyErrorCode.OK) {
                     this.autoView.preview();
                 }
                 break;

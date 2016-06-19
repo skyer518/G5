@@ -1,5 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cust="http://schemas.android.com/apk/res/cn.com.lightech.led_g5w">
+                  xmlns:cust="http://schemas.android.com/apk/res-auto">
     <ListPreference
         android:defaultValue="1"
         android:dialogTitle="选择模式"
@@ -40,20 +40,20 @@
         android:summaryOn="开"
         android:switchTextOff="关"
         android:switchTextOn="开"
-        android:title="喂食" />
+        android:title="喂食"/>
     <SwitchPreference
         android:key="pref_autoWave"
         android:summaryOff="关"
         android:summaryOn="开"
         android:switchTextOff="关"
         android:switchTextOn="开"
-        android:title="自动海浪" />
+        android:title="自动海浪"/>
     <SwitchPreference
         android:key="pref_dayOrNight"
         android:summaryOff="关"
         android:summaryOn="开"
         android:switchTextOff="关"
-        android:switchTextOn="开" />
+        android:switchTextOn="开"/>
     android:title="Day / Night" />
 
 
@@ -62,7 +62,7 @@
         android:dependency="pref_channel"
         android:key="pref_pause"
         android:title="Pause Time"
-        android:widgetLayout="@layout/tv_pref_time" />
+        android:widgetLayout="@layout/tv_pref_time"/>
 
     <PreferenceCategory android:title="Sequence 1>2>3>4">
 
@@ -71,26 +71,26 @@
             android:dependency="pref_channel"
             android:key="seq_time1"
             android:title="M1"
-            android:widgetLayout="@layout/tv_pref_time" />
+            android:widgetLayout="@layout/tv_pref_time"/>
 
         <cn.com.lightech.led_g5w.wedgit.TimePreference
             android:defaultValue="0"
             android:dependency="pref_channel"
             android:key="seq_time2"
             android:title="M2"
-            android:widgetLayout="@layout/tv_pref_time" />
+            android:widgetLayout="@layout/tv_pref_time"/>
         <cn.com.lightech.led_g5w.wedgit.TimePreference
             android:defaultValue="0"
             android:dependency="pref_channel"
             android:key="seq_time3"
             android:title="M3"
-            android:widgetLayout="@layout/tv_pref_time" />
+            android:widgetLayout="@layout/tv_pref_time"/>
         <cn.com.lightech.led_g5w.wedgit.TimePreference
             android:defaultValue="0"
             android:dependency="pref_channel"
             android:key="seq_time4"
             android:title="M4"
-            android:widgetLayout="@layout/tv_pref_time" />
+            android:widgetLayout="@layout/tv_pref_time"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
