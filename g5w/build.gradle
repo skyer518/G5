@@ -21,11 +21,24 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            applicationIdSuffix ".bd_1_5"
+            applicationIdSuffix ".googleplay.release"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
         debug {
             applicationIdSuffix ".debug"
+        }
+
+        google_release {
+            minifyEnabled true
+            applicationIdSuffix ".google.release"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        baidu_release {
+            minifyEnabled true
+            applicationIdSuffix ".g4v1.baidu.release"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
     }

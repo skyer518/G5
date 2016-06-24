@@ -12,7 +12,7 @@
         android:layout_width="@dimen/item_image_size"
         android:layout_height="@dimen/item_image_size"
         android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/app_margin_l"
+        android:layout_marginLeft="@dimen/app_margin_xl"
         android:layout_marginRight="@dimen/app_margin_m"
         android:src="@mipmap/led" />
 
@@ -28,14 +28,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:visibility="gone"
-            android:textSize="@dimen/app_margin_m" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_deviceip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textSize="@dimen/app_margin_m" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

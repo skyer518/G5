@@ -52,6 +52,8 @@
 
     -keep public class  com.github.mikephil.charting.**{*;}
 
+    -keep public class com.github.mikephil.charting.**{*;}
+
 
     #忽略警告
     -ignorewarning

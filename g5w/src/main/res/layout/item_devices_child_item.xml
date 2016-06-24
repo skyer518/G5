@@ -28,14 +28,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:visibility="gone"
-            android:textSize="@dimen/app_margin_m" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_deviceip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textSize="@dimen/app_margin_m" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:cust="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@mipmap/bg_control"
-              android:gravity="center_vertical"
-              android:orientation="horizontal"
-              android:padding="@dimen/app_padding_m">
+    xmlns:cust="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_control"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/app_padding_m">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,14 +36,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center_vertical|left"
-                    android:text="Mode"/>
+                    android:text="Mode" />
 
                 <Spinner
                     android:id="@+id/sp_function"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:entries="@array/array_wave_function"/>
+                    android:entries="@array/array_wave_function" />
             </LinearLayout>
 
             <LinearLayout
@@ -59,14 +59,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center_vertical|left"
-                    android:text="Effect"/>
+                    android:text="Effect" />
 
                 <Spinner
                     android:id="@+id/sp_effect"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:entries="@array/array_wave_effect"/>
+                    android:entries="@array/array_wave_effect" />
             </LinearLayout>
 
             <LinearLayout
@@ -83,7 +83,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center_vertical|left"
-                    android:text="Channel"/>
+                    android:text="Channel" />
 
                 <SeekBar
                     android:id="@+id/hsb_Channel"
@@ -105,7 +105,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center_vertical|left"
-                    android:text="Motor Speed"/>
+                    android:text="Motor Speed" />
 
                 <TextView
                     android:id="@+id/tv_motorSpeend"
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|left"
                     android:padding="2dp"
-                    android:text="0"/>
+                    android:text="0" />
 
                 <SeekBar
                     android:id="@+id/hsb_motorSpeend"
@@ -134,12 +134,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical|left"
-                    android:text="Day/Night"/>
+                    android:text="Day/Night" />
 
                 <Switch
                     android:id="@+id/sw_dayOrNight"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
@@ -154,12 +154,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical|left"
-                    android:text="Feed"/>
+                    android:text="Feed" />
 
                 <Switch
                     android:id="@+id/sw_feed"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
             <LinearLayout
@@ -174,12 +174,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical|left"
-                    android:text="Auto Time Search"/>
+                    android:text="Auto Time Search" />
 
                 <Switch
                     android:id="@+id/sw_autoWave"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
             </LinearLayout>
         </LinearLayout>
 
@@ -202,12 +202,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|left"
-                    android:text="Pause Time"/>
+                    android:text="Pause Time" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="10"/>
+                    android:layout_weight="10" />
 
                 <cn.com.lightech.led_g5w.wedgit.MyTimePicker
                     android:id="@+id/cust_timepicker_pause"
@@ -229,12 +229,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|left"
-                    android:text="Sequence 1>2>3>4 Time:"/>
+                    android:text="Sequence 1>2>3>4 Time:" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/app_margin_l"
+                    android:layout_marginLeft="@dimen/app_margin_xl"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -245,7 +245,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="4"
                         android:gravity="center_vertical|left"
-                        android:text="M1"/>
+                        android:text="M1" />
 
                     <TextView
                         android:id="@+id/tv_M1"
@@ -253,7 +253,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|left"
                         android:padding="2dp"
-                        android:text="0"/>
+                        android:text="0" />
 
                     <SeekBar
                         android:id="@+id/hsb_M1"
@@ -265,7 +265,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/app_margin_l"
+                    android:layout_marginLeft="@dimen/app_margin_xl"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -276,7 +276,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="4"
                         android:gravity="center_vertical|left"
-                        android:text="M2"/>
+                        android:text="M2" />
 
                     <TextView
                         android:id="@+id/tv_M2"
@@ -284,7 +284,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|left"
                         android:padding="2dp"
-                        android:text="0"/>
+                        android:text="0" />
 
                     <SeekBar
                         android:id="@+id/hsb_M2"
@@ -296,7 +296,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/app_margin_l"
+                    android:layout_marginLeft="@dimen/app_margin_xl"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -307,7 +307,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="4"
                         android:gravity="center_vertical|left"
-                        android:text="M3"/>
+                        android:text="M3" />
 
                     <TextView
                         android:id="@+id/tv_M3"
@@ -315,7 +315,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|left"
                         android:padding="2dp"
-                        android:text="0"/>
+                        android:text="0" />
 
                     <SeekBar
                         android:id="@+id/hsb_M3"
@@ -327,7 +327,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/app_margin_l"
+                    android:layout_marginLeft="@dimen/app_margin_xl"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -338,7 +338,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="4"
                         android:gravity="center_vertical|left"
-                        android:text="M4"/>
+                        android:text="M4" />
 
                     <TextView
                         android:id="@+id/tv_M4"
@@ -346,7 +346,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|left"
                         android:padding="2dp"
-                        android:text="0"/>
+                        android:text="0" />
 
                     <SeekBar
                         android:id="@+id/hsb_M4"
@@ -369,7 +369,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center_vertical|left"
-                    android:text="Last full MoonDay"/>
+                    android:text="Last full MoonDay" />
 
                 <TextView
                     android:id="@+id/tv_lastMoonDay"
@@ -377,7 +377,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|left"
                     android:padding="2dp"
-                    android:text="0"/>
+                    android:text="0" />
 
                 <SeekBar
                     android:id="@+id/hsb_lastMoonDay"

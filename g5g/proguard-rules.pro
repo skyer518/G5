@@ -50,6 +50,7 @@
     #如果有引用v4包可以添加下面这行
     -keep public class * extends android.support.v4.app.Fragment
 
+    -keep public class com.github.mikephil.charting.**{*;}
 
     -keep public class  com.github.mikephil.charting.**{*;}
 
