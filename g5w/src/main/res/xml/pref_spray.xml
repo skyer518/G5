@@ -1,5 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cust="http://schemas.android.com/apk/res/cn.com.lightech.led_g5w">
+    xmlns:cust="http://schemas.android.com/apk/res-auto">
     <ListPreference
         android:defaultValue="1"
         android:dialogTitle="选择模式"

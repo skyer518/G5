@@ -51,6 +51,7 @@
     -keep public class * extends android.support.v4.app.Fragment
 
 
+    -keep public class com.github.mikephil.charting.**{*;}
 
     #忽略警告
     -ignorewarning

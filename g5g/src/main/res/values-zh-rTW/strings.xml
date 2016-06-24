@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LED G5G</string>
+    <string name="app_name">CTL-G4</string>
     <string name="action_menu_effect">效果</string>
     <string name="intent_key_ledwifi">LED</string>
     <string name="device_device_title">線上設備</string>

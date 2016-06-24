@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LED G5W</string>
+    <string name="app_name">CTL G4</string>
     <string name="app_exit_application_msg">退出应用？</string>
     <string name="app_exit_cancel_button_text">取消</string>
     <string name="app_exit_confirm_button_text">确定</string>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LED G5W</string>
+    <string name="app_name">CTL G4</string>
     <string name="app_exit_confirm_button_text">OK</string>
     <string name="app_exit_cancel_button_text">Cancel</string>
     <string name="app_default_led_password">12345678</string>
