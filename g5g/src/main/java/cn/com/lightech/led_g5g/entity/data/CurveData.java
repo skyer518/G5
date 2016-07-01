@@ -7,13 +7,15 @@ import java.util.List;
 import cn.com.lightech.led_g5g.entity.CurvePoint;
 import cn.com.lightech.led_g5g.entity.DataNode;
 import cn.com.lightech.led_g5g.entity.LampChannel;
-import cn.com.lightech.led_g5g.entity.DataType;
 import cn.com.lightech.led_g5g.net.entity.ChanelType;
+import cn.com.lightech.led_g5g.net.utils.Logger;
 
 /**
  * Created by 明 on 2016/3/15.
  */
 public class CurveData extends DataNode {
+
+    private Logger logger = Logger.getLogger(getClass());
 
     private final int MAX_POINT = 24;
 
@@ -63,6 +65,7 @@ public class CurveData extends DataNode {
             if (point.isSamePoint(newPoint)) {
                 points.remove(i);
                 points.add(i, newPoint);
+                logger.e("isSame point: %d", i);
                 return i;
             }
         }

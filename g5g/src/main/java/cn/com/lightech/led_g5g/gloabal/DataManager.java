@@ -3,27 +3,26 @@ package cn.com.lightech.led_g5g.gloabal;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
-import java.util.Arrays;
 import java.util.List;
 
-import cn.com.lightech.led_g5g.entity.PackageId;
-import cn.com.lightech.led_g5g.entity.data.CurveData;
 import cn.com.lightech.led_g5g.entity.CurvePoint;
 import cn.com.lightech.led_g5g.entity.DataNode;
-import cn.com.lightech.led_g5g.entity.data.FlashData;
-import cn.com.lightech.led_g5g.entity.LampState;
-import cn.com.lightech.led_g5g.entity.data.ManualData;
 import cn.com.lightech.led_g5g.entity.DataType;
-import cn.com.lightech.led_g5g.entity.data.MoonData;
+import cn.com.lightech.led_g5g.entity.LampChannel;
+import cn.com.lightech.led_g5g.entity.LampState;
+import cn.com.lightech.led_g5g.entity.PackageId;
 import cn.com.lightech.led_g5g.entity.TimeBucket;
+import cn.com.lightech.led_g5g.entity.data.CurveData;
+import cn.com.lightech.led_g5g.entity.data.FlashData;
+import cn.com.lightech.led_g5g.entity.data.ManualData;
+import cn.com.lightech.led_g5g.entity.data.MoonData;
 import cn.com.lightech.led_g5g.net.ConnectManager;
+import cn.com.lightech.led_g5g.net.ConnectionsManager;
 import cn.com.lightech.led_g5g.net.entity.ChanelType;
 import cn.com.lightech.led_g5g.net.entity.ConnState;
-import cn.com.lightech.led_g5g.entity.LampChannel;
 import cn.com.lightech.led_g5g.net.entity.Response;
 import cn.com.lightech.led_g5g.net.socket.NetworkHelper;
 import cn.com.lightech.led_g5g.net.utils.StringUtil;
-import cn.com.lightech.led_g5g.net.ConnectionsManager;
 import cn.com.lightech.led_g5g.utils.PreferenceUtils;
 
 public class DataManager implements IDataListener {
@@ -346,22 +345,28 @@ public class DataManager implements IDataListener {
         CurveData curveData = null;
         switch (id2) {
             case 0x00:
-                curveData = seedling;
+                curveData = new CurveData(PackageId.Seedling[0], PackageId.Seedling[1]);
+                curveData.setPoints(seedling.getPoints());
                 break;
             case 0x05:
-                curveData = clone;
+                curveData = new CurveData(PackageId.Clone[0], PackageId.Clone[1]);
+                curveData.setPoints(clone.getPoints());
                 break;
             case 0x07:
-                curveData = vegetation;
+                curveData = new CurveData(PackageId.Vegetation[0], PackageId.Vegetation[1]);
+                curveData.setPoints(vegetation.getPoints());
                 break;
             case 0x09:
-                curveData = flowering;
+                curveData = new CurveData(PackageId.Flowering[0], PackageId.Flowering[1]);
+                curveData.setPoints(flowering.getPoints());
                 break;
             case 0x0b:
-                curveData = fruiting;
+                curveData = new CurveData(PackageId.Fruiting[0], PackageId.Fruiting[1]);
+                curveData.setPoints(fruiting.getPoints());
                 break;
             case 0x0d:
-                curveData = self;
+                curveData = new CurveData(PackageId.Self[0], PackageId.Self[1]);
+                curveData.setPoints(self.getPoints());
                 break;
 
             case 0x01:

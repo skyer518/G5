@@ -2,10 +2,6 @@ package cn.com.lightech.led_g5g.presenter;
 
 import android.content.Context;
 
-import java.util.List;
-
-import cn.com.lightech.led_g5g.entity.data.CurveData;
-import cn.com.lightech.led_g5g.entity.CurvePoint;
 import cn.com.lightech.led_g5g.entity.DataNode;
 import cn.com.lightech.led_g5g.entity.PackageId;
 import cn.com.lightech.led_g5g.gloabal.DataManager;
@@ -54,30 +50,30 @@ public class SycnDataPresenter implements IDataListener {
             case RecvDataFromLED:
                 if (response.IsOK()) {
                     final byte[] packageId = response.getPackageId();
+                    logger.e("RecvDataFromLED modeIndex:%d ,pakageId[0]:%d ,pakageId[1]:%d,pkgid[0]:%d ,pkgid[1]:%d",
+                            this.modeIndex, packageId[0], packageId[1], pkgId[0], pkgId[1]);
                     if (packageId != null && packageId.length == 2
                             && pkgId != null && pkgId.length == 2
                             && packageId[0] == pkgId[0] && packageId[1] == pkgId[1]) {
                         recvData(response);
                         syncNext();
-                        break;
+                        return false;
                     }
                 }
+
             case ValidateSumFailed:
             case IDFormatError: // 出现错误就跳过继续下一个吧
+            case Unknow:
                 if (!response.IsOK()) {
                     logger.e("RecvDataFromLED IDFormatError failed modeIndex:%d",
                             this.modeIndex);
                 }
-            default:
-                if (count < 3)
+                if (count < 5)
                     syncData();
                 else
                     syncNext();
-                return true;
+                break;
         }
-        Logger.getLogger().d(
-                response.getCmdType().toString() + "   "
-                        + response.getReplyCode());
         return false;
 
     }
@@ -95,12 +91,10 @@ public class SycnDataPresenter implements IDataListener {
             return;
         }
         count++;
-        LedProxy.recvDataFromLED(pkgId);
-//        LedProxy.validateData(pkgId);
+        LedProxy.recvDataFromLED(this.pkgId);
 
-
-        String txt = String.format("current: %d  ; total: %d  ;",
-                this.modeIndex, TOTAL_MODE);
+        String txt = String.format("current: %d  ; total: %d  ; pkgid[0]: %d ,pkgid[1]: %d , ",
+                this.modeIndex, TOTAL_MODE, pkgId[0], pkgId[1]);
         logger.e(txt);
 
     }

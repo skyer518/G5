@@ -31,6 +31,8 @@ public class ControlCurvePresenter implements IDataListener {
     private final byte timingId;
     private int mCursor;
 
+    private Logger logger = Logger.getLogger(getClass());
+
 
     public ControlCurvePresenter(Context context, IAutoView autoView, byte dataId, byte timingId) {
         this.mContext = context;
@@ -44,6 +46,8 @@ public class ControlCurvePresenter implements IDataListener {
     public void saveAuto() {
         LedProxy.sendToLed(DataManager.getInstance().getCurveDataById2(dataId));
         LedProxy.sendToLed(DataManager.getInstance().getCurveDataById2(timingId));
+
+        logger.e("saveAuto curve: [%d,%d]", dataId, timingId);
     }
 
 
@@ -117,7 +121,7 @@ public class ControlCurvePresenter implements IDataListener {
             default:
                 break;
         }
-        Logger.getLogger().d(
+        logger.d(
                 response.getCmdType().toString() + "   "
                         + response.getReplyCode());
         return true;

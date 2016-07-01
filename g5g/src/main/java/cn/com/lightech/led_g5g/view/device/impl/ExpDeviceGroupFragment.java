@@ -1,7 +1,6 @@
 package cn.com.lightech.led_g5g.view.device.impl;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -153,6 +152,8 @@ public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDev
     }
 
 
+
+
     @Override
     protected void loadData() {
         Log.i("ExpDeviceGroupFragment", "loadData");
@@ -174,6 +175,11 @@ public class ExpDeviceGroupFragment extends AppBaseStateFragment implements IDev
         presenter.start();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.stop();
+    }
 
     @Override
     public void onStop() {
