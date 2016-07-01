@@ -6,7 +6,7 @@ package cn.com.lightech.led_g5w.utils;
 public class TimeUtil {
 
     public static boolean isVali(int time) {
-        if (time >= 0 && time <= 24 * 60) {
+        if (time >= 0 && time < 24 * 60) {
             return true;
         }
         return false;

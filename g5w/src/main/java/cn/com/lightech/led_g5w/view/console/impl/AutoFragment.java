@@ -503,6 +503,7 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
     public void onValueSelected(List<Entry> e, int dataSetIndex, Highlight h) {
         if (e != null && e.size() > 0) {
             int time = e.get(0).getXIndex();
+            if (time == 144) time = 0;
             String textTime = xVals.get(time);
             tvTime.setText(textTime);
             LampChannel lc = new LampChannel();

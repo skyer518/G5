@@ -483,20 +483,4 @@ public class MainDeviceActivity extends AppBaseActivity implements IMainDeviceVi
     }
 
 
-//
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        if (v.getId() == R.id.iv_custPic) {
-//            menu.add(0, 0, Menu.NONE, "修改");
-//        }
-//    }
-//
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//        if (item.getItemId() == 0) {
-//            choicePhoto();
-//        }
-//        return super.onContextItemSelected(item);
-//    }
 }

@@ -13,8 +13,8 @@ android {
         applicationId "cn.com.lightech.led.g5w"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.5.00"
+        versionCode 4
+        versionName "1.5.01"
     }
 
 

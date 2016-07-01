@@ -262,18 +262,6 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
 
     }
 
-//    private void addChanelDialog() {
-//
-//        this.currentCurvePoint = new CurvePoint(tempCurvePoint.getTime(), tempCurvePoint.getChannel());
-//        Dialog dialog = new Dialog(getActivity(), R.style.dialog);
-//        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_channel, null);
-//        ViewHolder holder = new ViewHolder(view, dialog);
-//        dialog.setContentView(view);
-//        dialog.show();
-//        dialog.getWindow().setLayout(LocalPhoneParms.getPhoneWidth() / 4 * 3,
-//                LocalPhoneParms.getPhoneHeight() / 4 * 3);
-//
-//    }
 
     public void spikToCurrent(int time) {
         lcChart.highlightValue(time, 0);
@@ -518,6 +506,9 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
     public void onValueSelected(List<Entry> e, int dataSetIndex, Highlight h) {
         if (e != null && e.size() > 0) {
             int time = e.get(0).getXIndex();
+            if (time == 144) {
+                time = 0;
+            }
             String textTime = xVals.get(time);
             tvTime.setText(textTime);
             LampChannel lc = new LampChannel();

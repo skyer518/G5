@@ -42,12 +42,12 @@ public class HelpActivity extends AppBaseActivity {
         supportActionBar.setDisplayShowHomeEnabled(false);
         String able = getResources().getConfiguration().locale.getCountry();
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        if (able.equals("CN"))
-            webView.loadUrl("file:///android_asset/help/OperationMmanual_cn.htm");
-        else {
-            webView.loadUrl("file:///android_asset/help/OperationMmanual_en.htm");
+//        if (able.equals("CN"))
+//            webView.loadUrl("file:///android_asset/help/OperationMmanual_cn.htm");
+//        else {
+        webView.loadUrl("file:///android_asset/help/OperationMmanual_en.htm");
 
-        }
+//        }
     }
 
     @Override
