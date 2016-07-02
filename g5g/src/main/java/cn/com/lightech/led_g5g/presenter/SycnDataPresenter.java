@@ -50,7 +50,7 @@ public class SycnDataPresenter implements IDataListener {
             case RecvDataFromLED:
                 if (response.IsOK()) {
                     final byte[] packageId = response.getPackageId();
-                    logger.e("RecvDataFromLED modeIndex:%d ,pakageId[0]:%d ,pakageId[1]:%d,pkgid[0]:%d ,pkgid[1]:%d",
+                    logger.e("RecvDataFromLED modeIndex:%d ,pakageId:[%d,%d ];pakageId[%d,%d]",
                             this.modeIndex, packageId[0], packageId[1], pkgId[0], pkgId[1]);
                     if (packageId != null && packageId.length == 2
                             && pkgId != null && pkgId.length == 2
@@ -60,19 +60,21 @@ public class SycnDataPresenter implements IDataListener {
                         return false;
                     }
                 }
+            case QueryGroup:
+                return false;
 
             case ValidateSumFailed:
             case IDFormatError: // 出现错误就跳过继续下一个吧
             case Unknow:
-                if (!response.IsOK()) {
-                    logger.e("RecvDataFromLED IDFormatError failed modeIndex:%d",
-                            this.modeIndex);
-                }
-                if (count < 5)
+            default:
+                if (count < 10) {
+                    logger.e("cmdType:%s", response.getCmdType().toString());
                     syncData();
-                else
+                } else {
+
                     syncNext();
-                break;
+                    return true;
+                }
         }
         return false;
 
@@ -92,10 +94,6 @@ public class SycnDataPresenter implements IDataListener {
         }
         count++;
         LedProxy.recvDataFromLED(this.pkgId);
-
-        String txt = String.format("current: %d  ; total: %d  ; pkgid[0]: %d ,pkgid[1]: %d , ",
-                this.modeIndex, TOTAL_MODE, pkgId[0], pkgId[1]);
-        logger.e(txt);
 
     }
 
@@ -141,7 +139,7 @@ public class SycnDataPresenter implements IDataListener {
         String txt = String.format("stop ; current: %d  ; total: %d  ;",
                 this.modeIndex, TOTAL_MODE);
         logger.e(txt);
-        sycnDataView.stopSycn();
+        sycnDataView.finishSycn();
     }
 
     public void register() {

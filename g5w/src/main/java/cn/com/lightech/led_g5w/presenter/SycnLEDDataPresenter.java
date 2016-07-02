@@ -68,22 +68,19 @@ public class SycnLEDDataPresenter implements IDataListener {
             case ValidateSumFailed:
             case IDFormatError: // 出现错误就跳过继续下一个吧
                 if (!response.IsOK()) {
-                    logger.e("RecvDataFromLED IDFormatError failed modeIndex:%d",
+                    logger.i("RecvDataFromLED IDFormatError failed modeIndex:%d",
                             this.modeIndex);
                 }
             default:
-                if (count < 3)
+                if (count < 10) {
+                    logger.e("cmdType:%s", response.getCmdType().toString());
                     syncData();
-                else
+                } else {
                     syncNext();
-                return true;
+                    return true;
+                }
         }
-        Logger.getLogger().e(
-                response.getCmdType().toString() + "   "
-                        + response.getReplyCode());
-//        Logger.getLogger().e(
-//                response.getCmdType().toString() + "   "
-//                        + response.getReplyCode() + "  \n byte data:" + Arrays.toString(response.getByteArray()));
+
         return false;
 
     }
@@ -102,12 +99,6 @@ public class SycnLEDDataPresenter implements IDataListener {
         }
         count++;
         LedProxy.recvDataFromLED(pkgId);
-//        SparyProxy.validateData(pkgId);
-
-
-        String txt = String.format("current: %d  ; total: %d  ;",
-                this.modeIndex, TOTAL_MODE);
-        logger.e(txt);
 
     }
 
@@ -181,49 +172,4 @@ public class SycnLEDDataPresenter implements IDataListener {
     }
 
 
-    //    /**
-//     * 处理验证包返回的数据
-//     */
-//    private void proc(Response response) {
-//        if (response == null) {
-//            syncNext();// 继续同步下一个
-//            return;
-//        }
-//
-//        byte[] pkgId = response.getPackageId();
-//        long unixTime = response.getUnixTime();
-//
-//        DataNode appNode = DataManager.getInstance().getDataNode(
-//                Mode.valueOf(modeIndex));
-//
-//        if (appNode == null) {
-//            // APP数据为空
-//            if (unixTime > 0)
-//                SparyProxy.recvDataFromLED(pkgId);// LED的数据较新
-//            else
-//                syncNext();// APP和LED都没有数据，下一个
-//            return;
-//        }
-//
-//        // 对比包ID是否一致，如果不是，说明返回数据有误，直接跳过
-//        if (!Arrays.equals(pkgId, appNode.getID())) {
-//            // 继续同步下一个
-//            syncNext();
-//            return;
-//        }
-//
-//        // 对比时间截，哪个新用哪个。如果app的新，则获取，旧则发送.如果相等，或者都是0，则跳过
-//        if (unixTime == appNode.getUnixTime()) {
-//            // 继续同步下一个
-//            syncNext();
-//            return;
-////        } else if (unixTime < appNode.getUnixTime()) {
-////            // APP的数据较新
-////            SparyProxy.sendToLed(appNode);
-//        } else {
-//            // LED的数据较新
-//            SparyProxy.recvDataFromLED(pkgId);
-//        }
-//
-//    }
 }

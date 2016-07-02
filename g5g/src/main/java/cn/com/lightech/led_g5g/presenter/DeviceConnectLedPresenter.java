@@ -86,15 +86,15 @@ public class DeviceConnectLedPresenter extends LedPresenter implements IDataList
     public void gotoControl(int mainDevice) {
         String ip = group.getDevices().get(mainDevice).getIp();
         SycnDataDialog dialog = new SycnDataDialog(mContext, group, ip);
-        dialog.setCancelable(false);
+//        dialog.setCancelable(true);
         dialog.show();
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                Intent intent = new Intent();
-                intent.setClass(App.getInstance(), ControlActivity.class);
-                intent.putExtra(ControlActivity.ARGS_DEVICE_GROUP, group);
-                mContext.startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.setClass(App.getInstance(), ControlActivity.class);
+//                intent.putExtra(ControlActivity.ARGS_DEVICE_GROUP, group);
+//                mContext.startActivity(intent);
             }
         });
 

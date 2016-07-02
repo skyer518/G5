@@ -2,6 +2,7 @@ package cn.com.lightech.led_g5g.view.console.impl;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.com.lightech.led_g5g.R;
 import cn.com.lightech.led_g5g.entity.DeviceGroup;
+import cn.com.lightech.led_g5g.gloabal.App;
 import cn.com.lightech.led_g5g.presenter.SycnDataPresenter;
 import cn.com.lightech.led_g5g.view.console.ISycnDataView;
 
@@ -59,5 +61,14 @@ public class SycnDataDialog extends Dialog implements ISycnDataView {
     @Override
     public void stopSycn() {
         dismiss();
+    }
+
+    @Override
+    public void finishSycn() {
+        dismiss();
+        Intent intent = new Intent();
+        intent.setClass(App.getInstance(), ControlActivity.class);
+        intent.putExtra(ControlActivity.ARGS_DEVICE_GROUP, group);
+        mContext.startActivity(intent);
     }
 }

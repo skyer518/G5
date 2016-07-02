@@ -29,31 +29,31 @@ public class PackageId {
             case 0:
                 return Seedling;
             case 1:
-                return Seedling_Timing;
-            case 2:
                 return Clone;
-            case 3:
-                return Clone_Timing;
-            case 4:
+            case 2:
                 return Vegetation;
-            case 5:
-                return Vegetation_Timing;
-            case 6:
+            case 3:
                 return Flowering;
-            case 7:
-                return Flowering_Timing;
-            case 8:
+            case 4:
                 return Fruiting;
-            case 9:
-                return Fruiting_Timing;
-            case 10:
+            case 5:
                 return Self;
-            case 11:
-                return Self_Timing;
-            case 12:
+            case 6:
                 return Flash;
-            case 13:
+            case 7:
                 return Instant;
+            case 8:
+                return Self_Timing;
+            case 9:
+                return Clone_Timing;
+            case 10:
+                return Vegetation_Timing;
+            case 11:
+                return Seedling_Timing;
+            case 12:
+                return Flowering_Timing;
+            case 13:
+                return Fruiting_Timing;
 //            case 14:
 //                return Moon;
         }

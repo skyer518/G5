@@ -2,6 +2,7 @@ package cn.com.lightech.led_g5g.gloabal;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.List;
 
@@ -278,40 +279,52 @@ public class DataManager implements IDataListener {
         switch (curveData.getId2()) {
             case 0x00:
                 seedling = curveData;
+                Log.e("DataManager", "seedling");
                 break;
             case 0x05:
                 clone = curveData;
+                Log.e("DataManager", "clone");
                 break;
             case 0x07:
                 vegetation = curveData;
+                Log.e("DataManager", "vegetation");
                 break;
             case 0x09:
                 flowering = curveData;
+                Log.e("DataManager", "flowering");
                 break;
             case 0x0b:
                 fruiting = curveData;
+                Log.e("DataManager", "fruiting");
                 break;
             case 0x0d:
                 self = curveData;
+                Log.e("DataManager", "self");
                 break;
 
             case 0x01:
                 seedling = setTiming(seedling, curveData);
+                Log.e("DataManager", "seedling timing");
                 break;
             case 0x06:
                 clone = setTiming(clone, curveData);
+                Log.e("DataManager", "clone timing");
                 break;
             case 0x08:
                 vegetation = setTiming(vegetation, curveData);
+                Log.e("DataManager", "vegetation timing");
                 break;
             case 0x0a:
                 flowering = setTiming(flowering, curveData);
+                Log.e("DataManager", "flowering timing");
                 break;
             case 0x0c:
                 fruiting = setTiming(fruiting, curveData);
+                Log.e("DataManager", "fruiting timing");
                 break;
             case 0x0e:
                 self = setTiming(self, curveData);
+                Log.e("DataManager", "self timing");
                 break;
         }
 
@@ -320,11 +333,11 @@ public class DataManager implements IDataListener {
 
     private CurveData setTiming(CurveData curveData, CurveData curveTiming) {
 
-        List<CurvePoint> points = curveTiming.getPoints();
+        List<CurvePoint> timingPoints = curveTiming.getPoints();
         List<CurvePoint> dataPoints = curveData.getPoints();
 
-        for (int i = 0; i < points.size(); i++) {
-            CurvePoint point = points.get(i);
+        for (int i = 0; i < timingPoints.size(); i++) {
+            CurvePoint point = timingPoints.get(i);
             try {
                 point.setChannel(dataPoints.get(i).getChannel());
             } catch (IndexOutOfBoundsException e) {

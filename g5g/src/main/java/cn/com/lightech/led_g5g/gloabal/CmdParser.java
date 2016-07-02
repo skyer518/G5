@@ -183,7 +183,7 @@ public class CmdParser {
 
         // 数据包长度检测
         if (!valideDataLength(content)) {
-            logger.e("包长度不对，len:%1d; dataLen:%2d,data:[%3s]", content.length, content[6] & 0xff, Arrays.toString(content));
+            logger.i("包长度不对，len:%1d; dataLen:%2d,data:[%3s]", content.length, content[6] & 0xff, Arrays.toString(content));
             return true;
         }
         return false;

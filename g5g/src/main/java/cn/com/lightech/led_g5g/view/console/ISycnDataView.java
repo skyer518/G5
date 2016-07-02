@@ -8,5 +8,7 @@ import cn.com.lightech.led_g5g.view.IBaseView;
 public interface ISycnDataView extends IBaseView {
 
     void stopSycn();
+
+    void finishSycn();
 }
 
