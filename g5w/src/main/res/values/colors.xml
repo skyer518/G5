@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
 
     <!-- 灯通道色-->
-    <color name="ch_color_blue">#28166F</color>
-    <color name="ch_color_white">#FFFFFF</color>
-    <color name="ch_color_purple">#974578</color>
-    <color name="ch_color_green">#00923F</color>
-    <color name="ch_color_red">#D52B23</color>
+    <color name="ch_color_1">#28166F</color>
+    <color name="ch_color_2">#974578</color>
+    <color name="ch_color_3">#FFFFFF</color>
+    <color name="ch_color_4">#00923F</color>
+    <color name="ch_color_5">#D52B23</color>
     <!--seekbar_progress_blue  -->
     <color name="sb_gray">#DDDDDD</color>
 

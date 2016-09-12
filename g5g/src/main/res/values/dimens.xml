@@ -11,8 +11,6 @@
     <dimen name="app_padding_l">10dp</dimen>
 
     <dimen name="app_text_size_m">18sp</dimen>
-    <dimen name="app_text_size_l">20sp</dimen>
-    <dimen name="app_text_size_xl">24sp</dimen>
 
     <dimen name="item_image_size">38dp</dimen>
     <dimen name="app_item_hight">42dp</dimen>

@@ -48,9 +48,8 @@ public final class Constants {
 
 
     // 灯通道 Color
-    public static final int[] CH_COLORl = new int[]{R.color.ch_color_blue,
-            R.color.ch_color_white, R.color.ch_color_purple,
-            R.color.ch_color_green, R.color.ch_color_red};
+    public static final int[] CH_COLORl = new int[]{R.color.ch_color_1, R.color.ch_color_3,
+            R.color.ch_color_2, R.color.ch_color_4, R.color.ch_color_5};
 
     public static final long DEFAULT_UNIX_TIME = 1;// 固定模式的unix时间
 

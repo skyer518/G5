@@ -26,8 +26,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/ch_B"
-                android:textColor="@color/ch_color_blue" />
+                android:text="@string/ch_1"
+                android:textColor="@color/ch_color_1"/>
 
             <SeekBar
                 android:id="@+id/seekBar_blue"
@@ -44,7 +44,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|left"
-                android:textColor="@color/ch_color_blue" />
+                android:textColor="@color/ch_color_1"/>
         </LinearLayout>
 
         <LinearLayout
@@ -60,8 +60,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/ch_W"
-                android:textColor="@color/ch_color_white" />
+                android:text="@string/ch_2"
+                android:textColor="@color/ch_color_2"/>
 
             <SeekBar
                 android:id="@+id/seekBar_white"
@@ -78,7 +78,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|left"
-                android:textColor="@color/ch_color_white" />
+                android:textColor="@color/ch_color_2"/>
         </LinearLayout>
 
         <LinearLayout
@@ -94,8 +94,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/ch_P"
-                android:textColor="@color/ch_color_purple" />
+                android:text="@string/ch_3"
+                android:textColor="@color/ch_color_3"/>
 
             <SeekBar
                 android:id="@+id/seekBar_purple"
@@ -112,7 +112,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|left"
-                android:textColor="@color/ch_color_purple" />
+                android:textColor="@color/ch_color_3"/>
         </LinearLayout>
 
 
@@ -129,8 +129,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/ch_G"
-                android:textColor="@color/ch_color_green" />
+                android:text="@string/ch_4"
+                android:textColor="@color/ch_color_4"/>
 
             <SeekBar
                 android:id="@+id/seekBar_green"
@@ -147,7 +147,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|left"
-                android:textColor="@color/ch_color_green" />
+                android:textColor="@color/ch_color_4"/>
         </LinearLayout>
 
         <LinearLayout
@@ -163,8 +163,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/ch_R"
-                android:textColor="@color/ch_color_red" />
+                android:text="@string/ch_5"
+                android:textColor="@color/ch_color_5"/>
 
             <SeekBar
                 android:id="@+id/seekBar_red"
@@ -181,7 +181,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|left"
-                android:textColor="@color/ch_color_red" />
+                android:textColor="@color/ch_color_5"/>
         </LinearLayout>
 
     </LinearLayout>

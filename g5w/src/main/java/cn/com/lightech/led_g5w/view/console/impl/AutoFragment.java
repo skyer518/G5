@@ -434,16 +434,16 @@ public class AutoFragment extends AppBaseFragment implements OnChartValueSelecte
             values5.add(new Entry(point.getChannel().getTempRed(), point.getTime()));
         }
 
-        LineDataSet setDataBlue = getLineDataSet(values1, getString(R.string.ch_B),
-                getResources().getColor(R.color.ch_color_blue));
-        LineDataSet setDataWhite = getLineDataSet(values2, getString(R.string.ch_W),
-                getResources().getColor(R.color.ch_color_white));
-        LineDataSet setDataPurple = getLineDataSet(values3, getString(R.string.ch_P),
-                getResources().getColor(R.color.ch_color_purple));
-        LineDataSet setDataGreen = getLineDataSet(values4, getString(R.string.ch_G),
-                getResources().getColor(R.color.ch_color_green));
-        LineDataSet setDataRed = getLineDataSet(values5, getString(R.string.ch_R),
-                getResources().getColor(R.color.ch_color_red));
+        LineDataSet setDataBlue = getLineDataSet(values1, getString(R.string.ch_1),
+                getResources().getColor(R.color.ch_color_1));
+        LineDataSet setDataWhite = getLineDataSet(values2, getString(R.string.ch_2),
+                getResources().getColor(R.color.ch_color_2));
+        LineDataSet setDataPurple = getLineDataSet(values3, getString(R.string.ch_3),
+                getResources().getColor(R.color.ch_color_3));
+        LineDataSet setDataGreen = getLineDataSet(values4, getString(R.string.ch_4),
+                getResources().getColor(R.color.ch_color_4));
+        LineDataSet setDataRed = getLineDataSet(values5, getString(R.string.ch_5),
+                getResources().getColor(R.color.ch_color_5));
 
         List<LineDataSet> datas = new ArrayList<LineDataSet>(5);
         datas.add(setDataBlue);
